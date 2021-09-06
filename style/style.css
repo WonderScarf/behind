@@ -1,0 +1,38 @@
+:root {
+    
+    /* Text size values */
+    --title-size: 2.5em;
+    --header-size: 1.875em;
+    --text-size: 1.2em;
+
+    /* Color size values */
+    --dark-color: #353233;  /* Night rider */
+    --light-color: #8b817f;/* Suva Grey */
+
+    --primary-color:#b8b0bd; /* Chatelle */
+    --secondary-color: #eee6e6; /* Whisper */
+
+    --highlight-color: #5ca1b4; /* Shakespeare */
+
+    /* Canvas sizes */
+    --canvas-width: 650px;
+    --canvas-height: 700px;
+    --canvas-border-size: .2em;
+}
+
+body {
+    background-color: var(--light-color);
+}
+
+canvas {
+
+    /* Canvas properties */
+    width: var(--canvas-width);
+    height: var(--canvas-height);
+    background-color: var(--secondary-color);
+
+    /* Canvas border properties */
+    border: var(--canvas-border-size) solid;
+    border-color: var(--primary-color);
+
+}
