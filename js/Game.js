@@ -14,10 +14,7 @@ import { canvas, context } from "./globals.js"; //import the game's canvas
  *  Update: we process the inputs and change data accordingly.
  * 
  *  Render: we display changes on the canvas so that it matches the altered data.
- * 
- * 
- *  
-*/
+ */
 export default class Game {
 
 
@@ -37,11 +34,39 @@ export default class Game {
      * constant no matter your specs!
      * 
      * @param {Number} currentTime How much time has elapsed since the page loaded.
-
-     */
+    */
     loop(currentTime){
+		// Calculates deltaTime and converts it to seconds instead of milliseconds.
+		const deltaTime = (currentTime - this.lastTime) / 1000;
+        
+		this.update(deltaTime); 
+		
+        this.lastTime = currentTime; // Sets the last time to the current time.
+		requestAnimationFrame((time) => this.loop(time));
+	}
 
-    }
+	/**
+	 * Processes the player's inputs and changes data accordingly.
+	 * @param {Number} deltaTime How much time has elapsed since last time update was called.
+	*/
+	update(deltaTime) {
+        
+        // After we finish updating we render using the game's render function.
+		this.render();
+	}
+
+	/**
+     * Display changes on the canvas so that it matches the altered data.
+	*/
+	render() {
+        // If the canvas and context exists we proceed with the rendering.
+        if(canvas && context) {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        else {
+            alert("Game could not identify either canvas or context.")
+        }
+	}
 
 
 }

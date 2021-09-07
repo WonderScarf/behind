@@ -6,7 +6,7 @@ import Game from "./js/Game.js"; // Imports the Game object so we can create one
 */
 
 const game = new Game(); // We create our game object.
-game.loop(); // Starts the game via it's recursive loop.
+//game.loop(); // Starts the game via it's recursive loop.
 
 
 
