@@ -1,0 +1,23 @@
+{
+  "name": "behind",
+  "version": "1.0.0",
+  "description": "A small bullethell shooter",
+  "author": "WonderScarf (Tyler Messina-Katunar)",
+  "license": "MIT",
+  "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
+    "dom-confetti": "^0.2.2" 
+  },
+  "devDependencies": {
+    "esinstall": "^1.1.7"
+  },
+  "esinstall": {
+    "install": [
+      "lodash.clonedeep",
+      "dom-confetti" 
+    ]
+  },
+  "scripts": {
+    "postinstall": "node install-modules.mjs"
+  }
+}

@@ -1,0 +1,17 @@
+{
+    "options": {
+
+        "commands": {
+            "UP_KEY": {"accepted": ["w"]},
+            "RIGHT_KEY": {"accepted": ["d"]},
+            "DOWN_KEY": {"accepted": ["s"]},
+            "LEFT_KEY": {"accepted": ["a"]}, 
+            "PRIMARY_KEY": {"accepted": ["z"]}, 
+            "SECONDARY_KEY": {"accepted": ["x"]}, 
+            "TETIARY_KEY": {"accepted": ["c"]}, 
+            "ALTERNATE_KEY": {"accepted": ["v"]},
+            "BACK_KEY": {"accepted": ["1"]}, 
+            "CONSOLE_KEY": {"accepted": ["2"]}   
+    }   },
+        "example":{"name": "UP_KEY" ,"accepted": ["w"]}
+}

@@ -1,17 +1,14 @@
-import Game from "./js/Game.js"; // Imports the Game object so we can create one.
+import Behind from "./src/Behind.js";
+import { confetti } from "./web_modules/dom-confetti.js";
+import {canvas, context, inputConverter, stateManager} from "./src/global.js"
+import TouhouState from "./src/states/game_states/TouhouState.js"
+confetti(document.body, { angle: 90 });
 
-/**
- * Maybe we should create an event listener and await the canvas so we only start
- * when everything is loaded...
-*/
+stateManager.saveState("touhou", new TouhouState());
+stateManager.loadFromStates("touhou");
 
-const game = new Game(); // We create our game object.
-//game.loop(); // Starts the game via it's recursive loop.
+inputConverter.addKeyboardListener(document);
 
-
-
-
-
-
-
-
+// Initialize the game!
+let behind = new Behind();
+behind.gameLoop();

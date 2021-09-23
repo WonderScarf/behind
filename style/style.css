@@ -15,8 +15,8 @@
     --highlight-color: #5ca1b4; /* Shakespeare */
 
     /* Canvas sizes */
-    --canvas-width: 650px;
-    --canvas-height: 700px;
+    /*--canvas-width: 650px;
+    --canvas-height: 700px;*/
     --canvas-border-size: .2em;
 }
 
@@ -27,8 +27,8 @@ body {
 canvas {
 
     /* Canvas properties */
-    width: var(--canvas-width);
-    height: var(--canvas-height);
+    /*width: var(--canvas-width);
+    height: var(--canvas-height);*/
     background-color: var(--secondary-color);
 
     /* Canvas border properties */
