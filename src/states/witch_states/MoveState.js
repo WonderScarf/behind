@@ -1,8 +1,10 @@
 import State from "../State.js";
 import { inputConverter } from "../../global.js";
+import Witch from "../../entities/Witch.js";
+import FocusState from "./FocusState.js"; // cannot import due to circular dependancy
 
 /**
- * The superstate or Base state of the witch (it will always be in the stack at the back). 
+ * The superstate or Base state of the witch (it will always be in the stack at the back) It represents the branch that all player actions stem froms. 
  */
   export default class MoveState extends State {    
 
@@ -10,21 +12,29 @@ import { inputConverter } from "../../global.js";
 
     constructor(){
         super();
+        this.witch;
     };
 
 
+    /**
+     * Enters the MoveState.
+     * @param {{witch: Witch}} paramaters The inputs used when entering the state.
+     */
     enter(paramaters){
         if(!paramaters.witch){
             throw new Error("No witch was input with the paramaters.")
         }
 
-        this.witch = paramaters.witch;
+        this.witch = paramaters.witch; //The Witch that will be moved.
     }
 
     update(trueTime) {
 
         if(!inputConverter.commands){
             throw new Error("Commands have not been initialized and thus cannot be read.");
+        }
+        else if(!this.witch){
+            throw new Error("Cannot update when witch is undefined.");
         }
 
         let moveWeight = {x: 0, y: 0}
@@ -47,14 +57,17 @@ import { inputConverter } from "../../global.js";
 
         // If this happens we push focus mode state.
         if(inputConverter.commands.ALTERNATE_KEY.isPushed && inputConverter.commands.ALTERNATE_KEY.isEnabled){
-            
+            this.witch.stateManager.addState(new FocusState(), {witch: this.witch, soul:null} ); //same issue
         }
-
 
         this.witch.move(moveWeight.x, moveWeight.y);
     }
 
     render() {
+        if(!this.witch){
+            throw new Error("The witch within MoveState was not defined, thus it can't move.")
+        }
+
         this.witch.render();
     }
 }

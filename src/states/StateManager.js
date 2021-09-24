@@ -36,7 +36,7 @@ export default class StateManager {
 
     } */
 
-    addState(state, paramaters = undefined ,inFront = false ){
+    addState(state, paramaters = {} ,inFront = false ){
         if(!state){
             throw new Error("Cannot add an empty state.")
         }
@@ -83,9 +83,9 @@ export default class StateManager {
         }
 
         //NOTICE I feel like this is a bug but idk so ill keep it here...
-       /* oldState.exit();
+        oldState.exit();
         oldState = newState;
-        oldState.enter(); */
+        oldState.enter();
 
     }
 

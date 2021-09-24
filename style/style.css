@@ -14,6 +14,12 @@
 
     --highlight-color: #5ca1b4; /* Shakespeare */
 
+    /*Gameboy colors if we want to go in that direction*/
+    --gameboy-lightest: #e0f8d0;
+    --gameboy-light: #88c070;
+    --gameboy-dark: #346856;
+    --gameboy-darkest: #081820;
+
     /* Canvas sizes */
     /*--canvas-width: 650px;
     --canvas-height: 700px;*/

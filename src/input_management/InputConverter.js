@@ -88,7 +88,6 @@ export default class InputConverter{
             command.clearInputs();
         }
         //may want to check for 2 commands with the same key later
-        //this.commandData[index].keys
     }
 
     interpret(key){
@@ -110,7 +109,9 @@ export default class InputConverter{
         element.addEventListener('keydown', event => {
 
             let dataIndex = this.interpret(event.key);
-            if(dataIndex != null ){
+
+            //Only sets is pushed to true if dataIndex is not null and the commandData is not already Pressed.
+            if(dataIndex != null && !this.commandData[dataIndex].isPushed){
                 console.log("keydown: " + event.key);
                 this.commandData[dataIndex].isPushed = true;
             }
@@ -121,6 +122,8 @@ export default class InputConverter{
         element.addEventListener('keyup', event => {
 
             let dataIndex = this.interpret(event.key);
+            
+            // We only need to check for null here as keyups cannot be 'held' like keydowns.
             if(dataIndex != null ){
                 console.log("keyup: " + event.key);
                 this.commandData[dataIndex].isPushed = false;
@@ -130,6 +133,7 @@ export default class InputConverter{
         });
     }
 
+    
     removeKeyboardListener(element){
         element.removeEventListener('keydown');
         element.removeEventListener('keyup');
