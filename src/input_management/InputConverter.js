@@ -22,16 +22,16 @@ export default class InputConverter{
     constructor(){
 
         this.commandData = [
-            new Command(["ArrowUp"], true), // UP_KEY 0
-            new Command(["ArrowRight"], true), // RIGHT_KEY 1
-            new Command(["ArrowDown"], true), // DOWN_KEY 2
-            new Command(["ArrowLeft"], true), // LEFT_KEY 3
-            new Command(["q"], true), // PRIMARY_KEY 4
-            new Command(["1"], true), // SECONDARY_KEY 5 
-            new Command(["2"], true), // TETIARY_KEY 6
-            new Command(["3"], true), // ALTERNATE_KEY 7
-            new Command(["4"], true), // BACK_KEY 8
-            new Command(["5"], false), // CONSOLE_KEY 9
+            new Command(["ArrowUp",], true), // UP_KEY 0
+            new Command(["ArrowRight",], true), // RIGHT_KEY 1
+            new Command(["ArrowDown",], true), // DOWN_KEY 2
+            new Command(["ArrowLeft",], true), // LEFT_KEY 3
+            new Command(["z","Z",], true), // PRIMARY_KEY 4
+            new Command(["x","X",], true), // SECONDARY_KEY 5 
+            new Command(["c","C",], true), // TETIARY_KEY 6
+            new Command(["Shift","\\",], true), // ALTERNATE_KEY 7
+            new Command(["Escape","Backspace",], true), // BACK_KEY 8
+            new Command(["/"], false), // CONSOLE_KEY 9
         ];
 
         this.setCommands()
@@ -81,14 +81,14 @@ export default class InputConverter{
             //Singnals that we want to add keys
 
             //TODO add input validation and duplicate validation.
-            command.addInput()
+            command.addInput(keys)
         }
         else{
             // Signals that we want to clear the keys
             command.clearInputs();
         }
         //may want to check for 2 commands with the same key later
-        this.commandData[index].keys
+        //this.commandData[index].keys
     }
 
     interpret(key){
@@ -111,6 +111,7 @@ export default class InputConverter{
 
             let dataIndex = this.interpret(event.key);
             if(dataIndex != null ){
+                console.log("keydown: " + event.key);
                 this.commandData[dataIndex].isPushed = true;
             }
             event.preventDefault();
@@ -121,6 +122,7 @@ export default class InputConverter{
 
             let dataIndex = this.interpret(event.key);
             if(dataIndex != null ){
+                console.log("keyup: " + event.key);
                 this.commandData[dataIndex].isPushed = false;
                 
             }

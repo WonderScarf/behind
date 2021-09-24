@@ -6,7 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "lodash.clonedeep": "^4.5.0",
-    "dom-confetti": "^0.2.2" 
+    "dom-confetti": "^0.2.2"
   },
   "devDependencies": {
     "esinstall": "^1.1.7"
@@ -14,7 +14,7 @@
   "esinstall": {
     "install": [
       "lodash.clonedeep",
-      "dom-confetti" 
+      "dom-confetti"
     ]
   },
   "scripts": {

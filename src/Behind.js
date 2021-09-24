@@ -1,5 +1,5 @@
 import { canvas, context, stateManager } from "./global.js";
-import StateManager from "./managers/StateManager.js";
+//import StateManager from "./states/StateManager.js";
 
 export default class Behind {
 
@@ -32,7 +32,7 @@ export default class Behind {
     render() {
         if (canvas && context) {
             context.clearRect(0, 0, canvas.width, canvas.height);
-            stateManager.renderState();
+            stateManager.renderStates();
         }
         else {
             throw new Error("Either canvas or context is null.")

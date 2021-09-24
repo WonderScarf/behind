@@ -1,4 +1,4 @@
-import StateManager from "./managers/StateManager.js";
+import StateManager from "./states/StateManager.js";
 import InputConverter from "./input_management/InputConverter.js"
 
 // Canvas Properties
@@ -13,10 +13,10 @@ export const CANVAS_WIDTH = canvas.width;
 export const CANVAS_HEIGHT = canvas.height;
 
 // State manager
-export let stateManager = new StateManager();
+export const stateManager = new StateManager();
 
 //Input
-export let inputConverter = new InputConverter();
+export const inputConverter = new InputConverter();
 
 
 
