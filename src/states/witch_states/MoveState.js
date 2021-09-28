@@ -1,7 +1,8 @@
 import State from "../State.js";
 import { inputConverter } from "../../global.js";
 import Witch from "../../entities/Witch.js";
-import FocusState from "./FocusState.js"; // cannot import due to circular dependancy
+import FocusState from "./FocusState.js";
+import ShootState from "./ShootState.js";
 
 /**
  * The superstate or Base state of the witch (it will always be in the stack at the back) It represents the branch that all player actions stem froms. 
@@ -57,7 +58,12 @@ import FocusState from "./FocusState.js"; // cannot import due to circular depen
 
         // If this happens we push focus mode state.
         if(inputConverter.commands.ALTERNATE_KEY.isPushed && inputConverter.commands.ALTERNATE_KEY.isEnabled){
-            this.witch.stateManager.addState(new FocusState(), {witch: this.witch, soul:null} ); //same issue
+            this.witch.stateManager.addState(new FocusState(), {witch: this.witch} ); //same issue
+        }
+
+        // If this happens we shoot.
+        if(inputConverter.commands.PRIMARY_KEY.isPushed && inputConverter.commands.PRIMARY_KEY.isEnabled){
+            this.witch.stateManager.addState(new ShootState(), {witch: this.witch} ); //same issue
         }
 
         this.witch.move(moveWeight.x, moveWeight.y);

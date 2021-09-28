@@ -17,6 +17,3 @@ export const stateManager = new StateManager();
 
 //Input
 export const inputConverter = new InputConverter();
-
-
-

@@ -36,7 +36,7 @@ import State from "../State.js";
 */
 
 /**
-* The state that represents when the player slows down to dodge shots, child of Movestate.
+* The state that represents when the player slows down to dodge shots also displays hitbox.
 */
 export default class FocusState extends State {
 

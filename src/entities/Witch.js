@@ -19,9 +19,12 @@ export default class Witch extends Entity{
            that allot of pressision bullet-hells have.
         */
         this.soul = null; 
+        this.bullets = [];
 
         this.speed = 9; 
+       
         this.stateManager = new StateManager();
+
         this.stateManager.addState(new MoveState(), {witch: this});
     }
 

@@ -8,14 +8,14 @@ export default class PlayState extends State {
 
     constructor(){
         super();
-        //this.witch = new Witch(50, 50);
     };
+
 
 
     enter(paramaters){
         // Paramaters will be added later for play.
         
-        
+        //set witch type so we cann determine what bullets/ bombs to use depending on player choice.
         this.witch = new Witch();
     }
 
