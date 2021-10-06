@@ -14,14 +14,36 @@
     Back to the key inputs we should filter the keys based on the inputed
     key options (we will add this later).
 */
-
-import { canvas } from "../global.js";
 import Command from "./Command.js";
 
 export default class InputConverter{
     constructor(){
+        this.commandData = [];
+        this.getCommands("../../data/options_config.json");
+    }
 
-        this.commandData = [
+    /**
+     * Reads commands from a specified json file  TEMPORARY SHOULD BE DONE IN LOADING SCREEN
+     * @param {string} JSONpath Local path to the config json file that stores the commands
+     */
+    getCommands(jsonPath){
+
+        // TODO Make a loading system so we can load commands during a "loading screen" at the start of the game.
+        fetch(jsonPath)
+        .then((response) => response.json())
+        .then( (response) => {		
+
+            const {commands: commandDefinitions} = response;
+            commandDefinitions.forEach(commandDefinition => {
+                this.commandData.push(new Command(commandDefinition.keys));
+            });
+
+            this.setCommands();
+        });
+        
+
+        /*this.commandData = [
+            /*
             new Command(["ArrowUp",], true), // UP_KEY 0
             new Command(["ArrowRight",], true), // RIGHT_KEY 1
             new Command(["ArrowDown",], true), // DOWN_KEY 2
@@ -32,11 +54,11 @@ export default class InputConverter{
             new Command(["Shift","\\",], true), // ALTERNATE_KEY 7
             new Command(["Escape","Backspace",], true), // BACK_KEY 8
             new Command(["/"], false), // CONSOLE_KEY 9
-        ];
+        ];*/
 
-        this.setCommands()
     }
 
+    
     setCommands(){
         // The index will increment each set to be more dynamic.
         this.commands = {
@@ -58,6 +80,7 @@ export default class InputConverter{
             //Key to open debug.
             CONSOLE_KEY: this.commandData[9], 
         };
+
     }
 
     /**

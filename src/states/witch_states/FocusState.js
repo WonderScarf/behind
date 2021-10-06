@@ -1,6 +1,9 @@
 import { inputConverter } from "../../global.js";
 import Witch from "../../entities/Witch.js";
 import State from "../State.js";
+import MoveState from "./MoveState.js";
+import { context } from "../../global.js";
+
 
 /*Doesn't work with MoveState as parent, guising becasue of thhe fact that:
   
@@ -38,31 +41,27 @@ import State from "../State.js";
 /**
 * The state that represents when the player slows down to dodge shots also displays hitbox.
 */
-export default class FocusState extends State {
+export default class FocusState extends MoveState {
 
     // More shall be added.
 
     constructor() {
         super();
-
     };
 
     /**
      * Enters the FocusState.
-     * @param {{witch: Witch, soul: any}} paramaters The inputs used when entering the state.
+     * @param {{witch: Witch, }} paramaters The inputs used when entering the state.
      */
     enter(paramaters) {
         super.enter(paramaters);
 
-        if(!paramaters.witch){
-            throw new Error("No witch was input with the paramaters.")
-        }
-
-        this.witch = paramaters.witch; //The Witch that will be move
+        this.witch.isFocused = true;
     }
 
     exit() {
-        //Here we can do something on exit if we want...
+        // Run exit code
+        this.witch.isFocused = false;
     }
 
     update(trueTime) {
@@ -78,30 +77,24 @@ export default class FocusState extends State {
         //If not pushed, revert to the previous state (which should be the MoveState).
         if (!inputConverter.commands.ALTERNATE_KEY.isPushed) {
             this.witch.stateManager.removeState();
+            return;
         }
 
-        let moveWeight = { x: 0, y: 0 }
+        super.update(trueTime);
 
-        //Check directions
-
-        if (inputConverter.commands.UP_KEY.isPushed && inputConverter.commands.UP_KEY.isEnabled) {
-            moveWeight.y -= 0.25;
-        }
-        else if (inputConverter.commands.DOWN_KEY.isPushed && inputConverter.commands.DOWN_KEY.isEnabled) {
-            moveWeight.y += 0.25;
+        if(this.witch.isFocused){
+           // super.update(trueTime);
         }
 
-        if (inputConverter.commands.RIGHT_KEY.isPushed && inputConverter.commands.RIGHT_KEY.isEnabled) {
-            moveWeight.x += 0.25;
-        }
-        else if (inputConverter.commands.LEFT_KEY.isPushed && inputConverter.commands.LEFT_KEY.isEnabled) {
-            moveWeight.x -= 0.25;
-        }
-
-        this.witch.move(moveWeight.x, moveWeight.y);
-    }
+     }
 
     render() {
         super.render();
+
+        // We would make this the focus animation loop
+        context.fillStyle = 'red';
+        context.fillRect(this.x, this.y, this.width, this.height);
+        
+        this.witch.soul.render();
     }
 };

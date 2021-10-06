@@ -4,13 +4,10 @@ export default class Command{
      * A command that acts as a way to store multiple inputs for a
      * single action.
      * @param {string[]} inputs keys that act as gates to the command.
-     * @param {boolean} isEnabled if the command is enabled.
      */
-    constructor(inputs, isEnabled=true){
+    constructor(inputs){
         this.inputs = inputs;
-        this.isEnabled = isEnabled;
         this.isPushed = false;
-
     }
 
     /**

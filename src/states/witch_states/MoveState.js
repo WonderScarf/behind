@@ -1,8 +1,8 @@
 import State from "../State.js";
 import { inputConverter } from "../../global.js";
 import Witch from "../../entities/Witch.js";
-import FocusState from "./FocusState.js";
 import ShootState from "./ShootState.js";
+import { context } from "../../global.js";
 
 /**
  * The superstate or Base state of the witch (it will always be in the stack at the back) It represents the branch that all player actions stem froms. 
@@ -16,7 +16,6 @@ import ShootState from "./ShootState.js";
         this.witch;
     };
 
-
     /**
      * Enters the MoveState.
      * @param {{witch: Witch}} paramaters The inputs used when entering the state.
@@ -27,6 +26,10 @@ import ShootState from "./ShootState.js";
         }
 
         this.witch = paramaters.witch; //The Witch that will be moved.
+    }
+
+    exit(){
+
     }
 
     update(trueTime) {
@@ -42,31 +45,33 @@ import ShootState from "./ShootState.js";
 
         //Check directions
 
-        if(inputConverter.commands.UP_KEY.isPushed && inputConverter.commands.UP_KEY.isEnabled){
+        // If this happens we push focus mode state.
+        if(inputConverter.commands.ALTERNATE_KEY.isPushed && !this.witch.isFocused){
+            this.witch.stateManager.loadState("FocusState", {witch: this.witch});
+        }
+
+        // Get directions of movement.
+        if(inputConverter.commands.UP_KEY.isPushed){
             moveWeight.y--;
         }
-        else if(inputConverter.commands.DOWN_KEY.isPushed && inputConverter.commands.DOWN_KEY.isEnabled){
+        else if(inputConverter.commands.DOWN_KEY.isPushed){
             moveWeight.y++;
         }
 
-        if(inputConverter.commands.RIGHT_KEY.isPushed && inputConverter.commands.RIGHT_KEY.isEnabled){
+        if(inputConverter.commands.RIGHT_KEY.isPushed){
             moveWeight.x++;
         }
-        else if(inputConverter.commands.LEFT_KEY.isPushed && inputConverter.commands.LEFT_KEY.isEnabled){
+        else if(inputConverter.commands.LEFT_KEY.isPushed){
             moveWeight.x--;
         }
 
-        // If this happens we push focus mode state.
-        if(inputConverter.commands.ALTERNATE_KEY.isPushed && inputConverter.commands.ALTERNATE_KEY.isEnabled){
-            this.witch.stateManager.addState(new FocusState(), {witch: this.witch} ); //same issue
+        // When we press dodge button we go into the dodge state
+        if(inputConverter.commands.SECONDARY_KEY.isPushed){
+            this.witch.stateManager.loadState("DodgeState", {witch: this.witch, moveWeight});
         }
 
-        // If this happens we shoot.
-        if(inputConverter.commands.PRIMARY_KEY.isPushed && inputConverter.commands.PRIMARY_KEY.isEnabled){
-            this.witch.stateManager.addState(new ShootState(), {witch: this.witch} ); //same issue
-        }
+        this.witch.move(moveWeight.x *  trueTime, moveWeight.y * trueTime);
 
-        this.witch.move(moveWeight.x, moveWeight.y);
     }
 
     render() {
@@ -74,6 +79,10 @@ import ShootState from "./ShootState.js";
             throw new Error("The witch within MoveState was not defined, thus it can't move.")
         }
 
-        this.witch.render();
+        // We would make this the moving animation loop for player and we should send
+        context.fillStyle = 'red';
+        context.fillRect(this.witch.x, this.witch.y, this.witch.width, this.witch.height);
+
+        //this.witch.render();
     }
 }

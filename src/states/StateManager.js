@@ -5,36 +5,46 @@ import deepClone from "../../web_modules/lodash.clonedeep.js";
 export default class StateManager {
     
     constructor() {
-        //this.savedStates = new Map();
+        
+        // A map representing the map types 
+        this.stateTypes = new Map();
+
         // It's a stack to represent state's history. The last one is the most recent and will be updated/rendered first.
         this.currentStateStack = [];
         
     };
 
-    /*
-    saveState(label, state) {
+    
+    /**
+     * Saves the state type to a map.
+     * @param {*} label 
+     * @param {*} state 
+     */
+    saveStateType(label, state) {
         if(!state){
             throw new Error("Cannot save an empty state to saved states.")
         }
 
-        //Add validation that there are no duplicate keys
+        // Add validation that there are no duplicate keys
 
-        this.savedStates.set(label, state);
+        this.stateTypes.set(label, state);
     }
 
-    loadState(label) {
+    
+    /**
+     * Finds the state via label and adds it to stack.
+     * @param {*} label 
+     * @param {*} paramaters 
+     */
+    loadState(label, paramaters) {
+        let state = this.stateTypes.get(label);
 
-        //will need an update
-        let state = this.savedStates.get(label);
-
-        if (state) {
-            this.currentState = deepClone(state);
+        if (!state) {
+            throw Error("Attempted to find a state with a label that does not exist in states.");
         }
-        else {
-            console.log("Attempted to find a state with a label that does not exist in states.");
-        }
 
-    } */
+        this.addState(state, paramaters);
+    } 
 
     addState(state, paramaters = {} ,inFront = false ){
         if(!state){
@@ -98,13 +108,12 @@ export default class StateManager {
         this.currentStateStack[this.currentStateStack.length - 1].update(trueTime);
     }
 
-    renderStates() {
+    renderState() {
         if(!this.currentStateStack){
             throw new Error("There are no current states to render.")
         }
 
-        for (let currentIndex = this.currentStateStack.length - 1; currentIndex >= 0; currentIndex--) {
-            this.currentStateStack[currentIndex].render();
-        }
+        this.currentStateStack[this.currentStateStack.length - 1].render();
+
     }
 }

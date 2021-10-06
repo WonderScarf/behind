@@ -7,9 +7,9 @@ export default class Behind {
         // Time properties
         this.previousTime = 0;
         this.trueTime = 0;
-        // Connect to input, so we can automate the input.
-        // Setup event listeners for keys
-        // Make sure to add a way to remove them
+
+        // For now jump right into the playstate for testing.
+        stateManager.loadState("PlayState", {});
         
     }
 
@@ -32,7 +32,7 @@ export default class Behind {
     render() {
         if (canvas && context) {
             context.clearRect(0, 0, canvas.width, canvas.height);
-            stateManager.renderStates();
+            stateManager.renderState();
         }
         else {
             throw new Error("Either canvas or context is null.")

@@ -1,8 +1,11 @@
 // @ts-nocheck
 import {context, CANVAS_WIDTH, CANVAS_HEIGHT, inputConverter } from "../global.js";
 import StateManager from "../states/StateManager.js";
+import DodgeState from "../states/witch_states/DodgeState.js";
+import FocusState from "../states/witch_states/FocusState.js";
 import MoveState from "../states/witch_states/MoveState.js";
 import Entity from "./Entity.js";
+import Soul from "./Soul.js";
 
 export default class Witch extends Entity{
 
@@ -18,20 +21,39 @@ export default class Witch extends Entity{
         /* For now it will be null but later on it will have it's own class used to mark the glowy orb thing
            that allot of pressision bullet-hells have.
         */
-        this.soul = null; 
         this.bullets = [];
 
-        this.speed = 9; 
+        this.speed = 265; 
+        this.isFocused = false;
        
-        this.stateManager = new StateManager();
+        // For now it will be hardcoded but later I want it based on sprite size.
+        let soulSize = 15;
+        this.soul = new Soul(this.x + ((this.width - soulSize) / 2), this.y + ((this.height - soulSize) / 2), soulSize, soulSize); 
 
-        this.stateManager.addState(new MoveState(), {witch: this});
+        this.stateManager = new StateManager();
+        
+        //Should make the labels an enum with a value of the label.
+        this.stateManager.saveStateType("MoveState", new MoveState());
+        this.stateManager.saveStateType("FocusState", new FocusState());
+        this.stateManager.saveStateType("DodgeState", new DodgeState());
+
+        this.stateManager.loadState("MoveState",{witch: this});
     }
 
-
     move(x ,y){
-        this.x += x * this.speed;
-        this.y += y * this.speed;
+        let mod = 1;
+
+        if(this.isFocused){
+            mod = mod / 2;
+        }
+
+        this.x += this.speed * (x * mod);
+        this.y += this.speed * (y * mod);
+
+        this.soul.x += this.speed * (x * mod);
+        this.soul.y += this.speed * (y * mod);
+
+        
     }
 
     update(trueTime) {
@@ -39,12 +61,6 @@ export default class Witch extends Entity{
     }
 
     render() {
-        if(context){
-            context.fillStyle = 'red';
-            context.fillRect(this.x, this.y, this.width, this.height);
-        }
-        else{
-            throw new Error("Could not render witch due to the lack of context.")
-        }
+        this.stateManager.renderState();
     }
 }
