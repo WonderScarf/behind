@@ -1,23 +1,20 @@
-/* 
-    Maybe we can convert the inputs from the listeners to the different 
-    types of keys depending on the state of the game maybe? Well the player
-    has states too so I'm not sure how we should do this but I have a vague
-    idea. Anyways an enum of keys wiht different values meant to be converted
-    depending on the state seems like a wise way to handle inputs dynamically.
-    In terms of handling several states overlaped a stack of states might work and 
-    if implemented should be managed by the state manager. This way we can loop
-    through them defaultly when updating and then loop through them backwards
-    when rendering so that the state on top of the stack is displayed on top
-    of the rest. We should then of course add a pause bool to each state so that
-    we can identify if we want to run each stacked state.
-
-    Back to the key inputs we should filter the keys based on the inputed
-    key options (we will add this later).
-*/
 import Command from "./Command.js";
 
-export default class InputConverter{
-    constructor(){
+/**
+ * Class that converts JSON data into a list of Commands that are then assigned
+ * to an Enum depending on what order they are input for ease of access.
+ * 
+ * It then can the create event listeners for keyboard ups and downs and convert
+ * those inputs to check if a any of the command keys have been pressed or
+ * unpressed
+ * 
+ * You can the call an enum to check if a command has been pushed down or up in
+ * your code.
+ * 
+ * Note that commands may hold several keys each.
+ */
+export default class InputConverter {
+    constructor() {
         this.commandData = [];
         this.getCommands("../../data/options_config.json");
     }
@@ -26,21 +23,21 @@ export default class InputConverter{
      * Reads commands from a specified json file  TEMPORARY SHOULD BE DONE IN LOADING SCREEN
      * @param {string} JSONpath Local path to the config json file that stores the commands
      */
-    getCommands(jsonPath){
+    getCommands(jsonPath) {
 
         // TODO Make a loading system so we can load commands during a "loading screen" at the start of the game.
         fetch(jsonPath)
-        .then((response) => response.json())
-        .then( (response) => {		
+            .then((response) => response.json())
+            .then((response) => {
 
-            const {commands: commandDefinitions} = response;
-            commandDefinitions.forEach(commandDefinition => {
-                this.commandData.push(new Command(commandDefinition.keys));
+                const { commands: commandDefinitions } = response;
+                commandDefinitions.forEach(commandDefinition => {
+                    this.commandData.push(new Command(commandDefinition.keys));
+                });
+
+                this.setCommands();
             });
 
-            this.setCommands();
-        });
-        
 
         /*this.commandData = [
             /*
@@ -58,27 +55,31 @@ export default class InputConverter{
 
     }
 
-    
-    setCommands(){
+    /**
+     * Sets the commands Enum with the values from the commandData list. Should
+     * only be ran one time as since the commands are just pointers to static
+     * places in the commandData list.
+     */
+    setCommands() {
         // The index will increment each set to be more dynamic.
         this.commands = {
-    
+
             // Directions.
-            UP_KEY: this.commandData[0], 
-            RIGHT_KEY: this.commandData[1], 
+            UP_KEY: this.commandData[0],
+            RIGHT_KEY: this.commandData[1],
             DOWN_KEY: this.commandData[2],
-            LEFT_KEY: this.commandData[3], 
-            
+            LEFT_KEY: this.commandData[3],
+
             // The action buttons.
-            PRIMARY_KEY: this.commandData[4], 
-            SECONDARY_KEY: this.commandData[5], 
-            TETIARY_KEY: this.commandData[6], 
-            ALTERNATE_KEY: this.commandData[7], 
-        
-            BACK_KEY: this.commandData[8], 
-        
+            PRIMARY_KEY: this.commandData[4],
+            SECONDARY_KEY: this.commandData[5],
+            TETIARY_KEY: this.commandData[6],
+            ALTERNATE_KEY: this.commandData[7],
+
+            BACK_KEY: this.commandData[8],
+
             //Key to open debug.
-            CONSOLE_KEY: this.commandData[9], 
+            CONSOLE_KEY: this.commandData[9],
         };
 
     }
@@ -90,36 +91,46 @@ export default class InputConverter{
      * @param {Command} command The index the command's data is stored at
      * @param {string[]} keys The singal to clear if not null and the keys to add if null. 
      */
-    alterCommand(command, keys){
+    alterCommand(command, keys) {
 
         // Throws an error if the command is not in commandData or if it is null.
-        if(!command){
+        if (!command) {
             throw new Error("Command is null and thus could not be altered.");
         }
-        else if(!this.commandData.includes(command)){
+        else if (!this.commandData.includes(command)) {
             throw new Error("Command is not found in Command Data.");
         }
-                
-        if(keys){
+
+        if (keys) {
             //Singnals that we want to add keys
 
             //TODO add input validation and duplicate validation.
             command.addInput(keys)
         }
-        else{
+        else {
             // Signals that we want to clear the keys
             command.clearInputs();
         }
         //may want to check for 2 commands with the same key later
     }
 
-    interpret(key){
+    /**
+     * Takes a standard JavaScript eventlistener keyboard input and checks 
+     * if any Commands in commandData contains it returning it's index if
+     * true. 
+     * @param {*} key The JavaScript eventlistener keyboard input to check.
+     * @returns null if the key is not in the commandData's Commands and if in
+     *          a command then returns that Command's index in commandData. 
+     *          Note that if several Commands contain the same key, only the
+     *          first Command's index will be returned.
+     */
+    interpret(key) {
         let index = 0;
 
         // Saves processing time from rechecking length each time.
         let length = this.commandData.length;
-        while(index < length){
-            if(this.commandData[index].isMatch(key)) {
+        while (index < length) {
+            if (this.commandData[index].isMatch(key)) {
                 return index;
             }
             index++;
@@ -128,36 +139,45 @@ export default class InputConverter{
         return null;
     }
 
-    addKeyboardListener(element){
+    /**
+     * Adds event listeners keyup and keydown for a specified element that
+     * intercepts the input to determine if the key pressed is a part of 
+     * commandData and if so it sets it's push state to either true or false
+     * (depending on if in the keyup or keydown listeners)
+     * @param {*} element The element to add event listeners to.
+     */
+    addKeyboardListener(element) {
         element.addEventListener('keydown', event => {
 
             let dataIndex = this.interpret(event.key);
 
             //Only sets is pushed to true if dataIndex is not null and the commandData is not already Pressed.
-            if(dataIndex != null && !this.commandData[dataIndex].isPushed){
+            if (dataIndex != null && !this.commandData[dataIndex].isPushed) {
                 console.log("keydown: " + event.key);
                 this.commandData[dataIndex].isPushed = true;
             }
             event.preventDefault();
         });
-        
-        
+
         element.addEventListener('keyup', event => {
 
             let dataIndex = this.interpret(event.key);
-            
+
             // We only need to check for null here as keyups cannot be 'held' like keydowns.
-            if(dataIndex != null ){
+            if (dataIndex != null) {
                 console.log("keyup: " + event.key);
                 this.commandData[dataIndex].isPushed = false;
-                
+
             }
             event.preventDefault();
         });
     }
 
-    
-    removeKeyboardListener(element){
+    /**
+     * Removes keydown and keyup event listeners on a specific element.
+     * @param {*} element The element to remove event listeners to.
+     */
+    removeKeyboardListener(element) {
         element.removeEventListener('keydown');
         element.removeEventListener('keyup');
     }

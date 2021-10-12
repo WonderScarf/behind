@@ -1,5 +1,5 @@
 // @ts-nocheck
-import {context, CANVAS_WIDTH, CANVAS_HEIGHT, inputConverter } from "../global.js";
+import {CANVAS_WIDTH, CANVAS_HEIGHT} from "../global.js";
 import StateManager from "../states/StateManager.js";
 import DodgeState from "../states/witch_states/DodgeState.js";
 import FocusState from "../states/witch_states/FocusState.js";
@@ -7,6 +7,11 @@ import MoveState from "../states/witch_states/MoveState.js";
 import Entity from "./Entity.js";
 import Soul from "./Soul.js";
 
+/**
+ * The player entity that uses states and user inputs to determine how they
+ * interact with the play state. They can move, focus, dodge, shoot, bomb
+ * and die. They offer a wide variety of interactions with other entities.
+ */
 export default class Witch extends Entity{
 
     constructor(){ 

@@ -3,7 +3,7 @@ export default class Command{
     /**
      * A command that acts as a way to store multiple inputs for a
      * single action.
-     * @param {string[]} inputs keys that act as gates to the command.
+     * @param {string[]} inputs The keys that act as gates to the command.
      */
     constructor(inputs){
         this.inputs = inputs;
@@ -13,7 +13,7 @@ export default class Command{
     /**
      * Returns a bool depending on if it matches one of the 
      * command's inputs.
-     * @param {string} key an input.
+     * @param {string} key A keyboard key as a string.
      * @returns true if matches one of the inputs, false if not.
      */
     isMatch(key){
@@ -26,7 +26,7 @@ export default class Command{
     }
 
     /**
-     * Add inputs to command.
+     * Add inputs to the Command.
      * @param {string[]} keys Keys that should be added to input.
      */
     addInput(keys){
@@ -43,6 +43,9 @@ export default class Command{
         });
     }
 
+    /**
+     * Clears the inputs of the Command, can be used to refresh the accepted keys.
+     */
     clearInputs(){
         this.inputs.splice(0, this.inputs.length);
     }
