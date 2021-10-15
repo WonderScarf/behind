@@ -14,6 +14,7 @@ import Soul from "./Soul.js";
  */
 export default class Witch extends Entity{
 
+    //TODO constructor should take in a witchType which will determine what it's pallette and bullets are. 
     constructor(){ 
         
         /* May want to determine size based on images when we get them. Along with removing hardcoding.
@@ -22,19 +23,18 @@ export default class Witch extends Entity{
            with the hitbox sizes
         */
         super((CANVAS_WIDTH / 2) - 60, (CANVAS_HEIGHT * .80) , 60, 70);
-        
-        /* For now it will be null but later on it will have it's own class used to mark the glowy orb thing
-           that allot of pressision bullet-hells have.
-        */
-        this.bullets = [];
 
+        /** The speed the witch moves at and the distance dodged, should  */
         this.speed = 265; 
+
+        /** If the entity is currently focused, should be a boolean. Affects speed, dodge distance, etc. */
         this.isFocused = false;
-       
+
         // For now it will be hardcoded but later I want it based on sprite size.
         let soulSize = 15;
         this.soul = new Soul(this.x + ((this.width - soulSize) / 2), this.y + ((this.height - soulSize) / 2), soulSize, soulSize); 
 
+        // Creates a new state manager to manage the player's states.
         this.stateManager = new StateManager();
         
         //Should make the labels an enum with a value of the label.
@@ -42,6 +42,7 @@ export default class Witch extends Entity{
         this.stateManager.saveStateType("FocusState", new FocusState());
         this.stateManager.saveStateType("DodgeState", new DodgeState());
 
+        // Sets default state to move state.
         this.stateManager.loadState("MoveState",{witch: this});
     }
 
@@ -61,11 +62,17 @@ export default class Witch extends Entity{
         
     }
 
+    dodge(){
+        
+    }
+
     update(trueTime) {
+        // Updates itself via depending on it's state manager's current state.
         this.stateManager.updateState(trueTime);
     }
 
     render() {
+        // Updates itself depending on it's state manager's current state.
         this.stateManager.renderState();
     }
 }

@@ -1,41 +1,48 @@
 import State from "../State.js";
-import Witch from "../../entities/Witch.js";
-//import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../../global.js";
 
-export default class LoadingState extends State {    
-
-    // More shall be added.
+/**
+ * State that is ran when getting data from JSON files. Displays a symbol of loading to screen.
+ */
+export default class BootState extends State {    
 
     constructor(){
         super();
+
+        /** If true: finished loading, if false: still loading  */
+        isDone = false;   
     };
 
-
-
+    /**
+     * 
+     * @param {{jsonFiles: String[]}} paramaters 
+     */
     enter(paramaters){
-        this.witchPath = paramaters.witchPath;
+        
+        // Throws an error when no paramaters were input.
+        if(!paramaters){
+            throw new Error("No paramaters were entered into a loading state.")
+        }
+        
+        if(!paramaters.jsonFiles){
+            throw new Error("The paramaters do not contain jsonFiles.")
+        }
+
+        paramaters.jsonFiles.forEach(jsonFile => {
+            
+        });
+
     }
+    
 
     exit(){
 
     }
 
     update(trueTime) {
-        
-        // Checks if it's done loading if done then we change state to the assigned next state.
-        if(this.doneLoading){
-
-        }
-
-        this.witch.update(trueTime);
+        // Display a bar on screen based on how far the load is.
     }
 
     render() {
-        // Should display a loading screen or icon with a cute little animation.
-        if(!this.witch){
-            throw new Error("Cannot render a null Witch.")
-        }
-
-        this.witch.render();
+        // Render the loading screen on the canvas.
     }
 }

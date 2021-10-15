@@ -13,4 +13,5 @@ export default class Entity {
     update(trueTime) { };
 
     render() { };
+
 }
