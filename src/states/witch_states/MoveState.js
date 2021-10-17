@@ -1,7 +1,6 @@
 import State from "../State.js";
 import { inputConverter } from "../../global.js";
 import Witch from "../../entities/Witch.js";
-import ShootState from "./ShootState.js";
 import { context } from "../../global.js";
 
 /**
@@ -38,7 +37,7 @@ import { context } from "../../global.js";
             throw new Error("Commands have not been initialized and thus cannot be read.");
         }
         else if(!this.witch){
-            throw new Error("Cannot update when witch is undefined.");
+            throw new Error("Cannot update when witch is undefined or null.");
         }
 
         let moveWeight = {x: 0, y: 0}
@@ -79,9 +78,18 @@ import { context } from "../../global.js";
             throw new Error("The witch within MoveState was not defined, thus it can't move.")
         }
 
+        if(!context){
+            throw new Error("The context is null.")
+        }
+
+        // When we have more than 1 sprite render animation instead.
+        this.witch.sprites[0].render(this.witch.x, this.witch.y);
+
         // We would make this the moving animation loop for player and we should send
-        context.fillStyle = 'red';
-        context.fillRect(this.witch.x, this.witch.y, this.witch.width, this.witch.height);
+        //context.fillStyle = 'red';
+        //context.fillRect(this.witch.x, this.witch.y, this.witch.width, this.witch.height);
+
+        
 
         //this.witch.render();
     }

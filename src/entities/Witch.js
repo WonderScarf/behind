@@ -1,5 +1,6 @@
 // @ts-nocheck
-import {CANVAS_WIDTH, CANVAS_HEIGHT} from "../global.js";
+import Sprite from "../../lib/sprite_management/Sprite.js";
+import {CANVAS_WIDTH, CANVAS_HEIGHT, loadedImages} from "../global.js";
 import StateManager from "../states/StateManager.js";
 import DodgeState from "../states/witch_states/DodgeState.js";
 import FocusState from "../states/witch_states/FocusState.js";
@@ -16,55 +17,29 @@ export default class Witch extends Entity{
 
     //TODO constructor should take in a witchType which will determine what it's pallette and bullets are. 
     constructor(){ 
-        
-        /* May want to determine size based on images when we get them. Along with removing hardcoding.
-           Note that the hitbox being smaller then the model will need to be accounted for as well though
-           the hitbox can be it's own entity so we can calculate graze with the witch sizes and if we are hit
-           with the hitbox sizes
-        */
-        super((CANVAS_WIDTH / 2) - 60, (CANVAS_HEIGHT * .80) , 60, 70);
 
-        /** The speed the witch moves at and the distance dodged, should  */
-        this.speed = 265; 
+        super(
+            (CANVAS_WIDTH / 2), 
+            (CANVAS_HEIGHT * .5), 
+            300, 
+            350, 
+            Witch.generateWitchSprites()
+        );
 
-        /** If the entity is currently focused, should be a boolean. Affects speed, dodge distance, etc. */
+        /** The speed the witch moves.*/
+        this.speed = 900; 
+
+        /** If the entity is currently focused, should be a boolean. Affects speed, shot type, etc. */
         this.isFocused = false;
 
-        // For now it will be hardcoded but later I want it based on sprite size.
+        // For now it will be hardcoded but later I want it based on sprite size and.
         let soulSize = 15;
         this.soul = new Soul(this.x + ((this.width - soulSize) / 2), this.y + ((this.height - soulSize) / 2), soulSize, soulSize); 
-
-        // Creates a new state manager to manage the player's states.
-        this.stateManager = new StateManager();
         
-        //Should make the labels an enum with a value of the label.
-        this.stateManager.saveStateType("MoveState", new MoveState());
-        this.stateManager.saveStateType("FocusState", new FocusState());
-        this.stateManager.saveStateType("DodgeState", new DodgeState());
-
-        // Sets default state to move state.
-        this.stateManager.loadState("MoveState",{witch: this});
+        // Makes the state machine and loads the first state.
+        this.#setupStates();
     }
 
-    move(x ,y){
-        let mod = 1;
-
-        if(this.isFocused){
-            mod = mod / 2;
-        }
-
-        this.x += this.speed * (x * mod);
-        this.y += this.speed * (y * mod);
-
-        this.soul.x += this.speed * (x * mod);
-        this.soul.y += this.speed * (y * mod);
-
-        
-    }
-
-    dodge(){
-        
-    }
 
     update(trueTime) {
         // Updates itself via depending on it's state manager's current state.
@@ -74,5 +49,62 @@ export default class Witch extends Entity{
     render() {
         // Updates itself depending on it's state manager's current state.
         this.stateManager.renderState();
+    }
+
+    move(x ,y){
+        let mod = 1;
+
+        if(this.isFocused){
+            mod = mod / 5;
+        }
+
+        this.x += this.speed * (x * mod);
+        this.y += this.speed * (y * mod);
+
+        this.soul.x += this.speed * (x * mod);
+        this.soul.y += this.speed * (y * mod);
+    }
+
+    /**
+     * Sets up the witches StateManager with it's states. Should only be called in the
+     * constructor.
+     * @private 
+     */
+    #setupStates(){
+
+        // Creates a new state manager to manage the player's states.
+        this.stateManager = new StateManager();
+
+        //Should make the labels an enum with a value of the label.
+        this.stateManager.saveStateType("MoveState", new MoveState());
+        this.stateManager.saveStateType("FocusState", new FocusState());
+        
+        //TODO remove, replace with parrying since it sounds way more fun.
+        this.stateManager.saveStateType("DodgeState", new DodgeState()); 
+
+        // Sets default state to move state.
+        this.stateManager.loadState("MoveState",{witch: this});
+    }
+
+    static generateWitchSprites(){
+        let sprites = [];
+
+        let spriteSheet = loadedImages.get("witch");
+
+        sprites.push(new Sprite(
+            spriteSheet,
+            0,
+            0,
+            spriteSheet.width,
+            spriteSheet.height,
+        ));
+
+        return sprites;
+    }
+
+    #setAnimations(){
+        this.animations = {
+            
+        };
     }
 }

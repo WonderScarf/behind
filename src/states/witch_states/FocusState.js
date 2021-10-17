@@ -1,42 +1,7 @@
 import { inputConverter } from "../../global.js";
 import Witch from "../../entities/Witch.js";
-import State from "../State.js";
 import MoveState from "./MoveState.js";
 import { context } from "../../global.js";
-
-
-/*Doesn't work with MoveState as parent, guising becasue of thhe fact that:
-  
-  FocusState.js:11 Uncaught ReferenceError: Cannot access 'MoveState' before initialization
-  at FocusState.js:14 
-  this is in fact the initializer for the class
-
-  This was because of circluar dependancy because for a FocusState to extend
-  a MoveState while movestate creates a Focus State would require both the MoveState
-  and the FocusState to Point to Eachother, this causes node to poop it's pants
-  and thus thats out of the question. If we want to use heirarchical states we
-  either:
-
-   - Find a way to create child states in parent states without recursive imports
-
-   - Create a (A => B => C) or a (A => B => C => A) dependacy. This would mean we
-     would need to make our Statemanager not take in a new Object Declaration but a
-     type along with paramaters instead. This would avoid a circular dependancy though
-     would be hard as hell to code. The internet seems to call this a "Patern Factory".
-     This is a new concept to me but I feel like a factory could absolutly vaporize this
-     issue and allow for me to create states like this freely. I should be able to do this
-     dynamically allowing by instead inputing a type rather than a new instance of an object
-     when creating them. Noticing it It may still not work as I would need to import the class's Type
-     which may cause that issue still though i guess we could use a string instead or an enum stored 
-     inside the factory instead. 
-
-     https://enmascript.com/articles/2018/10/05/javascript-factory-pattern
-     https://spin.atomicobject.com/2018/06/25/circular-dependencies-javascript/
-     https://stackoverflow.com/questions/5658182/initializing-a-class-with-class-forname-and-which-have-a-constructor-which-tak
-
-     In the end I may just do neither as the amount of work to create one may just be better spent on other
-     aspects. As long as we don't repeat too much.
-*/
 
 /**
 * The state that represents when the player slows down to dodge shots also displays hitbox.
@@ -56,11 +21,20 @@ export default class FocusState extends MoveState {
     enter(paramaters) {
         super.enter(paramaters);
 
+        if(!this.witch){
+            throw new Error("Cannot exit FocusState as witch is was not set properly in MoveState.");
+        }
+
         this.witch.isFocused = true;
     }
 
     exit() {
         // Run exit code
+
+        if(!this.witch){
+            throw new Error("Cannot exit FocusState as witch is null or undefined.");
+        }
+
         this.witch.isFocused = false;
     }
 
@@ -90,6 +64,10 @@ export default class FocusState extends MoveState {
 
     render() {
         super.render();
+
+        if(!this.witch){
+            throw new Error("Cannot render FocusState as witch is null or undefined.");
+        }
 
         // We would make this the focus animation loop
         context.fillStyle = 'red';

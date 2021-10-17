@@ -1,5 +1,6 @@
+// @ts-nocheck
 import StateManager from "./states/StateManager.js";
-import InputConverter from "./input_management/InputConverter.js"
+import InputConverter from "../lib/input_management/InputConverter.js"
 
 // Canvas Properties
 export let canvas = document.querySelector("canvas");
@@ -9,6 +10,7 @@ if(!canvas){
 }
 
 export let context = canvas.getContext('2d'); 
+
 export const CANVAS_WIDTH = canvas.width;
 export const CANVAS_HEIGHT = canvas.height;
 
@@ -17,3 +19,7 @@ export const stateManager = new StateManager();
 
 //Input
 export const inputConverter = new InputConverter();
+
+//Image Stockpile
+export const loadedImages = new Map();
+

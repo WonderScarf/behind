@@ -1,7 +1,11 @@
 {
-    "sprites": [
+    "images": [
 		{
-
+            "name":"witch",
+            "width":"300", 
+            "height":"350",
+			"path": "../style/images/witch.png"
+            
 		}
 	],
 

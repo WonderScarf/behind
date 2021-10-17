@@ -8,8 +8,7 @@ export default class Behind {
         this.previousTime = 0;
         this.trueTime = 0;
 
-        // For now jump right into the playstate for testing.
-        stateManager.loadState("PlayState", {});
+        stateManager.loadState("LoadingState", {exitState: "PlayState", exitParamaters: {}});
         
     }
 
