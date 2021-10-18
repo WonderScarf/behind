@@ -84,13 +84,5 @@ import { context } from "../../global.js";
 
         // When we have more than 1 sprite render animation instead.
         this.witch.sprites[0].render(this.witch.x, this.witch.y);
-
-        // We would make this the moving animation loop for player and we should send
-        //context.fillStyle = 'red';
-        //context.fillRect(this.witch.x, this.witch.y, this.witch.width, this.witch.height);
-
-        
-
-        //this.witch.render();
     }
 }

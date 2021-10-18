@@ -21,7 +21,7 @@ export default class Witch extends Entity{
         super(
             (CANVAS_WIDTH / 2), 
             (CANVAS_HEIGHT * .5), 
-            300, 
+            210, 
             350, 
             Witch.generateWitchSprites()
         );

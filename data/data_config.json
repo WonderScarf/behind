@@ -2,7 +2,7 @@
     "images": [
 		{
             "name":"witch",
-            "width":"300", 
+            "width":"210", 
             "height":"350",
 			"path": "../style/images/witch.png"
             
