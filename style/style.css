@@ -20,10 +20,16 @@
     --gameboy-dark: #346856;
     --gameboy-darkest: #081820;
 
-    /* Canvas sizes */
-    /*--canvas-width: 650px;
-    --canvas-height: 700px;*/
+    /* Canvas */
     --canvas-border-size: .2em;
+
+
+    /* How big the canvas looks to the user (It's real size is in the HTML) */
+    --canvas-medium-width: 1280px;
+    --canvas-medium-height: 720px;
+
+    --canvas-small-width: 640px;
+    --canvas-small-height: 360px;
 }
 
 body {
@@ -33,8 +39,8 @@ body {
 canvas {
 
     /* Canvas properties */
-    /*width: var(--canvas-width);
-    height: var(--canvas-height);*/
+    width: var(--canvas-medium-width);
+    height: var(--canvas-medium-height);
     background-color: var(--secondary-color);
 
     /* Canvas border properties */
