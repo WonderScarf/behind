@@ -1,10 +1,17 @@
 import {context} from "../global.js";
 import Entity from "./Entity.js";
 
+/**
+ * A Entity representing a projectile fired by either a foe or friend
+ */
 export default class Bullet extends Entity{
 
-    //type will be a bullettype which will create a bunch of 
-    constructor(spawnX, spawnY, angle, type){ 
+    /**
+     * @param {{x:Number,y:Number}} spawnPoint 
+     * @param {Number} angle The angle of the bullet, ranges from 0 to 359
+     * @param {*} bulletType
+     */
+    constructor(spawnPoint, angle, bulletType){ 
         // We will want to determine width and height by image size later on... but for now we will hardcode the value
         super(spawnX, spawnY , 10, 10);
         

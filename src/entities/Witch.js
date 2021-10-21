@@ -2,9 +2,9 @@
 import Sprite from "../../lib/sprite_management/Sprite.js";
 import {CANVAS_WIDTH, CANVAS_HEIGHT, loadedImages} from "../global.js";
 import StateManager from "../states/StateManager.js";
-import DodgeState from "../states/witch_states/DodgeState.js";
 import FocusState from "../states/witch_states/FocusState.js";
 import MoveState from "../states/witch_states/MoveState.js";
+import ShootState from "../states/witch_states/ShootState.js";
 import Entity from "./Entity.js";
 import Soul from "./Soul.js";
 
@@ -14,32 +14,43 @@ import Soul from "./Soul.js";
  * and die. They offer a wide variety of interactions with other entities.
  */
 export default class Witch extends Entity{
+    
+    // The speed and speed modifiers.
+    static SPEED = 900;
+    static FOCUS_SPEED_MODIFIER = 5;
+   
+    // The bounding box size;
+    static BOUNDING_BOX_WIDTH = 210;
+    static BOUNDING_BOX_HEIGHT = 350;
 
-    //TODO constructor should take in a witchType which will determine what it's pallette and bullets are. 
+    //The hitbox size
+    static HITBOX_SIZE = 15;
+
+    // TODO constructor should take in a witchType which will determine what it's pallette and bullets are. 
     constructor(){ 
 
         super(
-            (CANVAS_WIDTH / 2), 
+            ((CANVAS_WIDTH / 2)), 
             (CANVAS_HEIGHT * .5), 
-            210, 
-            350, 
+            Witch.BOUNDING_BOX_WIDTH, 
+            Witch.BOUNDING_BOX_HEIGHT,
             Witch.generateWitchSprites()
         );
 
         /** The speed the witch moves.*/
-        this.speed = 900; 
 
         /** If the entity is currently focused, should be a boolean. Affects speed, shot type, etc. */
         this.isFocused = false;
 
         // For now it will be hardcoded but later I want it based on sprite size and.
-        let soulSize = 15;
-        this.soul = new Soul(this.x + ((this.width - soulSize) / 2), this.y + ((this.height - soulSize) / 2), soulSize, soulSize); 
+        this.soul = new Soul(this.x + ((this.width - Witch.HITBOX_SIZE) / 2), this.y + ((this.height - Witch.HITBOX_SIZE) / 2), Witch.HITBOX_SIZE, Witch.HITBOX_SIZE); 
         
         // Makes the state machine and loads the first state.
         this.#setupStates();
-    }
 
+        // Makes the animation states.
+        this.#setupAnimations();
+    }
 
     update(trueTime) {
         // Updates itself via depending on it's state manager's current state.
@@ -51,18 +62,30 @@ export default class Witch extends Entity{
         this.stateManager.renderState();
     }
 
-    move(x ,y){
-        let mod = 1;
 
+    /**
+     * Move the witch based on the values presented by x and y.
+     * @param {Number} xInitialModifier 
+     * @param {Number} yInitialModifier 
+     */
+    move(xInitialModifier ,yInitialModifier){
+
+        // Assign the x and y modifier to 
+        let xModifier = xInitialModifier;
+        let yModifier = yInitialModifier;
+
+        // If focused we divide the x and y modifier by the focus speed modifier.
         if(this.isFocused){
-            mod = mod / 5;
-        }
+            xModifier /= Witch.FOCUS_SPEED_MODIFIER;
+            yModifier /= Witch.FOCUS_SPEED_MODIFIER;
+        } 
 
-        this.x += this.speed * (x * mod);
-        this.y += this.speed * (y * mod);
-
-        this.soul.x += this.speed * (x * mod);
-        this.soul.y += this.speed * (y * mod);
+        //Generate the new x and y
+        this.x += Witch.SPEED * xModifier;
+        this.y += Witch.SPEED * yModifier;
+        
+        this.soul.x += Witch.SPEED * xModifier;
+        this.soul.y += Witch.SPEED * yModifier;
     }
 
     /**
@@ -71,16 +94,13 @@ export default class Witch extends Entity{
      * @private 
      */
     #setupStates(){
-
         // Creates a new state manager to manage the player's states.
         this.stateManager = new StateManager();
 
         //Should make the labels an enum with a value of the label.
         this.stateManager.saveStateType("MoveState", new MoveState());
         this.stateManager.saveStateType("FocusState", new FocusState());
-        
-        //TODO remove, replace with parrying since it sounds way more fun.
-        this.stateManager.saveStateType("DodgeState", new DodgeState()); 
+        this.stateManager.saveStateType("ShootState", new ShootState());
 
         // Sets default state to move state.
         this.stateManager.loadState("MoveState",{witch: this});
@@ -91,6 +111,7 @@ export default class Witch extends Entity{
 
         let spriteSheet = loadedImages.get("witch");
 
+        //LOOP OVER IMAGE
         sprites.push(new Sprite(
             spriteSheet,
             0,
@@ -102,7 +123,7 @@ export default class Witch extends Entity{
         return sprites;
     }
 
-    #setAnimations(){
+    #setupAnimations(){
         this.animations = {
             
         };

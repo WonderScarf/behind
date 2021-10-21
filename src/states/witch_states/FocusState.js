@@ -56,10 +56,6 @@ export default class FocusState extends MoveState {
 
         super.update(trueTime);
 
-        if(this.witch.isFocused){
-           // super.update(trueTime);
-        }
-
      }
 
     render() {

@@ -10,7 +10,7 @@ export default class LoadingState extends State {
         super();
 
         this.iskeyboardEventsSetup = false;
-        this.isImagesLoaded = false;
+        this.isDataLoaded = false;
     };
 
     /**
@@ -32,13 +32,16 @@ export default class LoadingState extends State {
         this.exitParamaters = paramaters.exitParamaters;
 
         if (!inputConverter.isSetup) {
-            // TODO make paths varriable.
+            // TODO make paths varriable so we needn't hard code it.
             inputConverter.setup("../../../data/options_config.json");
         }
 
-        this.load();
+        this.load().then(() => this.isDataLoaded = true);
     }
 
+    /**
+     * Loads files such as images and sounds in the data_config.json file.
+     */
     async load(){
         const {
             images: jsonImages,
@@ -46,12 +49,17 @@ export default class LoadingState extends State {
         } = await fetch('../../../data/data_config.json').then((response) => response.json());
 
         // Loads images and then when done set that the images loaded.
-        this.loadImages(jsonImages).then(() => this.isImagesLoaded = true);
+        this.loadImages(jsonImages);
     }
 
+    /**
+     * Loads images, adding them as CanvasImages to the loadedImages global Map.
+     * @param {*} jsonImages The data of the images to convert into CanvasImages.
+     */
     async loadImages(jsonImages) {
         
-        jsonImages.forEach((jsonImage) => {
+        // Loops for each turning each into acanvas image (sprite sheet).
+        await jsonImages.forEach((jsonImage) => {
             
 			loadedImages.set(jsonImage.name, new CanvasImage(
 				jsonImage.path,
@@ -77,7 +85,7 @@ export default class LoadingState extends State {
 
         // Check if everything is done loading then remove itself and make it so we run the exit state in the exit function
 
-        if (this.iskeyboardEventsSetup) {
+        if (this.iskeyboardEventsSetup && this.isDataLoaded) {
             stateManager.removeState();
         }
     }

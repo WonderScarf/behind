@@ -1,10 +1,9 @@
 import State from "../State.js";
-import { inputConverter } from "../../global.js";
+import { inputConverter} from "../../global.js";
 import Witch from "../../entities/Witch.js";
-import { context } from "../../global.js";
 
 /**
- * The superstate or Base state of the witch (it will always be in the stack at the back) It represents the branch that all player actions stem froms. 
+ * The superstate or Base state of the Witch (it will always be in the stack at the back) It represents the branch that all player actions stem froms. 
  */
   export default class MoveState extends State {    
 
@@ -12,7 +11,6 @@ import { context } from "../../global.js";
 
     constructor(){
         super();
-        this.witch;
     };
 
     /**
@@ -40,14 +38,24 @@ import { context } from "../../global.js";
             throw new Error("Cannot update when witch is undefined or null.");
         }
 
-        let moveWeight = {x: 0, y: 0}
-
-        //Check directions
-
-        // If this happens we push focus mode state.
+        // If we are not currently focused and we push the alternate key go into focus state.
         if(inputConverter.commands.ALTERNATE_KEY.isPushed && !this.witch.isFocused){
             this.witch.stateManager.loadState("FocusState", {witch: this.witch});
         }
+
+        // When we press secondary button we go into the parry state.
+        if(inputConverter.commands.SECONDARY_KEY.isPushed && !this.witch.stateManager.isCurrentlyIn("ParryState")){
+
+        }
+
+        // When we press primary button we go into the shoot state.
+        if(inputConverter.commands.PRIMARY_KEY.isPushed && !this.witch.stateManager.isCurrentlyIn("ShootState")){
+            this.witch.stateManager.loadState("ShootState", {witch: this.witch});
+
+        }
+
+        // Determines direction.
+        let moveWeight = {x: 0, y: 0}
 
         // Get directions of movement.
         if(inputConverter.commands.UP_KEY.isPushed){
@@ -64,25 +72,18 @@ import { context } from "../../global.js";
             moveWeight.x--;
         }
 
-        // When we press dodge button we go into the dodge state
-        if(inputConverter.commands.SECONDARY_KEY.isPushed){
-            this.witch.stateManager.loadState("DodgeState", {witch: this.witch, moveWeight});
-        }
-
-        this.witch.move(moveWeight.x *  trueTime, moveWeight.y * trueTime);
+        // Moves the witch with the moveWeight modified wiht the true time. 
+        this.witch.move(moveWeight.x * trueTime, moveWeight.y * trueTime);
 
     }
 
     render() {
+        // Throws an error in if there is no witch to render. 
         if(!this.witch){
             throw new Error("The witch within MoveState was not defined, thus it can't move.")
         }
 
-        if(!context){
-            throw new Error("The context is null.")
-        }
-
-        // When we have more than 1 sprite render animation instead.
+        // TODO When we have more than 1 sprite render animation instead.
         this.witch.sprites[0].render(this.witch.x, this.witch.y);
     }
 }

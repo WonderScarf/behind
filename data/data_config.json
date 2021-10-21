@@ -5,13 +5,17 @@
             "width":"210", 
             "height":"350",
 			"path": "../style/images/witch.png"
-            
 		}
 	],
 
-    "sounds": [
+    "bulletTypes": [
         {
+            "name":"default",
+            "width":"210",
+            "height":"350",
+            "path":"../style/images/witch-shoot.png",
 
+            "curve":"straight"
         }
     ]
 }

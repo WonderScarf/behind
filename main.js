@@ -1,12 +1,13 @@
 import Behind from "./src/Behind.js";
 import { confetti } from "./web_modules/dom-confetti.js";
 import {stateManager} from "./src/global.js"
-
 import PlayState from "./src/states/game_states/PlayState.js"
 import LoadingState from "./src/states/game_states/LoadingState.js";
 
+// Spawn test confetti
 confetti(document.body, { angle: 0 });
 
+// Setup States for the game's state manager.
 stateManager.saveStateType("PlayState", new PlayState());
 stateManager.saveStateType("LoadingState", new LoadingState());
 

@@ -14,20 +14,14 @@ export default class Entity {
     constructor(x, y, width, height, sprites = [], isCollidable = true) {
         this.x = x;
         this.y = y;
+
         this.width = width;
         this.height = height;
+
         this.isCollidable = isCollidable;
         this.sprites = sprites;
 
     }
-
-    /**
-     * Checks if the entity colides with another entity.
-     * @param {Entity} otherEntity The other entity to check colition against. 
-     */
-    didColide(otherEntity) { 
-        //TODO
-    };
 
     /**
      * Updates the data of the entity. Non-specific entities updates nothing so it must be overriden by those who extend Entity.

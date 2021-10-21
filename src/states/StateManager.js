@@ -1,57 +1,72 @@
-import PlayState from './game_states/PlayState.js';
 import State from './State.js'
-import deepClone from "../../web_modules/lodash.clonedeep.js";
 
+/**
+ * A state machine for managing states. Uses pushdown automata and heiarchical states
+ * to increase efficiency and adaptablility. 
+ */
 export default class StateManager {
-    
+
     constructor() {
-        
+
         // A map representing the map types 
         this.stateTypes = new Map();
 
         // It's a stack to represent state's history. The last one is the most recent and will be updated/rendered first.
         this.currentStateStack = [];
-        
+
     };
 
-    
     /**
-     * Saves the state type to a map.
-     * @param {*} label 
-     * @param {*} state 
+     * Saves the state type to a map which will can be loaded from to add it
+     * to the currentStateStack.
+     * @param {String} label The label that the state will be called from.
+     * @param {State} state The State to attach to the label.
      */
     saveStateType(label, state) {
-        if(!state){
+
+        // Throws an error when the state is null or undefined.
+        if (!state) {
             throw new Error("Cannot save an empty state to saved states.")
         }
 
-        // Add validation that there are no duplicate keys
+        // TODO Add validation that there are no duplicate keys
 
+        // Sets the stateTypes map with the input data.
         this.stateTypes.set(label, state);
     }
 
-    
+
     /**
-     * Finds the state via label and adds it to stack.
-     * @param {*} label 
-     * @param {*} paramaters 
+     * Finds the state via label and adds it to current States' stack.
+     * @param {String} label The name of the State in the saved State types.
+     * @param {{}} paramaters The paramaters to add the state with.
      */
     loadState(label, paramaters) {
+
+        // Get a state matching the label from the state stateTypes.
         let state = this.stateTypes.get(label);
 
+        // Throws if no state matches.
         if (!state) {
             throw Error("Attempted to find a state with a label that does not exist in states.");
         }
 
+        // Adds the state with the paramaters.
         this.addState(state, paramaters);
-    } 
+    }
 
-    addState(state, paramaters = {} ,inFront = false ){
-        if(!state){
+    /**
+     * Adds the state to the current stack of states.
+     * @param {State} state The state to add.
+     * @param {{}} paramaters The paramaters to enter the state with.
+     * @param {Boolean} inFront If true the state is added to the front or back. Default is back. 
+     */
+    addState(state, paramaters = {}, inFront = false) {
+        if (!state) {
             throw new Error("Cannot add an empty state.")
         }
 
-        if(inFront) {
+        if (inFront) {
             // Adds the item to the front of the stack.
             this.currentStateStack.unshift(state)
         }
@@ -64,14 +79,18 @@ export default class StateManager {
 
     }
 
-    removeState(inFront = false){
-        if(!this.currentStateStack){
+    /**
+     * Removes the state from the currentStateStack. 
+     * @param {Boolean} inFront If true the state is removed to the front or back. Default is back. 
+     */
+    removeState(inFront = false) {
+        if (!this.currentStateStack) {
             throw new Error("Cannot remove if the stateStack is empty.")
         }
 
         let state;
 
-        if(inFront) {
+        if (inFront) {
             // Removes the item to the front of the stack.
             state = this.currentStateStack.shift();
         }
@@ -84,35 +103,55 @@ export default class StateManager {
 
     }
 
-    replaceState(oldState, newState){
-        if(!this.currentStateStack){
-            throw new Error("Cannot replace if the stateStack is empty.")
-        }
-        else if(!this.currentStateStack.includes(oldState)){
-            throw new Error("Cannot replace a state outside of the stateStack.")
+    /**
+     * Gets the current state.
+     * @returns {State} The current State.
+     */
+    getCurrentState() {
+        if (!this.currentStateStack) {
+            throw new Error("Cannot get current state as currentStateStack is empty.")
         }
 
-        //NOTICE I feel like this is a bug but idk so ill keep it here...
-        oldState.exit();
-        oldState = newState;
-        oldState.enter();
-
+        return this.currentStateStack[this.currentStateStack.length - 1];
     }
 
+
+    /**
+     * If the stateLabel matches the label of the current state return true.
+     * If that is not the case return false.
+     * @param {String} stateLabel The name of the state to look for.
+     * @returns {Boolean} Is true if matching current state, false if not.
+     */
+    isCurrentlyIn(stateLabel){
+        return this.getCurrentState().constructor.name == stateLabel;
+    }
+
+    /**
+     * Updates the manager's current state (state on top of the stack).
+     * @param {Number} trueTime The ajusted time.
+     */
     updateState(trueTime) {
 
-        if(!this.currentStateStack){
-            throw new Error("There are no current states to update.")
+        // Throw an error if the stack is empty.
+        if (!this.currentStateStack) {
+            throw new Error("There are no current states in currentStateStack to update.")
         }
 
-        this.currentStateStack[this.currentStateStack.length - 1].update(trueTime);
+        // Updates the last element of currentStateStack.
+        this.getCurrentState().update(trueTime);
     }
 
+    /**
+     * Renders the current state to the canvas.
+     */
     renderState() {
-        if(!this.currentStateStack){
+
+        // Throw an error if the stack is empty.
+        if (!this.currentStateStack) {
             throw new Error("There are no current states to render.")
         }
 
+        // Renders the last element of currentStateStack.
         this.currentStateStack[this.currentStateStack.length - 1].render();
 
     }

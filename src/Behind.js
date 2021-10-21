@@ -1,6 +1,8 @@
 import { canvas, context, stateManager } from "./global.js";
-//import StateManager from "./states/StateManager.js";
 
+/**
+ * The game Behind.
+ */
 export default class Behind {
 
     constructor() {
@@ -8,12 +10,17 @@ export default class Behind {
         this.previousTime = 0;
         this.trueTime = 0;
 
+        // Loads the state manager's Loading state leading into PlayState.
         stateManager.loadState("LoadingState", {exitState: "PlayState", exitParamaters: {}});
         
     }
 
+    /** 
+     * The loop representing the running game, iterates on itself. 
+     * @param {Number} currentTime The current time.
+     */
     gameLoop(currentTime = 0) {
-        // Calculate true time
+        // Calculates the true time.
         this.trueTime = (currentTime - this.previousTime) / 1000;
 
         this.update();
@@ -29,6 +36,7 @@ export default class Behind {
     }
 
     render() {
+        //If the canvas and context exist clear the game's canvas and render state.
         if (canvas && context) {
             context.clearRect(0, 0, canvas.width, canvas.height);
             stateManager.renderState();

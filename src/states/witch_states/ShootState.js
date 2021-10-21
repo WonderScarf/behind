@@ -1,15 +1,13 @@
-
 import Witch from "../../entities/Witch.js";
-import State from "../State.js";
 import { inputConverter } from "../../global.js";
+import MoveState from "./MoveState.js";
 
-export default class MoveState extends State {
+export default class ShootState extends MoveState {
 
     // More shall be added.
 
     constructor() {
         super();
-        this.witch;
     };
 
     /**
@@ -28,16 +26,16 @@ export default class MoveState extends State {
         if (!inputConverter.commands) {
             throw new Error("Commands have not been initialized and thus cannot be read.");
         }
-
         if (!this.witch) {
             throw new Error("Commands have not been initialized and thus cannot be read.");
         }
 
         if(!inputConverter.commands.PRIMARY_KEY.isPushed){
             this.witch.stateManager.removeState();
+            return;
         }
 
-
+        super.update(trueTime);
     }
 
     render() {
@@ -45,6 +43,5 @@ export default class MoveState extends State {
             throw new Error("The witch within MoveState was not defined, thus it can't move.")
         }
 
-        this.witch.render();
     }
 }
