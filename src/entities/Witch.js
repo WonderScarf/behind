@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import Sprite from "../../lib/sprite_management/Sprite.js";
 import {CANVAS_WIDTH, CANVAS_HEIGHT, loadedImages} from "../global.js";
 import StateManager from "../states/StateManager.js";
@@ -6,7 +8,6 @@ import MoveState from "../states/witch_states/MoveState.js";
 import ShootState from "../states/witch_states/ShootState.js";
 import Entity from "./Entity.js";
 import Hitbox from "./Hitbox.js";
-import Soul from "./Soul.js";
 
 /**
  * The player entity that uses states and user inputs to determine how they
@@ -26,26 +27,36 @@ export default class Witch extends Entity{
     }
 
     //The hitbox size
-    static HITBOX_WIDTH = 15;
-    static HITBOX_HEIGHT =15;
+    static HITBOX_WIDTH = 32;
+    static HITBOX_HEIGHT = 32;
 
     // TODO constructor should take in a witchType which will determine what it's pallette and bullets are. 
     constructor(){ 
-        super(
-            ((CANVAS_WIDTH / 2)), 
-            (CANVAS_HEIGHT * .5), 
-            Witch.SPRITE_SIZES["witch-move"].width,
-            Witch.SPRITE_SIZES["witch-move"].height,
-            );
-        
-        // Gets all sprites relating to witch
-        this.#getWitchSprites();
+        super({
+            // The spawn-point
+            x: (CANVAS_WIDTH * .25),
+            y: (CANVAS_HEIGHT * .5),
+
+            // Bounding Box
+            boundingWidth: Witch.SPRITE_SIZES["witch-move"].width,
+            boundingHeight: Witch.SPRITE_SIZES["witch-move"].height,  
+
+            // Hitbox
+            hitboxWidth: Witch.HITBOX_WIDTH,
+            hitboxHeight: Witch.HITBOX_HEIGHT, 
+            
+            
+        });
+
+
+        // Gets and then sets to sprites all the sprites relating to witch
+        this.setSprites();
+
         //TODO Makes the animation states.
-        this.#setupAnimations();
-        //TODO Sets up the hitboxes
-        this.#setupHitboxes();
+        this.setAnimations();
+
         // Makes the state machine and loads the first state.
-        this.#setupStates();
+        this.#setStates();
 
         /** If the entity is currently focused, should be a boolean. Affects speed, shot type, etc. */
         this.isFocused = false;
@@ -58,13 +69,38 @@ export default class Witch extends Entity{
     update(trueTime) {
         // Updates itself via depending on it's state manager's current state.
         this.stateManager.updateState(trueTime);
+        
+        super.update(trueTime);
     }
 
     render() {
         // Updates itself depending on it's state manager's current state.
         this.stateManager.renderState();
+        
+        this.hitbox.render();
     }
 
+    setAnimations() { 
+        this.animations = {
+            
+        };
+    };
+
+    setSprites(){
+        let spriteNames = [];
+
+        spriteNames.push("witch-move");
+
+        let spriteSheet = loadedImages.get("witch-move");
+
+        for (let index = 0; index < spriteNames.length; index++) {
+
+        }
+
+        this.sprites.push(new Sprite(spriteSheet, 0, 0, spriteSheet.width, spriteSheet.height,));
+
+        this.sprites;
+    }
 
     /**
      * Move the witch based on the values presented by x and y.
@@ -86,9 +122,7 @@ export default class Witch extends Entity{
         //Generate the new x and y
         this.x += Witch.SPEED * xModifier;
         this.y += Witch.SPEED * yModifier;
-        
-        //this.soul.x += Witch.SPEED * xModifier;
-        //this.soul.y += Witch.SPEED * yModifier;
+
     }
 
     /**
@@ -96,7 +130,7 @@ export default class Witch extends Entity{
      * constructor.
      * @private 
      */
-    #setupStates(){
+    #setStates(){
         // Creates a new state manager to manage the player's states.
         this.stateManager = new StateManager();
 
@@ -107,27 +141,5 @@ export default class Witch extends Entity{
 
         // Sets default state to move state.
         this.stateManager.loadState("MoveState",{witch: this});
-    }
-
-    #getWitchSprites(){
-        let spriteNames = [];
-
-        spriteNames.push("witch-move");
-
-        let spriteSheet = loadedImages.get("witch-move");
-
-        for (let currentSheet = 0; index < spriteNames.length; index++) {
-                        
-        }
-
-        this.sprites.push(new Sprite(spriteSheet, 0, 0, spriteSheet.width, spriteSheet.height,));
-
-        this.sprites;
-    }
-
-    #setupAnimations(){
-        this.animations = {
-            
-        };
     }
 }

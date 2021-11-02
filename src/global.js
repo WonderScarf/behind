@@ -23,3 +23,5 @@ export const inputConverter = new InputConverter();
 //Image Stockpile
 export const loadedImages = new Map();
 
+export const DEBUG = true;
+
