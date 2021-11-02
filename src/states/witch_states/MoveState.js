@@ -23,10 +23,12 @@ import Witch from "../../entities/Witch.js";
         }
 
         this.witch = paramaters.witch; //The Witch that will be moved.
+        this.witch.currentAnimation = this.witch.animations.get(Witch.SPRITESHEET_NAMES[0]);
+        //this.witch.currentAnimation.startTimer();
     }
 
     exit(){
-
+        this.witch.currentAnimation.timer.s;
     }
 
     update(trueTime) {
@@ -75,6 +77,9 @@ import Witch from "../../entities/Witch.js";
         // Moves the witch with the moveWeight modified wiht the true time. 
         this.witch.move(moveWeight.x * trueTime, moveWeight.y * trueTime);
 
+        this.witch.currentAnimation.update(trueTime);
+        console.log(this.witch.currentAnimation.getCurrentFrame());
+
     }
 
     render() {
@@ -84,6 +89,10 @@ import Witch from "../../entities/Witch.js";
         }
 
         // TODO When we have more than 1 sprite render animation instead.
-        this.witch.sprites[0].render(this.witch.x, this.witch.y);
+
+        this.witch.currentAnimation.renderCurrentFrame(this.witch.x, this.witch.y);
+
+        //this.sprites[this.currentAnimation.getCurrentFrame()].render();
+        //this.witch.c[0].render(this.witch.x, this.witch.y);
     }
 }

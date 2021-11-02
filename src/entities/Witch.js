@@ -7,6 +7,7 @@ import FocusState from "../states/witch_states/FocusState.js";
 import MoveState from "../states/witch_states/MoveState.js";
 import ShootState from "../states/witch_states/ShootState.js";
 import Entity from "./Entity.js";
+import Animation from "../../lib/time_management/Animation.js";
 import Hitbox from "./Hitbox.js";
 
 /**
@@ -17,7 +18,9 @@ import Hitbox from "./Hitbox.js";
 export default class Witch extends Entity{
     
     static FOCUS_SPEED_MODIFIER = 5;
-    
+
+    static SPRITESHEET_NAMES = ["witch-move", "witch-shoot"];
+    static INTERVAL = 1;
     static SPEED = 900;
 
     static SPRITE_SIZES = {
@@ -44,8 +47,6 @@ export default class Witch extends Entity{
             // Hitbox
             hitboxWidth: Witch.HITBOX_WIDTH,
             hitboxHeight: Witch.HITBOX_HEIGHT, 
-            
-            
         });
 
 
@@ -81,25 +82,24 @@ export default class Witch extends Entity{
     }
 
     setAnimations() { 
-        this.animations = {
-            
-        };
+
     };
 
     setSprites(){
-        let spriteNames = [];
 
-        spriteNames.push("witch-move");
+       // let spriteNames = ["witch-move", "witch-shoot"];        
+       let spriteSheet;
 
-        let spriteSheet = loadedImages.get("witch-move");
+        for (let spritesheetIndex = 0; spritesheetIndex < Witch.SPRITESHEET_NAMES.length; spritesheetIndex++) {
 
-        for (let index = 0; index < spriteNames.length; index++) {
+            spriteSheet = loadedImages.get(Witch.SPRITESHEET_NAMES[spritesheetIndex]);
 
+            this.animations.set(Witch.SPRITESHEET_NAMES[spritesheetIndex], new Animation(spriteSheet.getSprites(), Witch.INTERVAL));
+            //this.sprites.push(new Sprite(spriteSheet, 0, 0, spriteSheet.width, spriteSheet.height));
         }
 
-        this.sprites.push(new Sprite(spriteSheet, 0, 0, spriteSheet.width, spriteSheet.height,));
+        console.log(this.animations);
 
-        this.sprites;
     }
 
     /**
@@ -122,7 +122,6 @@ export default class Witch extends Entity{
         //Generate the new x and y
         this.x += Witch.SPEED * xModifier;
         this.y += Witch.SPEED * yModifier;
-
     }
 
     /**

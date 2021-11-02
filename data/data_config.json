@@ -1,16 +1,21 @@
 {
     "images": [
 		{
-            "name":"witch",
+            "name":"witch-shoot",
             "width":"210", 
             "height":"350",
-			"path": "../style/images/witch.png"
+			"path": "../style/images/witch-shoot.png",
+            "spriteWidth": "210",
+            "spriteHeight": "350"
 		},
         {
             "name":"witch-move",
-            "width":"660", 
-            "height":"360",
-			"path": "../style/images/witch-move.png"
+            "width":"630", 
+            "height":"350",
+			"path": "../style/images/witch-move.png",
+            "spriteWidth": "210",
+            "spriteHeight": "350"
         }
+        
 	]
 }

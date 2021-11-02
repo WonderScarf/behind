@@ -8,7 +8,6 @@ import Hitbox from "./Hitbox.js";
  */
 export default class Entity {
 
-
     /**
      * @param {{} | {
      * x: Number, 
@@ -43,9 +42,9 @@ export default class Entity {
         this.isCollidable = params.isCollidable ?? true;
 
         this.sprites = [];
-        this.animations = [];
+        this.animations = new Map();
         this.currentAnimation = null;
-    }
+        }
 
     /**
      * Updates the data of the entity. Non-specific entities updates nothing so it must be overriden by those who extend Entity.
