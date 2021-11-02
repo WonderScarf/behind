@@ -8,7 +8,6 @@ export default class LoadingState extends State {
 
     constructor() {
         super();
-
         this.iskeyboardEventsSetup = false;
         this.isDataLoaded = false;
     };

@@ -1,3 +1,5 @@
+import Sprite from "../../lib/sprite_management/Sprite.js";
+import Hitbox from "./Hitbox.js";
 
 /**
  * A representation of a thing on screen with unique properties and abilities.
@@ -7,20 +9,25 @@ export default class Entity {
     /**
      * @param {Number} x The possition of top left x cordinate where the entity resides.
      * @param {Number} y The possition of top y x cordinate where the entity resides. 
-     * @param {Number} width The width of the entity.
-     * @param {Number} height The height of the entity.
+     * @param {Number} boundingWidth The width of the entity.
+     * @param {Number} boundingHeight The height of the entity.
+     * @param {Hitbox[]} hitboxes If the entity can colide with other objects
      * @param {Boolean} isCollidable If the entity can colide with other objects
      */
-    constructor(x, y, width, height, sprites = [], isCollidable = true) {
+    constructor(x, y, boundingWidth, boundingHeight, hitboxes = [], isCollidable = true) {
         this.x = x;
         this.y = y;
 
-        this.width = width;
-        this.height = height;
+        this.boundingWidth = boundingWidth;
+        this.boundingHeight = boundingHeight;
+
+        this.hitboxes = hitboxes;
 
         this.isCollidable = isCollidable;
-        this.sprites = sprites;
 
+        this.sprites;
+        this.animations;
+        
     }
 
     /**
@@ -34,4 +41,7 @@ export default class Entity {
      */
     render() { };
 
+    onCollision(collider){};
+
+    
 }

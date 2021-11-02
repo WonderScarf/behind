@@ -69,6 +69,6 @@ export default class FocusState extends MoveState {
         context.fillStyle = 'red';
         context.fillRect(this.x, this.y, this.width, this.height);
         
-        this.witch.soul.render();
+        //this.witch.soul.render();
     }
 };

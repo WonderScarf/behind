@@ -1,4 +1,3 @@
-// @ts-nocheck
 import Sprite from "../../lib/sprite_management/Sprite.js";
 import {CANVAS_WIDTH, CANVAS_HEIGHT, loadedImages} from "../global.js";
 import StateManager from "../states/StateManager.js";
@@ -6,6 +5,7 @@ import FocusState from "../states/witch_states/FocusState.js";
 import MoveState from "../states/witch_states/MoveState.js";
 import ShootState from "../states/witch_states/ShootState.js";
 import Entity from "./Entity.js";
+import Hitbox from "./Hitbox.js";
 import Soul from "./Soul.js";
 
 /**
@@ -15,41 +15,44 @@ import Soul from "./Soul.js";
  */
 export default class Witch extends Entity{
     
-    // The speed and speed modifiers.
-    static SPEED = 900;
     static FOCUS_SPEED_MODIFIER = 5;
-   
-    // The bounding box size;
-    static BOUNDING_BOX_WIDTH = 210;
-    static BOUNDING_BOX_HEIGHT = 350;
+    
+    static SPEED = 900;
+
+    static SPRITE_SIZES = {
+        "witch-shoot": {width: 210, height: 350},
+        "witch-move": {width: 210, height: 350},
+        "witch-focus": {width: 210, height: 350}
+    }
 
     //The hitbox size
-    static HITBOX_SIZE = 15;
+    static HITBOX_WIDTH = 15;
+    static HITBOX_HEIGHT =15;
 
     // TODO constructor should take in a witchType which will determine what it's pallette and bullets are. 
     constructor(){ 
-
         super(
             ((CANVAS_WIDTH / 2)), 
             (CANVAS_HEIGHT * .5), 
-            Witch.BOUNDING_BOX_WIDTH, 
-            Witch.BOUNDING_BOX_HEIGHT,
-            Witch.generateWitchSprites()
-        );
-
-        /** The speed the witch moves.*/
+            Witch.SPRITE_SIZES["witch-move"].width,
+            Witch.SPRITE_SIZES["witch-move"].height,
+            );
+        
+        // Gets all sprites relating to witch
+        this.#getWitchSprites();
+        //TODO Makes the animation states.
+        this.#setupAnimations();
+        //TODO Sets up the hitboxes
+        this.#setupHitboxes();
+        // Makes the state machine and loads the first state.
+        this.#setupStates();
 
         /** If the entity is currently focused, should be a boolean. Affects speed, shot type, etc. */
         this.isFocused = false;
 
         // For now it will be hardcoded but later I want it based on sprite size and.
-        this.soul = new Soul(this.x + ((this.width - Witch.HITBOX_SIZE) / 2), this.y + ((this.height - Witch.HITBOX_SIZE) / 2), Witch.HITBOX_SIZE, Witch.HITBOX_SIZE); 
-        
-        // Makes the state machine and loads the first state.
-        this.#setupStates();
+        //this.soul = new Soul(this.x + ((this.width - Witch.HITBOX_WIDTH) / 2), this.y + ((this.height - Witch.HITBOX_HEIGHT) / 2), Witch.HITBOX_WIDTH, Witch.HITBOX_HEIGHT); 
 
-        // Makes the animation states.
-        this.#setupAnimations();
     }
 
     update(trueTime) {
@@ -84,8 +87,8 @@ export default class Witch extends Entity{
         this.x += Witch.SPEED * xModifier;
         this.y += Witch.SPEED * yModifier;
         
-        this.soul.x += Witch.SPEED * xModifier;
-        this.soul.y += Witch.SPEED * yModifier;
+        //this.soul.x += Witch.SPEED * xModifier;
+        //this.soul.y += Witch.SPEED * yModifier;
     }
 
     /**
@@ -106,21 +109,20 @@ export default class Witch extends Entity{
         this.stateManager.loadState("MoveState",{witch: this});
     }
 
-    static generateWitchSprites(){
-        let sprites = [];
+    #getWitchSprites(){
+        let spriteNames = [];
 
-        let spriteSheet = loadedImages.get("witch");
+        spriteNames.push("witch-move");
 
-        //LOOP OVER IMAGE
-        sprites.push(new Sprite(
-            spriteSheet,
-            0,
-            0,
-            spriteSheet.width,
-            spriteSheet.height,
-        ));
+        let spriteSheet = loadedImages.get("witch-move");
 
-        return sprites;
+        for (let currentSheet = 0; index < spriteNames.length; index++) {
+                        
+        }
+
+        this.sprites.push(new Sprite(spriteSheet, 0, 0, spriteSheet.width, spriteSheet.height,));
+
+        this.sprites;
     }
 
     #setupAnimations(){

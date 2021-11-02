@@ -1,0 +1,3 @@
+Tiles:
+    Rather then use pixels to identify the size of sprites in a spritesheet
+    it would be better if we use a TILEMAP to determine

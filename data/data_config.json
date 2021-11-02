@@ -5,17 +5,12 @@
             "width":"210", 
             "height":"350",
 			"path": "../style/images/witch.png"
-		}
-	],
-
-    "bulletTypes": [
+		},
         {
-            "name":"default",
-            "width":"210",
-            "height":"350",
-            "path":"../style/images/witch-shoot.png",
-
-            "curve":"straight"
+            "name":"witch-move",
+            "width":"660", 
+            "height":"360",
+			"path": "../style/images/witch-move.png"
         }
-    ]
+	]
 }
