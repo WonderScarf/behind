@@ -8,7 +8,6 @@ import MoveState from "../states/witch_states/MoveState.js";
 import ShootState from "../states/witch_states/ShootState.js";
 import Entity from "./Entity.js";
 import Animation from "../../lib/time_management/Animation.js";
-import Hitbox from "./Hitbox.js";
 
 /**
  * The player entity that uses states and user inputs to determine how they
@@ -20,7 +19,7 @@ export default class Witch extends Entity{
     static FOCUS_SPEED_MODIFIER = 5;
 
     static SPRITESHEET_NAMES = ["witch-move", "witch-shoot"];
-    static INTERVAL = 1;
+    static INTERVAL = .1;
     static SPEED = 900;
 
     static SPRITE_SIZES = {
@@ -33,8 +32,8 @@ export default class Witch extends Entity{
     static HITBOX_WIDTH = 32;
     static HITBOX_HEIGHT = 32;
 
-    // TODO constructor should take in a witchType which will determine what it's pallette and bullets are. 
     constructor(){ 
+        
         super({
             // The spawn-point
             x: (CANVAS_WIDTH * .25),
@@ -52,9 +51,6 @@ export default class Witch extends Entity{
 
         // Gets and then sets to sprites all the sprites relating to witch
         this.setSprites();
-
-        //TODO Makes the animation states.
-        this.setAnimations();
 
         // Makes the state machine and loads the first state.
         this.#setStates();
@@ -81,25 +77,15 @@ export default class Witch extends Entity{
         this.hitbox.render();
     }
 
-    setAnimations() { 
-
-    };
-
     setSprites(){
 
-       // let spriteNames = ["witch-move", "witch-shoot"];        
        let spriteSheet;
 
         for (let spritesheetIndex = 0; spritesheetIndex < Witch.SPRITESHEET_NAMES.length; spritesheetIndex++) {
 
             spriteSheet = loadedImages.get(Witch.SPRITESHEET_NAMES[spritesheetIndex]);
-
             this.animations.set(Witch.SPRITESHEET_NAMES[spritesheetIndex], new Animation(spriteSheet.getSprites(), Witch.INTERVAL));
-            //this.sprites.push(new Sprite(spriteSheet, 0, 0, spriteSheet.width, spriteSheet.height));
         }
-
-        console.log(this.animations);
-
     }
 
     /**

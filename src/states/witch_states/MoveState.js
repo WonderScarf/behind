@@ -1,6 +1,7 @@
 import State from "../State.js";
 import { inputConverter} from "../../global.js";
 import Witch from "../../entities/Witch.js";
+import Animation from "../../../lib/time_management/Animation.js";
 
 /**
  * The superstate or Base state of the Witch (it will always be in the stack at the back) It represents the branch that all player actions stem froms. 
@@ -23,12 +24,20 @@ import Witch from "../../entities/Witch.js";
         }
 
         this.witch = paramaters.witch; //The Witch that will be moved.
-        this.witch.currentAnimation = this.witch.animations.get(Witch.SPRITESHEET_NAMES[0]);
-        //this.witch.currentAnimation.startTimer();
+        
+        // Sets a current animation to the index of the name we wanted.
+        this.currentAnimation = this.witch.animations.get(Witch.SPRITESHEET_NAMES[0]);
+
+        // Gets the 
+        let size = this.currentAnimation.getFrameSize();
+
+        this.witch.boundingWidth = size.width;
+        this.witch.boundingHeight = size.height;
+
+        //this.witch.hitbox.x = this.witch.x + (this.witch.width / 2) - this.witch.hitbox.width;
     }
 
     exit(){
-        this.witch.currentAnimation.timer.s;
     }
 
     update(trueTime) {
@@ -77,9 +86,7 @@ import Witch from "../../entities/Witch.js";
         // Moves the witch with the moveWeight modified wiht the true time. 
         this.witch.move(moveWeight.x * trueTime, moveWeight.y * trueTime);
 
-        this.witch.currentAnimation.update(trueTime);
-        console.log(this.witch.currentAnimation.getCurrentFrame());
-
+        this.currentAnimation.update(trueTime);
     }
 
     render() {
@@ -88,11 +95,6 @@ import Witch from "../../entities/Witch.js";
             throw new Error("The witch within MoveState was not defined, thus it can't move.")
         }
 
-        // TODO When we have more than 1 sprite render animation instead.
-
-        this.witch.currentAnimation.renderCurrentFrame(this.witch.x, this.witch.y);
-
-        //this.sprites[this.currentAnimation.getCurrentFrame()].render();
-        //this.witch.c[0].render(this.witch.x, this.witch.y);
+        this.currentAnimation.renderCurrentFrame(this.witch.x, this.witch.y);
     }
 }

@@ -68,7 +68,6 @@ export default class LoadingState extends State {
                 jsonImage.spriteWidth,
                 jsonImage.spriteHeight
 			));
-            console.log(loadedImages);
 		});
     }
 

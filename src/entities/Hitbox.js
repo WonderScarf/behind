@@ -19,7 +19,7 @@ export default class Hitbox {
      * @param {Number} height 
      * @param {Number} xOffset
      * @param {Number} yOffset
-     * @param {Number | Number[]} types 
+     * @param {String | String[]} types 
      */
     constructor(x, y, width, height, xOffset = 0, yOffset = 0, types = [Hitbox.TYPE.Unknown]){
         this.types = types;
@@ -49,6 +49,7 @@ export default class Hitbox {
 
         this.x += this.xOffset;
         this.y += this.yOffset;
+        
     }
 
     /**
@@ -78,6 +79,12 @@ export default class Hitbox {
      * Determines the color of the hibox depending on the mix go types and then returns that color.
      */
     #getColour(){
+
+        if(this.types.length > 1){
+            //TODO mix colors so we can identify which type is what depending on the displayed color.
+            // For now we will just have a predefined multi-color but should be changed.
+        }
+
         return "blue"
     }
 

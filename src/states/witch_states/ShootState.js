@@ -43,5 +43,7 @@ export default class ShootState extends MoveState {
             throw new Error("The witch within MoveState was not defined, thus it can't move.")
         }
 
+        
+
     }
 }
