@@ -8,6 +8,7 @@ import MoveState from "../states/witch_states/MoveState.js";
 import ShootState from "../states/witch_states/ShootState.js";
 import Entity from "./Entity.js";
 import Animation from "../../lib/time_management/Animation.js";
+import FocusShootState from "../states/witch_states/FocusShootState.js";
 
 /**
  * The player entity that uses states and user inputs to determine how they
@@ -19,7 +20,7 @@ export default class Witch extends Entity{
     static FOCUS_SPEED_MODIFIER = 5;
 
     static SPRITESHEET_NAMES = ["witch-move", "witch-shoot"];
-    static INTERVAL = .1;
+    static INTERVAL = .4;
     static SPEED = 900;
 
     static SPRITE_SIZES = {
@@ -46,6 +47,7 @@ export default class Witch extends Entity{
             // Hitbox
             hitboxWidth: Witch.HITBOX_WIDTH,
             hitboxHeight: Witch.HITBOX_HEIGHT, 
+            
         });
 
 
@@ -57,6 +59,8 @@ export default class Witch extends Entity{
 
         /** If the entity is currently focused, should be a boolean. Affects speed, shot type, etc. */
         this.isFocused = false;
+        
+        this.isShooting = false;
 
         // For now it will be hardcoded but later I want it based on sprite size and.
         //this.soul = new Soul(this.x + ((this.width - Witch.HITBOX_WIDTH) / 2), this.y + ((this.height - Witch.HITBOX_HEIGHT) / 2), Witch.HITBOX_WIDTH, Witch.HITBOX_HEIGHT); 
@@ -73,7 +77,7 @@ export default class Witch extends Entity{
     render() {
         // Updates itself depending on it's state manager's current state.
         this.stateManager.renderState();
-        
+
         this.hitbox.render();
     }
 
@@ -123,6 +127,7 @@ export default class Witch extends Entity{
         this.stateManager.saveStateType("MoveState", new MoveState());
         this.stateManager.saveStateType("FocusState", new FocusState());
         this.stateManager.saveStateType("ShootState", new ShootState());
+        this.stateManager.saveStateType("FocusShootState", new FocusShootState());
 
         // Sets default state to move state.
         this.stateManager.loadState("MoveState",{witch: this});

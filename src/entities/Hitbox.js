@@ -27,12 +27,11 @@ export default class Hitbox {
         this.xOffset = xOffset;
         this.yOffset = yOffset;
 
-        this.x = x + xOffset;
-        this.y = y + yOffset;
+        this.x = x;
+        this.y = y;
 
         this.width = width;
         this.height = height;
-
     }
 
     /**
@@ -41,15 +40,8 @@ export default class Hitbox {
      * @param {Number} yOffset 
      */
     setNewOffsets(xOffset, yOffset){
-        this.x -= this.xOffset;
-        this.y -= this.yOffset;
-
         this.xOffset = xOffset;
-        this,yOffset = yOffset;
-
-        this.x += this.xOffset;
-        this.y += this.yOffset;
-        
+        this.yOffset = yOffset;   
     }
 
     /**
@@ -58,8 +50,8 @@ export default class Hitbox {
      * @param {Number} y The y place to mimic the follow.
      */
     mimic(x, y){
-        this.x = x;
-        this.y = y;
+        this.x = x + this.xOffset;
+        this.y = y + this.yOffset;
     }
 
 	render() {

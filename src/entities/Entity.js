@@ -37,7 +37,7 @@ export default class Entity {
 
         let hitboxType = params.type ?? Hitbox.TYPE.Unknown;
 
-        this.hitbox = new Hitbox(this.x, this.y, hitboxWidth, hitboxHeight, yHitboxOffset, hitboxType);
+        this.hitbox = new Hitbox(this.x, this.y, hitboxWidth, hitboxHeight, xHitboxOffset,yHitboxOffset, hitboxType);
 
         this.isCollidable = params.isCollidable ?? true;
 

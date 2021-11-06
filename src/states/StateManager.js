@@ -43,6 +43,7 @@ export default class StateManager {
      */
     loadState(label, paramaters) {
 
+        console.log(label);
         // Get a state matching the label from the state stateTypes.
         let state = this.stateTypes.get(label);
 
@@ -78,13 +79,14 @@ export default class StateManager {
         state.enter(paramaters);
 
     }
+    
 
     /**
      * Removes the state from the currentStateStack. 
      * @param {Boolean} inFront If true the state is removed to the front or back. Default is back. 
      */
     removeState(inFront = false) {
-        if (!this.currentStateStack) {
+        if (!this.currentStateStack ) {
             throw new Error("Cannot remove if the stateStack is empty.")
         }
 
@@ -101,6 +103,7 @@ export default class StateManager {
 
         state.exit();
 
+        this.getCurrentState().return();
     }
 
     /**

@@ -1,12 +1,14 @@
 import State from "../State.js";
 import { inputConverter} from "../../global.js";
 import Witch from "../../entities/Witch.js";
-import Animation from "../../../lib/time_management/Animation.js";
 
 /**
  * The superstate or Base state of the Witch (it will always be in the stack at the back) It represents the branch that all player actions stem froms. 
  */
   export default class MoveState extends State {    
+
+    static HITBOX_X_OFFSET = 100;
+    static HITBOX_Y_OFFSET = 150;
 
     // More shall be added.
 
@@ -25,19 +27,23 @@ import Animation from "../../../lib/time_management/Animation.js";
 
         this.witch = paramaters.witch; //The Witch that will be moved.
         
-        // Sets a current animation to the index of the name we wanted.
+        // Sets a current animation to the index of the name we wanted. It is stored within the state itself so it is saved when changing directory.
         this.currentAnimation = this.witch.animations.get(Witch.SPRITESHEET_NAMES[0]);
+        
+        // We set up the witch's new properties to match the current state.
+        this.#setupMoveWitch();
+    }
 
-        // Gets the 
-        let size = this.currentAnimation.getFrameSize();
-
-        this.witch.boundingWidth = size.width;
-        this.witch.boundingHeight = size.height;
-
-        //this.witch.hitbox.x = this.witch.x + (this.witch.width / 2) - this.witch.hitbox.width;
+    /**
+     * Returns back to the MoveState from a previous state. In this case it is used to revert the
+     * witch's size and hitbox offset to what is expected in this state.
+     */
+    return() {
+        this.#setupMoveWitch();
     }
 
     exit(){
+        throw Error("MoveState is the default state for the Witch and as such can not be exited.")
     }
 
     update(trueTime) {
@@ -62,7 +68,6 @@ import Animation from "../../../lib/time_management/Animation.js";
         // When we press primary button we go into the shoot state.
         if(inputConverter.commands.PRIMARY_KEY.isPushed && !this.witch.stateManager.isCurrentlyIn("ShootState")){
             this.witch.stateManager.loadState("ShootState", {witch: this.witch});
-
         }
 
         // Determines direction.
@@ -96,5 +101,14 @@ import Animation from "../../../lib/time_management/Animation.js";
         }
 
         this.currentAnimation.renderCurrentFrame(this.witch.x, this.witch.y);
+    }
+
+    #setupMoveWitch(){
+        let size = this.currentAnimation.getFrameSize();
+
+        this.witch.boundingWidth = size.width;
+        this.witch.boundingHeight = size.height;
+
+        this.witch.hitbox.setNewOffsets(MoveState.HITBOX_X_OFFSET, MoveState.HITBOX_Y_OFFSET);
     }
 }
