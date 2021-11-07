@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { inputConverter } from "../../global.js";
 import Witch from "../../entities/Witch.js";
 import MoveState from "./MoveState.js";
@@ -7,6 +8,9 @@ import MoveState from "./MoveState.js";
 */
 export default class FocusState extends MoveState {
 
+
+    static HITBOX_X_OFFSET = 100;
+    static HITBOX_Y_OFFSET = 150;
     // More shall be added.
 
     constructor() {
@@ -21,15 +25,22 @@ export default class FocusState extends MoveState {
         super.enter(paramaters);
 
         if (!this.witch) {
-            throw new Error("Cannot enter FocusState as witch is was not set properly in MoveState.");
+            throw new Error("Cannot setup the FocusState's witch as witch is was not set properly in MoveState.");
         }
+
+        this.currentAnimation = this.witch.animations.get(Witch.SPRITESHEET_NAMES[0]);
+
+        this.#setupWitch();
 
         this.witch.isFocused = true;
     }
 
     return() {
         super.return();
-        this.witch.isFocused = true;
+
+        if(this.witch){
+            this.witch.isFocused = true;
+        }
     }
 
     exit() {
@@ -41,15 +52,15 @@ export default class FocusState extends MoveState {
         if (!inputConverter.commands) {
             throw new Error("Commands have not been initialized and thus cannot be read.");
         }
-
-        if (!this.witch) {
-            throw new Error("Commands have not been initialized and thus cannot be read.");
+        else if (!this.witch) {
+            throw new Error("Witch has not been initialized and thus cannot be read.");
+        }
+        else if (!this.witch.stateManager) {
+            throw new Error("Witch's state manager have not been initialized and thus cannot be read. ");
         }
 
-        if (inputConverter.commands.PRIMARY_KEY.isPushed) {
-            this.witch.stateManager.loadState("ShootState", { witch: this.witch });
-            //this.witch.stateManager.loadState("FocusShootState", { witch: this.witch });
-            return;
+        if (inputConverter.commands.PRIMARY_KEY.isPushed && !this.witch.isShooting) {
+            this.witch.stateManager.loadState("FocusShootState", { witch: this.witch });
         }
 
         //If not pushed, revert to the previous state (which should be the MoveState).
@@ -58,12 +69,24 @@ export default class FocusState extends MoveState {
             return;
         }
 
-        //? Note that this this is to make switching between 
         super.update(trueTime);
 
     }
 
     render() {
         super.render();
+    }
+    
+    #setupWitch(){
+
+        this.witch.isFocused = true;
+        this.witch.isShooting = false;
+
+        let size = this.currentAnimation.getFrameSize();
+        this.witch.boundingWidth = size.width;
+        this.witch.boundingHeight = size.height;
+
+        this.witch.hitbox.setNewOffsets(FocusState.HITBOX_X_OFFSET, FocusState.HITBOX_Y_OFFSET);
+
     }
 };

@@ -1,16 +1,19 @@
+//@ts-nocheck
 import Witch from "../../entities/Witch.js";
 import { inputConverter } from "../../global.js";
 import FocusState from "./FocusState.js";
 import ShootState from "./ShootState.js";
 
-export default class FocusShootState extends ShootState {
+/**
+ * State representing the 
+ */
+export default class FocusShootState extends FocusState {
 
-    static HITBOX_X_OFFSET = 150;
+    static HITBOX_X_OFFSET = 80;
     static HITBOX_Y_OFFSET = 150;
 
     constructor() {
         super();
-        
     };
 
     /**
@@ -18,39 +21,42 @@ export default class FocusShootState extends ShootState {
      * @param {{witch: Witch}} paramaters The inputs used when entering the state.
      */
     enter(paramaters) {
-        super.enter(paramaters);
-        this.witch.isFocused = true;
+        this.witch = paramaters.witch;
+        this.currentAnimation = this.witch.animations.get(Witch.SPRITESHEET_NAMES[1]);
+        
+        this.#setupWitch();
     }
 
     return(){
+        this.#setupWitch();
     }
 
     exit() {
-        this.witch.isFocused = false;
+        super.exit();
+        this.witch.isShooting = false;
+
     }
 
     update(trueTime) {
         if (!inputConverter.commands) {
             throw new Error("Commands have not been initialized and thus cannot be read.");
         }
-        if (!this.witch) {
-            throw new Error("Commands have not been initialized and thus cannot be read.");
+        else if (!this.witch) {
+            throw new Error("Witch have not been initialized and thus cannot be read.");
+        }
+        else if (!this.witch.stateManager) {
+            throw new Error("Witch's state manager have not been initialized and thus cannot be read. ");
         }
 
-        if(!inputConverter.commands.ALTERNATE_KEY.isPushed){
-            console.log("ping")
-            this.witch.stateManager.removeState();
-        }
 
-        if(!inputConverter.commands.PRIMARY_KEY.isPushed && inputConverter.commands.PRIMARY_KEY.isPushed){
-            console.log("ping")
+        if(!inputConverter.commands.ALTERNATE_KEY.isPushed || !inputConverter.commands.PRIMARY_KEY.isPushed ){
             this.witch.stateManager.removeState();
+            this.witch.stateManager.removeState();
+            return;
         }
         
         super.update(trueTime);
-        console.log("A")
-        //! only updates 1 time then waits then does it for the amount of time
-        //! waited needs to be fixed, debug later.
+
     }
 
     render() {
@@ -59,5 +65,17 @@ export default class FocusShootState extends ShootState {
         }
 
         this.currentAnimation.renderCurrentFrame(this.witch.x, this.witch.y);
+    }
+
+    #setupWitch(){
+        let size = this.currentAnimation.getFrameSize();
+
+        this.witch.boundingWidth = size.width;
+        this.witch.boundingHeight = size.height;
+
+        this.witch.isFocused = true;
+        this.witch.isShooting = true;
+        
+        this.witch.hitbox.setNewOffsets(FocusShootState.HITBOX_X_OFFSET, FocusShootState.HITBOX_Y_OFFSET);
     }
 }

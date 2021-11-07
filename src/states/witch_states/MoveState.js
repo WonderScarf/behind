@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import State from "../State.js";
 import { inputConverter} from "../../global.js";
 import Witch from "../../entities/Witch.js";
@@ -31,7 +33,7 @@ import Witch from "../../entities/Witch.js";
         this.currentAnimation = this.witch.animations.get(Witch.SPRITESHEET_NAMES[0]);
         
         // We set up the witch's new properties to match the current state.
-        this.#setupMoveWitch();
+        this.#setupWitch();
     }
 
     /**
@@ -39,7 +41,7 @@ import Witch from "../../entities/Witch.js";
      * witch's size and hitbox offset to what is expected in this state.
      */
     return() {
-        this.#setupMoveWitch();
+        this.#setupWitch();
     }
 
     exit(){
@@ -54,6 +56,9 @@ import Witch from "../../entities/Witch.js";
         else if(!this.witch){
             throw new Error("Cannot update when witch is undefined or null.");
         }
+        else if (!this.witch.stateManager) {
+            throw new Error("Witch's state manager have not been initialized and thus cannot be read. ");
+        }
 
         // If we are not currently focused and we push the alternate key go into focus state.
         if(inputConverter.commands.ALTERNATE_KEY.isPushed && !this.witch.isFocused){
@@ -61,12 +66,12 @@ import Witch from "../../entities/Witch.js";
         }
 
         // When we press secondary button we go into the parry state.
-        if(inputConverter.commands.SECONDARY_KEY.isPushed && !this.witch.stateManager.isCurrentlyIn("ParryState")){
+        if(inputConverter.commands.SECONDARY_KEY.isPushed){
 
         }
 
         // When we press primary button we go into the shoot state.
-        if(inputConverter.commands.PRIMARY_KEY.isPushed && !this.witch.stateManager.isCurrentlyIn("ShootState")){
+        if(inputConverter.commands.PRIMARY_KEY.isPushed && !this.witch.isShooting){
             this.witch.stateManager.loadState("ShootState", {witch: this.witch});
         }
 
@@ -103,7 +108,7 @@ import Witch from "../../entities/Witch.js";
         this.currentAnimation.renderCurrentFrame(this.witch.x, this.witch.y);
     }
 
-    #setupMoveWitch(){
+    #setupWitch(){
         let size = this.currentAnimation.getFrameSize();
 
         this.witch.boundingWidth = size.width;

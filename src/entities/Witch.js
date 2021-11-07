@@ -70,7 +70,6 @@ export default class Witch extends Entity{
     update(trueTime) {
         // Updates itself via depending on it's state manager's current state.
         this.stateManager.updateState(trueTime);
-        
         super.update(trueTime);
     }
 

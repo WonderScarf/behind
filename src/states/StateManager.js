@@ -43,7 +43,6 @@ export default class StateManager {
      */
     loadState(label, paramaters) {
 
-        console.log(label);
         // Get a state matching the label from the state stateTypes.
         let state = this.stateTypes.get(label);
 
@@ -82,28 +81,41 @@ export default class StateManager {
     
 
     /**
-     * Removes the state from the currentStateStack. 
+     * Removes the state from the currentStateStack. TODO make 2 separate functions so we divide deleting by name and place.
      * @param {Boolean} inFront If true the state is removed to the front or back. Default is back. 
+     * @param {String | null} label The name of the state to delete. 
      */
-    removeState(inFront = false) {
+    removeState(inFront = false, label = null) {
         if (!this.currentStateStack ) {
             throw new Error("Cannot remove if the stateStack is empty.")
         }
 
         let state;
 
-        if (inFront) {
-            // Removes the item to the front of the stack.
-            state = this.currentStateStack.shift();
-        }
+
+        if(label) {
+            
+            state = this.stateTypes.get(label);
+            state.exit();
+            
+            if(state){
+                state.exit();
+            }
+        } 
         else {
-            // Removes the item to the end of the stack.
-            state = this.currentStateStack.pop();
+            if (inFront) {
+                // Removes the item to the front of the stack.
+                state = this.currentStateStack.shift();
+            }
+            else {
+                // Removes the item to the end of the stack.
+                state = this.currentStateStack.pop();
+            }
+    
+            state.exit();
+    
+            this.getCurrentState().return();
         }
-
-        state.exit();
-
-        this.getCurrentState().return();
     }
 
     /**
