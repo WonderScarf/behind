@@ -40,30 +40,30 @@ As you should have noticed the conrtol schemes are varriable and change dependin
 13. When the boss reachs 0 health the game is set to win menu state.
 
 ## Concept Art (Wireframes)
-![Playing the Game](./style/images/wireframe.png)
+![Playing the Game](style/images/readme_images/wireframe.png)
 
 ## Assets
 In terms of assets, sprites homegrown (we will make them ourselves) using programs like [Krita](https://krita.org/en/) 
 and [Pixelart](https://www.pixilart.com/draw). Sounds will be produced on site and music will be taken from open source cites when
 implemented . We will use Arial as a font to keep it simple to read.
-#### GUI
+### GUI
 The gui should be bare-bones and unintrusive so the user doensn't get distracted from being killed in one hit. It can be really hard to focus in environments 
 with tons of colors and sound so the UI should be unintrusive with a basic clear color scheme.
 
 ## Other
 
-#### Extrenal Libraries
+### Extrenal Libraries
 >Note that these will change as development progresses
 
-      1. lodash.clonedeep
-      2. dom-confetti
-      3. some base code from [Vikram Signh](https://github.com/VikramSinghMTL) that was edited to suit the project.
+1. [lodash.clonedeep](https://www.npmjs.com/package/lodash.clonedeep)
+2. [dom-confetti](https://github.com/daniel-lundin/dom-confetti) 
+3. some base code from [Vikram Signh](https://github.com/VikramSinghMTL) that was edited to suit the project.
 
-#### Unique Inclusions
+### Unique Inclusions
 ESinstall will be used so to complile node libraries into a single javascript file so that it can run without a server being active.
 
-#### Interesting Algorithms
+### Interesting Algorithms
 >Note that these will change as development progresses
 
-      1. State Manager, a state machine using pushdown automata combined with heigharchy to allow not only a state history but the use of states in a far more addaptable method.
-      2. InputConverted and Commands, allows for the easy access of actions through any keyboard inputs anywhere in the code so that keys can be changed anytime and still work.
+1. State Manager, a state machine using pushdown automata combined with heigharchy to allow not only a state history but the use of states in a far more addaptable method.
+2. InputConverted and Commands, allows for the easy access of actions through any keyboard inputs anywhere in the code so that keys can be changed anytime and still work.
