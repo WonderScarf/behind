@@ -1,23 +1,21 @@
-import State from "../../State.js";
+import MenuState from "./MenuState.js";
 
 /**
- * The game's manin menu.
+ * The game's options menu.
  */
-export default class MenuState extends State {
-    
+export default class OptionsState extends MenuState {
     /**
      * Function that is run by the state manager when loaded.
      * @param {{}} paramaters The properties that should be loaded by the state.
      */
-     enter(paramaters){
-
+    enter(paramaters){
+         
     }
 
     /**
      * Function that is run on removal of state.
      */
     exit(){
-
     }
 
     /**
@@ -41,5 +39,4 @@ export default class MenuState extends State {
     render() { 
 
     };
-
 }

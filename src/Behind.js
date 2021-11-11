@@ -12,7 +12,6 @@ export default class Behind {
 
         // Loads the state manager's Loading state leading into PlayState.
         stateManager.loadState("LoadingState", {exitState: "PlayState", exitParamaters: {}});
-        
     }
 
     /** 
@@ -23,12 +22,12 @@ export default class Behind {
         // Calculates the true time.
         this.trueTime = (currentTime - this.previousTime) / 1000;
 
-        this.update();
-        this.render();
+        this.update(); // Updates the game
+        this.render(); // Renders the game
 
         this.previousTime = currentTime;
 
-        requestAnimationFrame((time) => this.gameLoop(time));
+        requestAnimationFrame((time) => this.gameLoop(time)); // Needs to be here.
     }
 
     update() {
