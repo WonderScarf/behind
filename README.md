@@ -48,6 +48,7 @@ As you should have noticed the conrtol schemes are varriable and change dependin
 ![States](style/images/readme_images/states.png)
 
 ## Concept Art (Wireframes)
+>Made by Tyler Messina-Katunar
 ![Playing the Game](style/images/readme_images/wireframe.png)
 
 ## Assets
