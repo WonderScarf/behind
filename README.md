@@ -39,13 +39,21 @@ As you should have noticed the conrtol schemes are varriable and change dependin
 12. The boss has different states that are changes when reaching a certain percentage (%) of health
 13. When the boss reachs 0 health the game is set to win menu state.
 
+## UML Class Diagram
+>Made by Kevin Rumbolt
+![Classes](style/images/readme_images/classes.png)
+
+## State Diagram
+>Made by Kevin Rumbolt
+![States](style/images/readme_images/states.png)
+
 ## Concept Art (Wireframes)
 ![Playing the Game](style/images/readme_images/wireframe.png)
 
 ## Assets
 In terms of assets, sprites homegrown (we will make them ourselves) using programs like [Krita](https://krita.org/en/) 
 and [Pixelart](https://www.pixilart.com/draw). Sounds will be produced on site and music will be taken from open source cites when
-implemented . We will use Arial as a font to keep it simple to read.
+implemented . We will use Arial as a font to keep it simple to read. The UML and state diagrams were made using LucidCharts.
 ### GUI
 The gui should be bare-bones and unintrusive so the user doensn't get distracted from being killed in one hit. It can be really hard to focus in environments 
 with tons of colors and sound so the UI should be unintrusive with a basic clear color scheme.
