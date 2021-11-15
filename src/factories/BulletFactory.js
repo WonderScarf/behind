@@ -3,7 +3,7 @@ import WitchBullet from "../entities/bullets/WitchBullet.js";
 import WitchFocusBullet from "../entities/bullets/WitchFocusBullet.js";
 import AoeBullet from "../entities/bullets/AoeBullet.js";
 import DirectBullet from "../entities/bullets/DirectBullet.js";
-import { BulletType } from "../enums";
+import { BulletType } from "../enums.js";
 /**
  * Factory that produces bullets of different types.
  */
@@ -11,7 +11,7 @@ export class BulletFactory {
 
     /**
      * Creates an instance of bullet
-     * @param {string} type the type of the bullet to create, defaults to DirectBullet
+     * @param {string} type the type of the bullet to creat.
      * @param {Number} spawnX The spawn point of the bullet on the x axis.
      * @param {Number} spawnY The spawn point of the bullet on the y axis.
      * @param {*} direction Direction The Bullet is facing
@@ -26,8 +26,10 @@ export class BulletFactory {
                 return new WitchBullet(spawnX, spawnX, direction);
             case BulletType.WitchFocus:
                 return new WitchFocusBullet(spawnX, spawnX, direction);
-			default: 
+			case BulletType.Direct: 
 				return new DirectBullet(spawnX, spawnY, direction);
+            default:
+                return new Bullet(spawnX, spawnY, direction);
 		}
 
 	}

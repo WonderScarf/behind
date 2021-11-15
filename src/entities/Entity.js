@@ -44,6 +44,10 @@ export default class Entity {
         this.sprites = [];
         this.animations = new Map();
         this.currentAnimation = null;
+
+        /**If the entity should be cleaned up at the next nearest opportunity. */
+        this.canRemove = false;
+        
         }
 
     /**

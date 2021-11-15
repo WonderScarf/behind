@@ -3,11 +3,15 @@
 import Witch from "../../entities/Witch.js";
 import { inputConverter } from "../../global.js";
 import MoveState from "./MoveState.js";
+import {BulletFactory} from "../../factories/BulletFactory.js"
+import { BulletType } from "../../enums.js";
+import Bullet from "../../entities/bullets/Bullet.js";
 
 export default class ShootState extends MoveState {
 
     static HITBOX_X_OFFSET = 80;
     static HITBOX_Y_OFFSET = 150;
+    static COOLDOWN = 10;
 
     constructor() {
         super();
@@ -23,7 +27,8 @@ export default class ShootState extends MoveState {
         }
 
         this.witch = paramaters.witch;
-        this.currentAnimation = this.witch.animations.get(Witch.SPRITESHEET_NAMES[1]);
+        this.currentAnimation = this.witch.animations.get(Witch.SPRITESHEET_NAMES[1]); //TODO make a thing in enum that manages this.
+
         this.#setupWitch();
     }
 
@@ -57,6 +62,9 @@ export default class ShootState extends MoveState {
             return;
         }
 
+        this.witch.shoot(BulletType.Bullet); //TODO change to witchbullet, set to bullet for testing.
+
+
         super.update(trueTime);
     }
 
@@ -70,7 +78,6 @@ export default class ShootState extends MoveState {
 
     #setupWitch(){
         let size = this.currentAnimation.getFrameSize();
-
 
         this.witch.isShooting = true;
         this.witch.isFocused = false;

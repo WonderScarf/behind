@@ -1,3 +1,4 @@
+import { Direction } from "../../enums.js";
 import {context} from "../../global.js";
 import Entity from "../Entity.js";
 
@@ -6,11 +7,12 @@ import Entity from "../Entity.js";
  */
 export default class Bullet extends Entity{
 
-    constructor(spawnX, spawnY, direction, ){ 
+
+    constructor(spawnX, spawnY, direction, width = 10, height = 10){ 
         // We will want to determine width and height by image size later on... but for now we will hardcode the value
-        super(spawnX, spawnY , 10, 10);
-        
-        this.speed = 3; 
+        super(spawnX, spawnY , width, height);
+        this.direction = direction;
+        this.speed = 1;
     }
 
     move(x ,y) {
@@ -19,7 +21,25 @@ export default class Bullet extends Entity{
     }
 
     update(trueTime) {
-        
+        switch(this.direction){
+
+            case Direction.Up:
+                this.y -= (trueTime * this.speed);
+                break;
+
+            case Direction.Down:
+                this.y += (trueTime * this.speed);
+                break;
+
+            case Direction.Left:
+                this.x += (trueTime * this.speed);
+                break;
+
+            case Direction.Right:
+                this.x -= (trueTime * this.speed);
+                break;
+        }
+        this.move(this.x, this.y);
     }
 
     render() {
@@ -27,7 +47,5 @@ export default class Bullet extends Entity{
             throw new Error("Could not render bullet due to the lack of context.")
         }
 
-        context.fillStyle = 'blue';
-        context.fillRect(this.x, this.y, this.width, this.height);
     }
 }

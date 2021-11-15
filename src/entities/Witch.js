@@ -1,7 +1,7 @@
 //@ts-nocheck
 
 import Sprite from "../../lib/sprite_management/Sprite.js";
-import {CANVAS_WIDTH, CANVAS_HEIGHT, loadedImages} from "../global.js";
+import {CANVAS_WIDTH, CANVAS_HEIGHT, loadedImages, stateManager} from "../global.js";
 import StateManager from "../states/StateManager.js";
 import FocusState from "../states/witch_states/FocusState.js";
 import MoveState from "../states/witch_states/MoveState.js";
@@ -9,6 +9,9 @@ import ShootState from "../states/witch_states/ShootState.js";
 import Entity from "./Entity.js";
 import Animation from "../../lib/time_management/Animation.js";
 import FocusShootState from "../states/witch_states/FocusShootState.js";
+import { BulletFactory } from "../factories/BulletFactory.js";
+import { Direction } from "../enums.js"; 
+
 
 /**
  * The player entity that uses states and user inputs to determine how they
@@ -62,14 +65,13 @@ export default class Witch extends Entity{
         
         this.isShooting = false;
 
-        // For now it will be hardcoded but later I want it based on sprite size and.
-        //this.soul = new Soul(this.x + ((this.width - Witch.HITBOX_WIDTH) / 2), this.y + ((this.height - Witch.HITBOX_HEIGHT) / 2), Witch.HITBOX_WIDTH, Witch.HITBOX_HEIGHT); 
-
+        this.bullets = [];
     }
 
     update(trueTime) {
         // Updates itself via depending on it's state manager's current state.
         this.stateManager.updateState(trueTime);
+
         super.update(trueTime);
     }
 
@@ -111,6 +113,12 @@ export default class Witch extends Entity{
         //Generate the new x and y
         this.x += Witch.SPEED * xModifier;
         this.y += Witch.SPEED * yModifier;
+    }
+
+    shoot(type){
+        //>Shoot bullet here.
+        stateManager.getCurrentState().addEntity(BulletFactory.createInstance(type, this.x, this.y, Direction.Up));
+        console.log("shoot");
     }
 
     /**

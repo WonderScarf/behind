@@ -1,5 +1,8 @@
 import MenuState from "./MenuState.js";
 
+/**
+ * Screen that displays on game overaa
+ */
 export default class GameOverState extends MenuState {
         /**
          * Function that is run by the state manager when loaded.
