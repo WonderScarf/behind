@@ -13,13 +13,12 @@ export default class PlayState extends State {
 
     enter(paramaters){
         // Paramaters will be added later for play.
+
+        this.entities = []; // THe entities of the game.
+
+        this.addEntity(new Witch()); // Spawn in the Witch, representing the player.
         
-        //set witch type so we cann determine what bullets/ bombs to use depending on player choice.
-        //this.witch = new Witch();
-
-        this.entities = [];
-
-        this.entities.push(new Witch());
+        //this.addEntity(new Boss()); // TODO Spawn in the Boss for the player to fight.
     }
 
     exit(){
@@ -29,7 +28,8 @@ export default class PlayState extends State {
     update(trueTime) {
 
         this.entities.forEach(entity => {
-
+            /* If the entity is not null we check if we can remove it, if we can remove it
+            then we set it to null and if not we update the entity. */
             if(entity){
 
                 if(entity.canRemove) {
@@ -41,12 +41,9 @@ export default class PlayState extends State {
 
             }
         });
-
-        //this.witch.update(trueTime);
     }
 
     render() {
-
 
         // Renders each entity
         this.entities.forEach(entity => {
@@ -55,9 +52,7 @@ export default class PlayState extends State {
             }
         });
 
-        //this.witch.render();
     }
-
 
     addEntity(entity){
         if(!entity){

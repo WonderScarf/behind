@@ -2,6 +2,7 @@
 
 import Sprite from "../../lib/sprite_management/Sprite.js";
 import Hitbox from "./Hitbox.js";
+import { DEBUG } from "../global.js";
 
 /**
  * A representation of a thing on screen with unique properties and abilities.
@@ -59,10 +60,12 @@ export default class Entity {
     };
 
     /**
-     * Renders the entity to the canvas. Non-specific entities render nothing to nowhere so must be overriden by those who extend Entity.
+     * Renders the entity to the canvas. Will only render hitbox if not overwritten.
      */
     render() {
-        throw Error("Not implemented");
+        if(DEBUG){
+            this.hitbox.render();
+        }
     };
 
     setAnimations() { throw Error("Not implemented"); };

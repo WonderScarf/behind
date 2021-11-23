@@ -2,7 +2,8 @@
 import Witch from "../../entities/Witch.js";
 import { inputConverter } from "../../global.js";
 import FocusState from "./FocusState.js";
-import ShootState from "./ShootState.js";
+import { BulletType } from "../../enums.js";
+
 
 /**
  * State representing the 
@@ -54,6 +55,8 @@ export default class FocusShootState extends FocusState {
             this.witch.stateManager.removeState();
             return;
         }
+
+        this.witch.shoot(BulletType.WitchFocus);
         
         super.update(trueTime);
 

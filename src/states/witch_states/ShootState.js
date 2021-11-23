@@ -3,9 +3,7 @@
 import Witch from "../../entities/Witch.js";
 import { inputConverter } from "../../global.js";
 import MoveState from "./MoveState.js";
-import {BulletFactory} from "../../factories/BulletFactory.js"
 import { BulletType } from "../../enums.js";
-import Bullet from "../../entities/bullets/Bullet.js";
 
 export default class ShootState extends MoveState {
 
@@ -62,8 +60,7 @@ export default class ShootState extends MoveState {
             return;
         }
 
-        this.witch.shoot(BulletType.Bullet); //TODO change to witchbullet, set to bullet for testing.
-
+        this.witch.shoot(BulletType.Witch);
 
         super.update(trueTime);
     }

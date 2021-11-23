@@ -11,7 +11,7 @@ export class BulletFactory {
 
     /**
      * Creates an instance of bullet
-     * @param {string} type the type of the bullet to creat.
+     * @param {String} type the type of the bullet to creat.
      * @param {Number} spawnX The spawn point of the bullet on the x axis.
      * @param {Number} spawnY The spawn point of the bullet on the y axis.
      * @param {*} direction Direction The Bullet is facing
@@ -21,11 +21,11 @@ export class BulletFactory {
 		
         switch (type) {
 			case BulletType.Aoe:
-				return new AoeBullet(spawnX, spawnX);
+				return new AoeBullet(spawnX, spawnY);
             case BulletType.Witch:
-                return new WitchBullet(spawnX, spawnX, direction);
+                return new WitchBullet(spawnX, spawnY, direction);
             case BulletType.WitchFocus:
-                return new WitchFocusBullet(spawnX, spawnX, direction);
+                return new WitchFocusBullet(spawnX, spawnY, direction);
 			case BulletType.Direct: 
 				return new DirectBullet(spawnX, spawnY, direction);
             default:

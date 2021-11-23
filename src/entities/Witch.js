@@ -116,10 +116,11 @@ export default class Witch extends Entity{
     }
 
     shoot(type){
-        //>Shoot bullet here.
-        stateManager.getCurrentState().addEntity(BulletFactory.createInstance(type, this.x, this.y, Direction.Up));
-        console.log("shoot");
-    }
+        let bullet = BulletFactory.createInstance(type, this.x, this.y, Direction.Up);
+
+        //TODO set the bullet possision to the top-center of the witch's hitbox
+
+        stateManager.getCurrentState().addEntity(bullet);    }
 
     /**
      * Sets up the witches StateManager with it's states. Should only be called in the
