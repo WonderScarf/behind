@@ -3,13 +3,17 @@ import {context} from "../../global.js";
 import Entity from "../Entity.js";
 import Hitbox from "../Hitbox.js"
 /**
- * A Entity representing a projectile fired by either a foe or friend
+ * An Entity representing a projectile fired by either a foe or friend
  */
 export default class Bullet extends Entity{
 
     static DEFAULT_BULLET_SPEED = 1000;
     static DEFAULT_HITBOX_WIDTH = 10;
     static DEFAULT_HITBOX_HEIGHT = 10;
+    static DEFAULT_BOUNDING_WIDTH = 50;
+    static DEFAULT_BOUNDING_HEIGHT = 50;
+    static DEFAULT_DAMAGE = 1;
+    static DEFAULT_HIT_ID = [0]; // Determines which beings it can 'hit'
 
     /**
      * @param {Number} spawnX 
@@ -17,8 +21,14 @@ export default class Bullet extends Entity{
      * @param {*} direction 
      * @param {Number} width 
      * @param {Number} height 
+     * @param {Number} speed
+     * @param {Number} hitboxWidth
+     * @param {Hitbox} hitboxHeight
+     * @param {Number} damage
+     * @param {Number[]} collisionId
      */
-    constructor(spawnX, spawnY, direction, width = 10, height = 10, speed = Bullet.DEFAULT_BULLET_SPEED, hitboxWidth = Bullet.DEFAULT_HITBOX_WIDTH, hitboxHeight = Bullet.DEFAULT_HITBOX_HEIGHT){ 
+    constructor(spawnX, spawnY, direction, width = Bullet.DEFAULT_BOUNDING_WIDTH, height = Bullet.DEFAULT_BOUNDING_HEIGHT, speed = Bullet.DEFAULT_BULLET_SPEED, hitboxWidth = Bullet.DEFAULT_HITBOX_WIDTH, hitboxHeight = Bullet.DEFAULT_HITBOX_HEIGHT, damage = Bullet.DEFAULT_DAMAGE, collisionId = Bullet.DEFAULT_COLLISION_ID){ 
+        // TODO on future iderations it may be better to create a bullet data object that we bring in instead of 300 parameters.
         super({
             x: spawnX, 
             y:spawnY, 
@@ -26,11 +36,12 @@ export default class Bullet extends Entity{
             boundingHeight: height,
             hitboxWidth: hitboxWidth,
             hitboxHeight: hitboxHeight, 
-
         })
+
         this.direction = direction;
         this.speed = speed;
-        
+        this.damage = damage;
+        this.collisionId = collisionId;
     }
 
 
@@ -62,5 +73,12 @@ export default class Bullet extends Entity{
         }
 
         super.render();
+    }
+
+    /**
+     * Function that deter
+     */
+    hit(entity){
+
     }
 }

@@ -14,7 +14,7 @@ export default class WitchFocusBullet extends WitchBullet{
 
     constructor(spawnX, spawnY, direction = WitchBullet.DEFAULT_DIRECTION){
         super(
-            spawnX, 
+            spawnX + (WitchFocusBullet.BOUNDING_WIDTH), 
             spawnY, 
             direction, 
             WitchFocusBullet.BOUNDING_WIDTH, 

@@ -83,16 +83,15 @@ export default class StateManager {
     /**
      * Removes the state from the currentStateStack. TODO make 2 separate functions so we divide deleting by name and place.
      * @param {Boolean} inFront If true the state is removed to the front or back. Default is back. 
-     * @param {String | null} label The name of the state to delete. 
      */
     removeState(inFront = false, label = null) {
         if (!this.currentStateStack ) {
             throw new Error("Cannot remove if the stateStack is empty.")
         }
-
+        
         let state;
-
-
+        
+        //! NOTICE remove the label functionality as it induces bugs in the states.
         if(label) {
             
             state = this.stateTypes.get(label);

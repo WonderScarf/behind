@@ -2,7 +2,7 @@
 
 import Sprite from "../../lib/sprite_management/Sprite.js";
 import Hitbox from "./Hitbox.js";
-import { DEBUG } from "../global.js";
+import { DEBUG, context } from "../global.js";
 
 /**
  * A representation of a thing on screen with unique properties and abilities.
@@ -49,13 +49,14 @@ export default class Entity {
         /**If the entity should be cleaned up at the next nearest opportunity. */
         this.canRemove = false;
         
-        }
+    }
 
     /**
      * Updates the data of the entity. Non-specific entities updates nothing so it must be overriden by those who extend Entity.
      * @param {Number} trueTime The current time since last frame.
      */
     update(trueTime) { 
+        // TODO Check if the entity is OOB
         this.hitbox.mimic(this.x, this.y)
     };
 
@@ -65,14 +66,31 @@ export default class Entity {
     render() {
         if(DEBUG){
             this.hitbox.render();
+
+            context.save();
+            context.strokeStyle = "rgba(100, 0, 0, .5)";
+            context.lineWidth = 3;
+            context.li
+            context.beginPath();
+            context.rect(this.x, this.y, this.boundingWidth, this.boundingHeight);
+            context.stroke();
+            context.closePath();
+            context.restore();
         }
     };
 
-    setAnimations() { throw Error("Not implemented"); };
+
+    // Functions relating to drawing / animating of the Entity.
 
     setSprites() { throw Error("Not implemented"); }
 
-    onCollision(collider) { };
+
+    // Functions that act as templates for events that may occur to the Entity like getting shot.
+
+    oobAction(){ throw Error("Not implemented"); }
+
+    collisionAction(collider) { throw Error("Not implemented"); };
+
 
 
 }

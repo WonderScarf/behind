@@ -57,7 +57,7 @@ export default class Hitbox {
 	render() {
         if(DEBUG && context){
             context.save();
-            context.strokeStyle = "blue";
+            context.strokeStyle = "rgba(0, 0, 100, 1)";
             context.lineWidth = 4;
             context.beginPath();
             context.rect(this.x, this.y, this.width, this.height);
