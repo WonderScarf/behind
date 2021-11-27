@@ -78,47 +78,36 @@ export default class StateManager {
         state.enter(paramaters);
 
     }
-    
 
     /**
-     * Removes the state from the currentStateStack. TODO make 2 separate functions so we divide deleting by name and place.
-     * @param {Boolean} inFront If true the state is removed to the front or back. Default is back. 
+     * Removes the state from the currentStateStack.
+     * @param {Boolean} inFront If true the state is removed to the front or back. Default is false. 
      */
-    removeState(inFront = false, label = null) {
+    removeState(inFront = false) {
         if (!this.currentStateStack ) {
             throw new Error("Cannot remove if the stateStack is empty.")
         }
         
-        let state;
+        let state; // The state that has been will be pop out of the stack of states.
         
-        //! NOTICE remove the label functionality as it induces bugs in the states.
-        if(label) {
-            
-            state = this.stateTypes.get(label);
-            state.exit();
-            
-            if(state){
-                state.exit();
-            }
-        } 
-        else {
-            if (inFront) {
-                // Removes the item to the front of the stack.
-                state = this.currentStateStack.shift();
-            }
-            else {
-                // Removes the item to the end of the stack.
-                state = this.currentStateStack.pop();
-            }
-    
-            state.exit();
-    
-            this.getCurrentState().return();
+        if (inFront) {
+            // Removes the item to the front of the stack.
+            state = this.currentStateStack.shift();
         }
+        else {
+            // Removes the item to the end of the stack.
+            state = this.currentStateStack.pop();
+        }
+
+        state.exit(); // Exits the removed state
+
+        /* Signals the now current state to run it's return function so 
+        it reset values back to where they need to be. */
+        this.getCurrentState().return();
     }
 
     /**
-     * Gets the current state.
+     * Gets the current state (The state on the top of the state stack).
      * @returns {State} The current State.
      */
     getCurrentState() {
@@ -132,7 +121,8 @@ export default class StateManager {
 
     /**
      * If the stateLabel matches the label of the current state return true.
-     * If that is not the case return false.
+     * If that is not the case return false. This can be used to check if we
+     * are in a specific state via it's label or name alone.
      * @param {String} stateLabel The name of the state to look for.
      * @returns {Boolean} Is true if matching current state, false if not.
      */

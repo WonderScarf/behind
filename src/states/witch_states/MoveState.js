@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import State from "../State.js";
 import { inputConverter} from "../../global.js";
 import Witch from "../../entities/Witch.js";
@@ -9,10 +7,8 @@ import Witch from "../../entities/Witch.js";
  */
   export default class MoveState extends State {    
 
-    static HITBOX_X_OFFSET = 100;
-    static HITBOX_Y_OFFSET = 150;
-
-    // More shall be added.
+    static HITBOX_X_OFFSET = 100; // The x offset of the rendered hitbox compared to the bounding box.
+    static HITBOX_Y_OFFSET = 150; // The y offset of the rendered hitbox compared to the bounding box.
 
     constructor(){
         super();
@@ -50,6 +46,7 @@ import Witch from "../../entities/Witch.js";
 
     update(trueTime) {
 
+        // Error checking.
         if(!inputConverter.commands){
             throw new Error("Commands have not been initialized and thus cannot be read.");
         }
@@ -67,7 +64,7 @@ import Witch from "../../entities/Witch.js";
 
         // When we press secondary button we go into the parry state.
         if(inputConverter.commands.SECONDARY_KEY.isPushed){
-
+            //TODO if time is remaining at the end create a parry state (OPTIONAL)
         }
 
         // When we press primary button we go into the shoot state.
@@ -75,7 +72,7 @@ import Witch from "../../entities/Witch.js";
             this.witch.stateManager.loadState("ShootState", {witch: this.witch});
         }
 
-        // Determines direction.
+        // Determines direction / speed multiplier for movement.
         let moveWeight = {x: 0, y: 0}
 
         // Get directions of movement.
@@ -93,10 +90,10 @@ import Witch from "../../entities/Witch.js";
             moveWeight.x--;
         }
 
-        // Moves the witch with the moveWeight modified wiht the true time. 
+        // Moves the witch with the moveWeight modified wiht the true time to account for refresh rates. 
         this.witch.move(moveWeight.x * trueTime, moveWeight.y * trueTime);
 
-        this.currentAnimation.update(trueTime);
+        this.currentAnimation.update(trueTime); // Update the current states' animation.
     }
 
     render() {
@@ -105,15 +102,30 @@ import Witch from "../../entities/Witch.js";
             throw new Error("The witch within MoveState was not defined, thus it can't move.")
         }
 
+        // Render the current animation frame to the canvas.
         this.currentAnimation.renderCurrentFrame(this.witch.x, this.witch.y);
     }
 
+    /**
+     * Sets up the witch object to match requirements of the MoveState (this is just meant 
+     * to organize the code and make it cleaner to read).
+     * @private
+     * @throws When witch is null, undefined or illegible to JavaScript.
+     */
     #setupWitch(){
+
+        // Error handling.
+        if(!this.witch){
+            throw Error("Cannot setup witch as it is either null, undefined or was not set in the params.")
+        }
+
         let size = this.currentAnimation.getFrameSize();
 
+        // Update the witch's bounding box acording to the sizes obtained.
         this.witch.boundingWidth = size.width;
         this.witch.boundingHeight = size.height;
 
+        // Set the hitbox offsets based on this state's default values.
         this.witch.hitbox.setNewOffsets(MoveState.HITBOX_X_OFFSET, MoveState.HITBOX_Y_OFFSET);
     }
 }

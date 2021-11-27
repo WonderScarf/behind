@@ -31,7 +31,7 @@ export default class Behind {
     }
 
     update() {
-        stateManager.updateState(this.trueTime);
+        stateManager.updateState(this.trueTime); // Update the state manager's true time.
     }
 
     render() {

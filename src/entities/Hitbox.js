@@ -2,24 +2,28 @@ import {DEBUG, context} from "../global.js";
 
 export default class Hitbox {
 
-    //The ways the inputs interract with the world, a hitbox has several at a time.
+    /**
+     * Enum representing the different types of hitboxes that affect the ways the inputs interract 
+     * with the world, a hitbox has several at a time.
+     * @constant
+     */
     static TYPE = {
-       "Hit": 0,
-       "Hurt": 1,
-       "Dead": 2,
-       "Event": 3,
-       "Unknown": 4,
-       };
+       "Hit": 0, // A hibox that acts as collision for whatever comes into contact with it.
+       "Hurt": 1, // A hitbox that damages whatever comes into contact with it
+       "Dead": 2, // A hitbox that removes whatever comes into contact with it.
+       "Event": 3, // A hitbox meant to trigger an event.
+       "Unknown": 4, // When a hitbox is not set and how it colides is unknown.
+    };
 
     /**
      * A bot representing a area on which an affect is based.
-     * @param {Number} x 
-     * @param {Number} y 
-     * @param {Number} width 
-     * @param {Number} height 
-     * @param {Number} xOffset
-     * @param {Number} yOffset
-     * @param {String | String[]} types 
+     * @param {Number} x The x spawn point of the hitbox.
+     * @param {Number} y The y spawn poitn of the hitbox.
+     * @param {Number} width The width of the hitbox.
+     * @param {Number} height The height of the hitbox.
+     * @param {Number} xOffset The hitbox's offset compared to it's coresponding bounding box.
+     * @param {Number} yOffset The hitbox's offset compared to it's coresponding bounding box.
+     * @param {String | String[]} types The type or Types that the hitbox or hurtbox has (Only those within the TYPE enum are valid).
      */
     constructor(x, y, width, height, xOffset = 0, yOffset = 0, types = [Hitbox.TYPE.Unknown]){
         this.types = types;
@@ -36,8 +40,8 @@ export default class Hitbox {
 
     /**
      * Changes the offsets used by the hitbox and replaces them with a new set of offsets.
-     * @param {Number} xOffset 
-     * @param {Number} yOffset 
+     * @param {Number} xOffset The new xOffset compared to the bounding box.
+     * @param {Number} yOffset The new yOffset compared to the bounding box. 
      */
     setNewOffsets(xOffset, yOffset){
         this.xOffset = xOffset;
@@ -55,9 +59,11 @@ export default class Hitbox {
     }
 
 	render() {
+
+        // When in debug mode draw out a hitbox.
         if(DEBUG && context){
             context.save();
-            context.strokeStyle = "rgba(0, 0, 100, 1)";
+            context.strokeStyle = "rgba(0, 0, 100, 1)"; //TODO replace by a constant later on.
             context.lineWidth = 4;
             context.beginPath();
             context.rect(this.x, this.y, this.width, this.height);
@@ -66,19 +72,5 @@ export default class Hitbox {
             context.restore();
         }
 	}
-
-    /**
-     * Determines the color of the hibox depending on the mix go types and then returns that color.
-     */
-    #getColour(){
-
-        if(this.types.length > 1){
-            //TODO mix colors so we can identify which type is what depending on the displayed color.
-            // For now we will just have a predefined multi-color but should be changed.
-        }
-
-        return "blue"
-    }
-
 
 }

@@ -1,13 +1,13 @@
 
 /**
- * A state that the state manager runs.
+ * A state that the state manager runs. Will throw errors unless it's actions are overriden.
  */
 export default class State {
     constructor() { }
 
     /**
      * Function that is run by the state manager when loaded.
-     * @param {{}} paramaters The properties that should be loaded by the state.
+     * @param { {} } paramaters The properties that should be loaded by the state.
      */
     enter(paramaters){
         throw Error("'Abstract' state cannot be exited. Please implement state to another class and assign the function to it."); 
@@ -29,7 +29,7 @@ export default class State {
 
     /**
      * Updates the current state
-     * @param {Number} trueTime The ajusted time.
+     * @param {Number} trueTime The ajusted time. Determines the time to ajust values like speed by.
      */
     update(trueTime){ 
         throw Error("'Abstract' state cannot be updated. Please implement state to another class and assign the update function to it."); 

@@ -1,24 +1,28 @@
-//@ts-nocheck
-
 import Witch from "../../entities/Witch.js";
 import { inputConverter } from "../../global.js";
 import MoveState from "./MoveState.js";
 import { BulletType } from "../../enums.js";
 
+/**
+ * A state representing when the witch is shooting but is not focusing. The standout feature of the
+ * state is that it shoots projectiles without lowering the witch's speed from it's normal value. 
+ * It is derived from the movestate.
+ */
 export default class ShootState extends MoveState {
 
-    static HITBOX_X_OFFSET = 80;
-    static HITBOX_Y_OFFSET = 150;
-    static COOLDOWN = 10;
+    static HITBOX_X_OFFSET = 80; // The x offset of the rendered hitbox compared to the bounding box.
+    static HITBOX_Y_OFFSET = 150; // The y offset of the rendered hitbox compared to the bounding box.
+    static MAX_COOLDOWN = 10; // The cooldown between shots in this state.
 
     constructor() {
         super();
     };
 
+
     // State essential functions...
     
     /**
-     * Enters the Shootstate.
+     * Enters the Shootstate. Witch must be entered as a part of the paramaters.
      * @param {{witch: Witch}} paramaters The inputs used when entering the state.
      */
     enter(paramaters) {
@@ -26,18 +30,26 @@ export default class ShootState extends MoveState {
             throw new Error("No witch was input with the paramaters.")
         }
 
-        this.witch = paramaters.witch;
+        // Set the paramaters of the objects entered (like the Witch object)
+        this.witch = paramaters.witch; 
+
+        // Set the current animation to use from the newly set witch.
         this.currentAnimation = this.witch.animations.get(Witch.SPRITESHEET_NAMES[1]);
 
+        // Setup the witch object. 
         this.#setupWitch();
+
     }
 
+    /**
+     * @throws When witch is null, undefined or illegible to JavaScript.
+     */
     return(){
-       this.#setupWitch();
+       this.#setupWitch(); // We set up the Witch back to it's normal value.
     }
 
     exit() {
-        this.witch.isShooting = false;
+        this.witch.isShooting = false; // We signal to the witch that it is no longer shooting.
     }
 
     update(trueTime) {
@@ -67,12 +79,21 @@ export default class ShootState extends MoveState {
             return;
         }
 
-        //TODO Determine if the witch can shoot a bullet based on a fire rate so the witch does not shoot every frame.
-        this.witch.shoot(BulletType.Witch); //! This is temporary will be replaced with a with the idea mentionned above.
+        // Quick algorithm to make bullets only shoot when cooldown is up.
+        if(this.cooldown < ShootState.MAX_COOLDOWN){
+            this.cooldown++; //TODO refine by incremention based on truetime.
+        }
+        else {
+            this.witch.shoot(BulletType.Witch); // We shoot a witch type bullet.
+            this.cooldown = 0; // We reset the current cooldown / initialize if cooldown is null.
+        }
 
         super.update(trueTime);
     }
 
+    /**
+     * @throws When witch is null, undefined or illegible to JavaScript.
+     */
     render() {
         if (!this.witch) {
             throw new Error("The witch within MoveState was not defined, thus it can't move.")
@@ -85,18 +106,29 @@ export default class ShootState extends MoveState {
     // Unique and private functions for the state...
 
     /**
-     * Sets up the witch object in the state (this is just meant to organize the code and make it cleaner.)
+     * Sets up the witch object in the state (this is just meant to organize the code and 
+     * make it cleaner to read).
      * @private
+     * @throws When witch is null, undefined or illegible to JavaScript.
      */
     #setupWitch(){
+
+        // Error handling.
+        if(!this.witch){
+            throw Error("Cannot setup witch as it is either null, undefined or was not set in the params.")
+        }
+
+        // Determine the itch's bounding box sizes via it's animation.
         let size = this.currentAnimation.getFrameSize();
 
-        this.witch.isShooting = true;
-        this.witch.isFocused = false;
-
+        // Update the witch's bounding box acording to the sizes obtained.
         this.witch.boundingWidth = size.width;
         this.witch.boundingHeight = size.height;
 
+        // Set the hitbox offsets based on this state's default values.
         this.witch.hitbox.setNewOffsets(ShootState.HITBOX_X_OFFSET, ShootState.HITBOX_Y_OFFSET);
+
+        this.witch.isShooting = true; // Singal the witch is shooting.
+        this.witch.isFocused = false; // Signal the witch is not focusing.
     }
 }

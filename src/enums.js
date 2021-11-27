@@ -9,6 +9,9 @@ export const BulletType = {
     Bullet: 'bullet'
 };
 
+/**
+ * An emum representing of numbers dictation directions 
+ */
 export const Direction = {
     Up: 0,
     Right: 1,
