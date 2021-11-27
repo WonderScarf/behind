@@ -20,6 +20,7 @@ export default class FocusState extends MoveState {
     /**
      * Enters the FocusState.
      * @param {{witch: Witch}} paramaters The inputs used when entering the state.
+     * @throws When the witch is null, undefined or cannot be paresed as a Witch object.
      */
     enter(paramaters) {
         super.enter(paramaters);
