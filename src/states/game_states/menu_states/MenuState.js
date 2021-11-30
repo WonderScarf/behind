@@ -32,7 +32,7 @@ export default class MenuState extends State {
      * @param {Number} trueTime The ajusted time.
      */
     update(trueTime){ 
-
+        
     };
 
     /**

@@ -126,13 +126,15 @@ export default class Boss extends Entity{
     }
 
     /**
-     * Launces a bullet from it's own place depending on type of bullet input and sends it to the entities in it's playstate.    
+     * Launches a bullet from it's own place depending on type of bullet input and sends it to the entities in it's playstate.    
      * @param {BulletType} type The type of bullet to shoot
      * @param {Direction} direction The direction to shoot it in.
+     * @param {Number | undefined} spawnX 
+     * @param {Number | undefined} spawnY 
      */
-    shoot(type, direction = Direction.Down){
-    
-        let bullet = BulletFactory.createInstance(type, this.x, this.y, direction); // Make a bullet using the object factory based on the type input.
+    shoot(type, direction = Direction.Down, spawnX = this.x, spawnY = this.y) {
+        // TODO refactor so it can shoot out of a specied possision as well as the default so TYPE A as well as B works in FirstPhaseState.
+        let bullet = BulletFactory.createInstance(type, spawnX, spawnY, direction); // Make a bullet using the object factory based on the type input.
         stateManager.getCurrentState().addEntity(bullet) // Adds the bullet to the current playstate.
     }
 

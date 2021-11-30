@@ -2,6 +2,7 @@ import FightingState from "./FightingState.js";
 import Witch from "../../entities/Witch.js";
 import Boss from "../../entities/Boss.js";
 import { BulletType, Direction } from "../../enums.js";
+import { CANVAS_WIDTH, CANVAS_HEIGHT } from "../../global.js";
 
 /**
  * The logic for the first phase of the fight
@@ -56,8 +57,6 @@ export default class FirstPhaseState extends FightingState {
         
         this.#followWitch(trueTime); // Boss follows the Witch's movements as best as they could.
         
-
-
         // Managing B-Type Bullets
 
         // Quick algorithm to make bullets only shoot when cooldown is up.
@@ -65,7 +64,10 @@ export default class FirstPhaseState extends FightingState {
             this.cooldownB++; //TODO refine by incremention based on truetime.
         }
         else {
-            this.boss.shoot(BulletType.Direct); // We shoot a witch type bullet.
+
+            let bulletDataB = this.#randomSideSpawn(BulletType.Direct);
+
+            this.boss.shoot(BulletType.Direct, bulletDataB.direction, bulletDataB.x, bulletDataB.y); // We shoot a witch type bullet.
             this.cooldownB = 0; // We reset the current cooldown / initialize if cooldown is null.
         }
 
@@ -76,11 +78,12 @@ export default class FirstPhaseState extends FightingState {
         super.render();
     }
 
-    setupBoss(){
+    setupBoss() {
+
     }
 
-    // Unqiue functions...
 
+    // Unqiue functions...
 
     /**
      * Follows the witch's X placement. 
@@ -106,5 +109,33 @@ export default class FirstPhaseState extends FightingState {
 
         this.boss.move(trueTime);
     }
+
+
+    /**
+     * 
+     * @param {BulletType} type 
+     * @returns 
+     */
+    #randomSideSpawn(){
+        // The varriables representing the spawn point of the bullet
+        let spawnX ;
+        let spawnY = Math.random() * CANVAS_HEIGHT;
+
+        // TODO implement that it spawns completely inbound via the bullets' width
+
+        // Randomly pick either left or right
+        let direction = Math.floor(Math.random() * 2) + 2;
+
+        if(direction == Direction.Left) {
+            spawnX = 0;
+        } 
+        else if(direction == Direction.Right) {
+            spawnX = CANVAS_WIDTH - 100;
+        }
+
+
+        return {x: spawnX, y: spawnY, direction};
+    }
+
 
 }
