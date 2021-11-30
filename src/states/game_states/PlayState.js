@@ -1,6 +1,7 @@
 import State from "../State.js";
 import Witch from "../../entities/Witch.js";
 import Entity from "../../entities/Entity.js";
+import Boss from "../../entities/Boss.js";
 
 /**
  * The state of the game dictating the the actual video game is happening.
@@ -11,7 +12,7 @@ export default class PlayState extends State {
         super();
     };
 
-
+    
     // Standard state functions...
     
     /**
@@ -23,9 +24,12 @@ export default class PlayState extends State {
 
         this.entities = []; // The entities of the game that will be updated/rendered.
 
-        this.addEntity(new Witch()); // Spawn in the Witch, representing the player.
+        this.witch = new Witch();
+        this.boss = new Boss(this.witch);
 
-        //this.addEntity(new Boss()); // TODO Spawn in the Boss for the player to fight.
+        this.addEntity(this.witch); // Spawn in the Witch, representing the player.
+
+        this.addEntity(this.boss); // Spawn in the Boss for the player to fight.
     }
 
     exit() {
@@ -35,13 +39,14 @@ export default class PlayState extends State {
     update(trueTime) {
 
         // TODO still need to add collision logic / checks to the play state
-        // TODO still need to add some way to check if the player has died or if the boss has died. 
+        // TODO still need tso add some way to check if the player has died or if the boss has died. 
 
         this.entities.forEach(entity => {
             /* If the entity is not null we check if we can remove it, if we can remove it
             then we set it to null and if not we update the entity. */
             if (entity) {
 
+                // Removes or updates the entity depending on it's designated to removed.
                 if (entity.canRemove) {
                     entity = null;
                 }

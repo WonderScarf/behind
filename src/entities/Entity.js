@@ -1,6 +1,5 @@
 //@ts-nocheck
 
-import Sprite from "../../lib/sprite_management/Sprite.js";
 import Hitbox from "./Hitbox.js";
 import { DEBUG, context } from "../global.js";
 

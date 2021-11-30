@@ -56,6 +56,7 @@ import Witch from "../../entities/Witch.js";
         else if (!this.witch.stateManager) {
             throw new Error("Witch's state manager have not been initialized and thus cannot be read. ");
         }
+        
 
         // If we are not currently focused and we push the alternate key go into focus state.
         if(inputConverter.commands.ALTERNATE_KEY.isPushed && !this.witch.isFocused){

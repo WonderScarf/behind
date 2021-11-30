@@ -69,6 +69,7 @@ export default class Witch extends Entity{
     // Standard Entity functions...
 
     update(trueTime) {
+
         // Updates itself via depending on it's state manager's current state.
         this.stateManager.updateState(trueTime);
 
@@ -85,7 +86,6 @@ export default class Witch extends Entity{
     }
 
     // Entity sprite/animation functions... 
-
     setSprites(){
 
        let spriteSheet;
@@ -123,9 +123,7 @@ export default class Witch extends Entity{
      * Launces a bullet from it's own place depending on type of bullet input and sends it to the entities in it's playstate.    
      * @param {*} type 
      */
-    shoot(type){
-        //TODO find a way to only fire a bullet based on a firerate that will change depending on state.
-    
+    shoot(type){    
         let bullet = BulletFactory.createInstance(type, this.x, this.y, Direction.Up); // Make a bullet using the object factory based on the type input.
         stateManager.getCurrentState().addEntity(bullet) // Adds the bullet to the current playstate.
     }
@@ -137,7 +135,6 @@ export default class Witch extends Entity{
      * Sets up the witches StateManager with it's states. Should only be called in the
      * constructor.
      * @private 
-     * 
      */
     #setStates(){
         // Creates a new state manager to manage the player's states.
