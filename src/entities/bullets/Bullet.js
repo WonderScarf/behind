@@ -18,7 +18,7 @@ export default class Bullet extends Entity{
     /**
      * @param {Number} spawnX 
      * @param {Number} spawnY 
-     * @param {*} direction 
+     * @param {Direction} direction 
      * @param {Number} width 
      * @param {Number} height 
      * @param {Number} speed
@@ -42,6 +42,7 @@ export default class Bullet extends Entity{
         this.speed = speed;
         this.damage = damage;
         this.collisionId = collisionId;
+
     }
 
 
@@ -75,10 +76,10 @@ export default class Bullet extends Entity{
         super.render();
     }
 
-    /**
-     * Function that deter
-     */
-    hit(entity){
+    // Actions...
 
+    
+    oobAction() {
+        this.canRemove = true;
     }
 }

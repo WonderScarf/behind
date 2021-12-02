@@ -7,7 +7,7 @@ import { CANVAS_WIDTH, CANVAS_HEIGHT } from "../../global.js";
 /**
  * The logic for the first phase of the fight
  */
-export default class FirstPhaseState extends FightingState {   
+export default class FirstPhaseState extends FightingState {
 
     // Properties relating to size and place.
     static HITBOX_X_OFFSET = 100; // The x offset of the rendered hitbox compared to the bounding box.
@@ -16,15 +16,16 @@ export default class FirstPhaseState extends FightingState {
     // Properties relating to movement...
     static MOVEMENT_BUFFER_WIDTH = 8; // Number representing how closely Boss should aim to follow Witch.
 
-    // Proporties of the shots fired directly bellow the Boss...
-    static MAX_COOLDOWN_A = 20;
+    // Proporties of the shots fired directly from the Boss...
+    static MAX_COOLDOWN_A = 5;
+    static BETWEEN_CLIP_COOLDOWN_A = 55;
     static CLIP_SIZE_A = 10;
 
     // Properties relating to the shots fired to the sides.
     static MAX_COOLDOWN_B = 20;
 
 
-    constructor(){
+    constructor() {
         super();
     };
 
@@ -32,9 +33,9 @@ export default class FirstPhaseState extends FightingState {
      * Enters the FirstPhaseState.
      * @param {{boss: Boss, witch: Witch}} paramaters The inputs used when entering the state.
      */
-    enter(paramaters){
+    enter(paramaters) {
         super.enter(paramaters);
-        
+
         this.witch = paramaters.witch;
 
         this.setupBoss();
@@ -42,6 +43,8 @@ export default class FirstPhaseState extends FightingState {
         // Sets a current animation to the index of the name we wanted. It is stored within the state itself so it is saved when changing directory.
         this.currentAnimation = this.boss.animations.get(Boss.SPRITESHEET_NAMES[0]);
 
+        this.clipUsed = 0;
+        this.clipCooldownA = 0;
 
     }
 
@@ -54,24 +57,14 @@ export default class FirstPhaseState extends FightingState {
     }
 
     update(trueTime) {
-        
+
         this.#followWitch(trueTime); // Boss follows the Witch's movements as best as they could.
-        
-        // Managing B-Type Bullets
 
-        // Quick algorithm to make bullets only shoot when cooldown is up.
-        if(this.cooldownB < FirstPhaseState.MAX_COOLDOWN_B){
-            this.cooldownB++; //TODO refine by incremention based on truetime.
-        }
-        else {
+        // Managing spawning The different Bullets that the boss fires.
+        this.#shootAType();
+        this.#shootBType();
 
-            let bulletDataB = this.#randomSideSpawn(BulletType.Direct);
-
-            this.boss.shoot(BulletType.Direct, bulletDataB.direction, bulletDataB.x, bulletDataB.y); // We shoot a witch type bullet.
-            this.cooldownB = 0; // We reset the current cooldown / initialize if cooldown is null.
-        }
-
-        super.update(trueTime); 
+        super.update(trueTime);
     }
 
     render() {
@@ -90,17 +83,17 @@ export default class FirstPhaseState extends FightingState {
      * @param {Number} trueTime
      * @private 
      */
-    #followWitch(trueTime){
+    #followWitch(trueTime) {
 
         // Gets the center X point of both th witch and the boss
-        let witchX = ( this.witch.x - ( this.witch.boundingWidth / 2 ) );
-        let bossX = ( this.boss.x - ( this.boss.boundingWidth / 2 ) );
+        let witchX = (this.witch.x - (this.witch.boundingWidth / 2));
+        let bossX = (this.boss.x - (this.boss.boundingWidth / 2));
 
         // Change the boss's direction depending on how far they are from the player.
-        if( FirstPhaseState.MOVEMENT_BUFFER_WIDTH > Math.abs( witchX - bossX ) ) {
+        if (FirstPhaseState.MOVEMENT_BUFFER_WIDTH > Math.abs(witchX - bossX)) {
             this.boss.direction = Direction.None;
         }
-        else if(witchX > bossX) {
+        else if (witchX > bossX) {
             this.boss.direction = Direction.Right;
         }
         else {
@@ -110,32 +103,75 @@ export default class FirstPhaseState extends FightingState {
         this.boss.move(trueTime);
     }
 
-
     /**
-     * 
+     * Spawns a B-type Direct bullets on the screen randomly
      * @param {BulletType} type 
-     * @returns 
+     * @returns {{x: Number, y:Number, direction: Direction }} 
      */
-    #randomSideSpawn(){
+    #randomSideSpawn() {
         // The varriables representing the spawn point of the bullet
-        let spawnX ;
+        let spawnX;
         let spawnY = Math.random() * CANVAS_HEIGHT;
 
-        // TODO implement that it spawns completely inbound via the bullets' width
+        // TODO implement that it spawns completely inbound via the bullets' width.
+        // ? Maybe a timer of some sort that sets the bullet to dead when the we would determined as reaching it's destination.
 
         // Randomly pick either left or right
         let direction = Math.floor(Math.random() * 2) + 2;
 
-        if(direction == Direction.Left) {
+        if (direction == Direction.Left) {
             spawnX = 0;
-        } 
-        else if(direction == Direction.Right) {
+        }
+        else if (direction == Direction.Right) {
             spawnX = CANVAS_WIDTH - 100;
         }
 
 
-        return {x: spawnX, y: spawnY, direction};
+        return { x: spawnX, y: spawnY, direction: direction };
     }
 
+    /**
+     * Manages the cooldowns of the A-Type Direct bullets that the boss fires 
+     * and shoots when it is determined it should.
+     */
+    #shootAType() {
 
+        if (this.cooldownA < FirstPhaseState.MAX_COOLDOWN_A) {
+            this.cooldownA++;
+        }
+        else {
+            if (this.clipCooldownA >= FirstPhaseState.BETWEEN_CLIP_COOLDOWN_A) {
+                this.clipCooldownA = 0;
+                this.clipUsed = 0;
+            }
+            else if (this.clipUsed <= FirstPhaseState.CLIP_SIZE_A) {
+
+                this.boss.shoot(BulletType.Direct);
+
+                this.clipUsed++;
+                this.cooldownA = 0;
+            }
+            else {
+                this.clipCooldownA++;
+            }
+        }
+    }
+
+    /**
+     * Manages the cooldowns of the B-Type Direct bullets that the boss fires 
+     * and shoots when it is determined it should.
+     */
+    #shootBType() {
+
+        if (this.cooldownB < FirstPhaseState.MAX_COOLDOWN_B) {
+            this.cooldownB++; //TODO refine by incremention based on truetime.
+        }
+        else {
+
+            let bulletDataB = this.#randomSideSpawn(BulletType.Direct);
+
+            this.boss.shoot(BulletType.Direct, bulletDataB.direction, bulletDataB.x, bulletDataB.y);
+            this.cooldownB = 0; // We reset the current cooldown / initialize if cooldown is null.
+        }
+    }
 }

@@ -2,6 +2,8 @@ import State from "../State.js";
 import Witch from "../../entities/Witch.js";
 import Entity from "../../entities/Entity.js";
 import Boss from "../../entities/Boss.js";
+import { isObb } from "../../../lib/canvas/canvasUtils.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../../global.js";
 
 /**
  * The state of the game dictating the the actual video game is happening.
@@ -12,9 +14,9 @@ export default class PlayState extends State {
         super();
     };
 
-    
+
     // Standard state functions...
-    
+
     /**
      * Function that runs when entering the playstate
      * @param {null | undefined | {}} paramaters The paramates for the PlayState (no paramaters are needed for PlayState).
@@ -41,14 +43,30 @@ export default class PlayState extends State {
         // TODO still need to add collision logic / checks to the play state
         // TODO still need tso add some way to check if the player has died or if the boss has died. 
 
+
         this.entities.forEach(entity => {
             /* If the entity is not null we check if we can remove it, if we can remove it
             then we set it to null and if not we update the entity. */
             if (entity) {
 
+                // Checks if the entity is OOB and runs it's OOB action.
+                if (isObb({
+                    canvasWidth: CANVAS_WIDTH,
+                    canvasHeight: CANVAS_HEIGHT,
+                    itemX: entity.hitbox.x,
+                    itemY: entity.hitbox.y,
+                    itemWidth: entity.hitbox.width,
+                    itemHeight: entity.hitbox.height
+                })) {
+
+                    entity.oobAction(); // run the entity's OOB action
+                }
+
                 // Removes or updates the entity depending on it's designated to removed.
                 if (entity.canRemove) {
-                    entity = null;
+                    this.entities = this.entities.filter(function(current) { return current != entity; });
+                    entity = null; 
+                    console.log(this.entities)
                 }
                 else {
                     entity.update(trueTime);

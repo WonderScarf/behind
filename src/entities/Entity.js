@@ -84,10 +84,20 @@ export default class Entity {
     setSprites() { throw Error("Not implemented"); }
 
 
-    // Functions that act as templates for events that may occur to the Entity like getting shot.
-
+    /* Functions that act as templates for events that may occur to the Entity like getting shot. 
+       These will hereby be refered to as 'Actions'*/
+    
+    /**
+     * Action that is ran when entity goes off the canvas.
+     * @throws error when not being overriden.
+     */
     oobAction(){ throw Error("Not implemented"); }
 
+    /**
+     * Action that is ran when the entity colides into another entity. Meant to be overriden by entity.
+     * @param {Entity} collider The entity colided into.
+     * @throws error when not being overriden
+     */
     collisionAction(collider) { throw Error("Not implemented"); };
 
 

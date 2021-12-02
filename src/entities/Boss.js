@@ -21,7 +21,7 @@ export default class Boss extends Entity{
 
     static SPRITESHEET_NAMES = ["witch-move", "witch-shoot"];
     static INTERVAL = .4;
-    static SPEED = 450;
+    static SPEED = 475;
 
     static SPRITE_SIZES = {
         "witch-shoot": {width: 210, height: 350},
@@ -30,8 +30,8 @@ export default class Boss extends Entity{
     }
 
     // The hitbox size
-    static HITBOX_WIDTH = 32;
-    static HITBOX_HEIGHT = 32;
+    static HITBOX_WIDTH = 360;
+    static HITBOX_HEIGHT = 360;
 
 
     // The direction of the that is currently moved in
@@ -46,15 +46,16 @@ export default class Boss extends Entity{
         super({
             // The spawn-point
             x: (CANVAS_WIDTH * .5),
-            y: (CANVAS_HEIGHT * .25),
+            y: (CANVAS_HEIGHT * .02),
 
             // Bounding Box
             boundingWidth: Boss.SPRITE_SIZES["witch-move"].width,
             boundingHeight: Boss.SPRITE_SIZES["witch-move"].height,  
 
             // Hitbox
-            hitboxWidth: Boss.HITBOX_WIDTH,
-            hitboxHeight: Boss.HITBOX_HEIGHT, 
+            
+            //hitboxWidth: Boss.HITBOX_WIDTH,
+            //hitboxHeight: Boss.HITBOX_HEIGHT, 
             
         });
 
@@ -132,7 +133,7 @@ export default class Boss extends Entity{
      * @param {Number | undefined} spawnX 
      * @param {Number | undefined} spawnY 
      */
-    shoot(type, direction = Direction.Down, spawnX = this.x, spawnY = this.y) {
+    shoot(type, direction = Direction.Down, spawnX = this.x + (this.boundingWidth / 2), spawnY = this.y + (this.boundingHeight / 2)) {
         // TODO refactor so it can shoot out of a specied possision as well as the default so TYPE A as well as B works in FirstPhaseState.
         let bullet = BulletFactory.createInstance(type, spawnX, spawnY, direction); // Make a bullet using the object factory based on the type input.
         stateManager.getCurrentState().addEntity(bullet) // Adds the bullet to the current playstate.
