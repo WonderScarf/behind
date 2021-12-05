@@ -19,3 +19,11 @@ export const Direction = {
     Left: 3,
     None: 4,
 };
+
+/**
+ * An emum representing of numbers dictation directions 
+ */
+ export const HitboxId = {
+    WitchHit: 1,
+    BossHit: 2,
+};

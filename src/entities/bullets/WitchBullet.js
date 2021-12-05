@@ -1,4 +1,4 @@
-import { Direction } from "../../enums.js";
+import { Direction, HitboxId } from "../../enums.js";
 import Bullet from "./Bullet.js";
 
 /**
@@ -26,6 +26,8 @@ import Bullet from "./Bullet.js";
             hitboxWidth, 
             hitboxHeight
         );
+        
+        this.hitbox.id = HitboxId.BossHit
     }
     
 }

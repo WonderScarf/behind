@@ -3,7 +3,7 @@ import StateManager from "../states/StateManager.js";
 import Entity from "./Entity.js";
 import Animation from "../../lib/time_management/Animation.js";
 import { BulletFactory } from "../factories/BulletFactory.js";
-import { Direction, BulletType} from "../enums.js"; 
+import { Direction, BulletType, HitboxId} from "../enums.js"; 
 import Witch from "./Witch.js";
 import DyingState from "../states/boss_states/DyingState.js"
 import FirstPhaseState from "../states/boss_states/FirstPhaseState.js"
@@ -55,13 +55,13 @@ export default class Boss extends Entity{
             boundingHeight: Boss.SPRITE_SIZES["witch-move"].height,  
 
             // Hitbox
-            
-            //hitboxWidth: Boss.HITBOX_WIDTH,
-            //hitboxHeight: Boss.HITBOX_HEIGHT, 
+            hitboxId: HitboxId.BossHit
             
         });
 
         this.direction = Boss.DEFAULT_DIRECTION;
+
+        this.hp = Boss.MAX_HP;
 
         // Gets and then sets to sprites all the sprites relating to witch
         this.setSprites();
@@ -145,6 +145,10 @@ export default class Boss extends Entity{
         //Since the Boss's 'ai' never would need to go oob we don't need to do anything (saves processing power).
     }
 
+    collisionAction(collider){
+        this.hp -= 1;
+        console.log(this.hp);
+    }
     
     // Private functions meant to hold functions that should be abstracted.
 

@@ -1,5 +1,5 @@
 import Bullet from "./Bullet.js";
-import { Direction } from "../../enums.js";
+import { Direction, HitboxId } from "../../enums.js";
 
 /**
  * Bullet that moves in the specified direction until reaching a target or outside of the canvas.
@@ -28,5 +28,8 @@ export default class DirectBullet extends Bullet{
             DirectBullet.HITBOX_WIDTH,
             DirectBullet.HITBOX_HEIGHT
         );
+
+        this.hitbox.id = HitboxId.WitchHit;
+
     }
 }

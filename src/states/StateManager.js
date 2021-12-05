@@ -103,7 +103,9 @@ export default class StateManager {
 
         /* Signals the now current state to run it's return function so 
         it reset values back to where they need to be. */
-        this.getCurrentState().return();
+        if(this.currentStateStack.length != 0){
+            this.getCurrentState().return();
+        }
     }
 
     /**

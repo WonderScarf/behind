@@ -82,4 +82,8 @@ export default class Bullet extends Entity{
     oobAction() {
         this.canRemove = true;
     }
+
+    collisionAction(collider){
+        this.canRemove = true;
+    }
 }

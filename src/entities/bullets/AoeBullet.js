@@ -1,5 +1,5 @@
 import Bullet from "./Bullet.js";
-import { Direction } from "../../enums.js";
+import { Direction, HitboxId } from "../../enums.js";
 
 /**
  * Bullet spawns and stays in place for a set amount of time.
@@ -24,5 +24,6 @@ export default class AoeBullet extends Bullet{
             AoeBullet.HITBOX_WIDTH,
             AoeBullet.HITBOX_HEIGHT
         );
+        this.hitbox.id = HitboxId.WitchHit;
     }
 }

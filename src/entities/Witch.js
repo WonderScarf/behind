@@ -9,7 +9,7 @@ import Entity from "./Entity.js";
 import Animation from "../../lib/time_management/Animation.js";
 import FocusShootState from "../states/witch_states/FocusShootState.js";
 import { BulletFactory } from "../factories/BulletFactory.js";
-import { Direction } from "../enums.js"; 
+import { Direction, HitboxId } from "../enums.js"; 
 
 /**
  * The player entity that uses states and user inputs to determine how they
@@ -30,7 +30,7 @@ export default class Witch extends Entity{
         "witch-focus": {width: 210, height: 350}
     }
 
-    //The hitbox size
+    //The hitbox
     static HITBOX_WIDTH = 32;
     static HITBOX_HEIGHT = 32;
 
@@ -48,6 +48,7 @@ export default class Witch extends Entity{
             // Hitbox
             hitboxWidth: Witch.HITBOX_WIDTH,
             hitboxHeight: Witch.HITBOX_HEIGHT, 
+            hitboxId: HitboxId.WitchHit
             
         });
 
@@ -118,7 +119,7 @@ export default class Witch extends Entity{
         let predictedHitboxPoint = { x: this.hitbox.x + (xModifier * Witch.SPEED) , y: this.hitbox.y + (yModifier * Witch.SPEED) };
 
         /* We determine if the hitbox will be out of bounds if we move and change action acordingly.
-           We do this as the player cannot go oob in any circumstance. */
+           We do this as the player cannot go oob in any circumstance.*/
         if((predictedHitboxPoint.x + this.hitbox.width) > CANVAS_WIDTH) { 
             this.hitbox.x = CANVAS_WIDTH - this.hitbox.width;
         }
@@ -147,30 +148,17 @@ export default class Witch extends Entity{
      */
     shoot(type){    
         let bullet = BulletFactory.createInstance(type, this.x, this.y, Direction.Up); // Make a bullet using the object factory based on the type input.
-        stateManager.getCurrentState().addEntity(bullet) // Adds the bullet to the current playstate.
+        stateManager.getCurrentState().addEntity(bullet); // Adds the bullet to the current playstate.
     }
 
 
     oobAction() {
-
-        if((this.hitbox.x + this.hitbox.width) > CANVAS_WIDTH){ 
-            this.x = CANVAS_WIDTH - this.hitbox.width;
-        }
-        
-        if(this.hitbox.x < 0) { 
-            this.x = 1;
-        }
-
-        if(this.hitbox.y < 0) {
-            this.y = 1;
-        }
-        
-        if((this.hitbox.y + this.hitbox.height) > CANVAS_HEIGHT){ 
-            this.y = CANVAS_HEIGHT - this.hitbox.height;
-        }
         
     }
 
+    collisionAction(collider){
+        this.canRemove = true;
+    }
     // Private functions meant to hold functions that should be abstracted.
 
     /**

@@ -21,9 +21,6 @@ export default class FightingState extends State {
         if(!paramaters.boss){
             throw new Error("No boss was input with the paramaters.")
         }
-
-        console.log(paramaters.boss);
-
         this.boss = paramaters.boss;
         
         // We set up the witch's new properties to match the current state.

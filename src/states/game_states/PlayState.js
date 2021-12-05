@@ -3,7 +3,8 @@ import Witch from "../../entities/Witch.js";
 import Entity from "../../entities/Entity.js";
 import Boss from "../../entities/Boss.js";
 import { isObb } from "../../../lib/canvas/canvasUtils.js";
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../../global.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, stateManager } from "../../global.js";
+import Hitbox from "../../entities/Hitbox.js";
 
 /**
  * The state of the game dictating the the actual video game is happening.
@@ -43,11 +44,21 @@ export default class PlayState extends State {
         // TODO still need to add collision logic / checks to the play state
         // TODO still need tso add some way to check if the player has died or if the boss has died. 
 
-
         this.entities.forEach(entity => {
             /* If the entity is not null we check if we can remove it, if we can remove it
             then we set it to null and if not we update the entity. */
             if (entity) {
+
+                // We only check collision with witch and boss as they are the only 2 entities that are not bullets.
+                if(entity != this.witch && Hitbox.isCollide(entity.hitbox, this.witch.hitbox)) {
+                    this.witch.collisionAction(entity);
+                    entity.collisionAction(this.witch);
+                }
+
+                if(entity != this.boss && Hitbox.isCollide(entity.hitbox, this.boss.hitbox)) {
+                    this.boss.collisionAction(entity);
+                    entity.collisionAction(this.boss);
+                }
 
                 // Checks if the entity is OOB and runs it's OOB action.
                 if (isObb({
@@ -72,6 +83,19 @@ export default class PlayState extends State {
                 }
 
             }
+
+            // Checks if the witch is set to be removed or is removed and if so enter the gameover state.
+            if(this.witch == null || this.witch.canRemove){
+                stateManager.removeState();
+                stateManager.loadState("GameOverState", {});
+            }
+
+            // Checks if the boss is set to be removed or is removed and if so enter the win state.
+            if(this.boss == null  || this.boss.canRemove){
+                stateManager.removeState();
+                stateManager.loadState("WinState", {});
+            }
+            
         });
     }
 
