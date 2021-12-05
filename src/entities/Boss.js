@@ -33,6 +33,8 @@ export default class Boss extends Entity{
     static HITBOX_WIDTH = 360;
     static HITBOX_HEIGHT = 360;
 
+    // The max HP the boss has.
+    static MAX_HP = 100;
 
     // The direction of the that is currently moved in
     static DEFAULT_DIRECTION = Direction.None; 
@@ -139,7 +141,11 @@ export default class Boss extends Entity{
         stateManager.getCurrentState().addEntity(bullet) // Adds the bullet to the current playstate.
     }
 
+    oobAction(){
+        //Since the Boss's 'ai' never would need to go oob we don't need to do anything (saves processing power).
+    }
 
+    
     // Private functions meant to hold functions that should be abstracted.
 
     /**
@@ -153,10 +159,10 @@ export default class Boss extends Entity{
         this.stateManager = new StateManager();
 
         // Should make the labels an enum with a value of the label.
-        // this.stateManager.saveStateType("DyingState", new DyingState());
+        this.stateManager.saveStateType("DyingState", new DyingState());
         this.stateManager.saveStateType("FirstPhaseState", new FirstPhaseState());
-        // this.stateManager.saveStateType("SecondPhaseState", new SecondPhaseState());
-        // this.stateManager.saveStateType("ThirdPhaseState", new ThirdPhaseState());
+        this.stateManager.saveStateType("SecondPhaseState", new SecondPhaseState());
+        this.stateManager.saveStateType("ThirdPhaseState", new ThirdPhaseState());
 
         // Sets default state to move state.
         this.stateManager.loadState("FirstPhaseState",{boss: this, witch: witch});

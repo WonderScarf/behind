@@ -114,9 +114,31 @@ export default class Witch extends Entity{
             yModifier /= Witch.FOCUS_SPEED_MODIFIER;
         } 
 
-        //Generate the new x and y
-        this.x += Witch.SPEED * xModifier;
-        this.y += Witch.SPEED * yModifier;
+        // The place the hitbox will be when after moved.
+        let predictedHitboxPoint = { x: this.hitbox.x + (xModifier * Witch.SPEED) , y: this.hitbox.y + (yModifier * Witch.SPEED) };
+
+        /* We determine if the hitbox will be out of bounds if we move and change action acordingly.
+           We do this as the player cannot go oob in any circumstance. */
+        if((predictedHitboxPoint.x + this.hitbox.width) > CANVAS_WIDTH) { 
+            this.hitbox.x = CANVAS_WIDTH - this.hitbox.width;
+        }
+        else if(predictedHitboxPoint.x < 0) { 
+            this.hitbox.x = 1;
+        }
+        else{
+            this.x += Witch.SPEED * xModifier;
+        }
+
+        if(predictedHitboxPoint.y < 0) {
+            this.hitbox.y = 1;
+        }
+        else if((predictedHitboxPoint.y + this.hitbox.height) > CANVAS_HEIGHT){ 
+            this.hitbox.y = CANVAS_HEIGHT - this.hitbox.height;
+        }
+        else {
+            this.y += Witch.SPEED * yModifier;
+        }
+        
     }
 
     /**
@@ -128,6 +150,26 @@ export default class Witch extends Entity{
         stateManager.getCurrentState().addEntity(bullet) // Adds the bullet to the current playstate.
     }
 
+
+    oobAction() {
+
+        if((this.hitbox.x + this.hitbox.width) > CANVAS_WIDTH){ 
+            this.x = CANVAS_WIDTH - this.hitbox.width;
+        }
+        
+        if(this.hitbox.x < 0) { 
+            this.x = 1;
+        }
+
+        if(this.hitbox.y < 0) {
+            this.y = 1;
+        }
+        
+        if((this.hitbox.y + this.hitbox.height) > CANVAS_HEIGHT){ 
+            this.y = CANVAS_HEIGHT - this.hitbox.height;
+        }
+        
+    }
 
     // Private functions meant to hold functions that should be abstracted.
 
@@ -149,4 +191,5 @@ export default class Witch extends Entity{
         // Sets default state to move state.
         this.stateManager.loadState("MoveState",{witch: this});
     }
+    
 }

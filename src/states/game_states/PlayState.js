@@ -66,7 +66,6 @@ export default class PlayState extends State {
                 if (entity.canRemove) {
                     this.entities = this.entities.filter(function(current) { return current != entity; });
                     entity = null; 
-                    console.log(this.entities)
                 }
                 else {
                     entity.update(trueTime);
