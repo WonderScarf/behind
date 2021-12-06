@@ -34,7 +34,7 @@ export default class Boss extends Entity{
     static HITBOX_HEIGHT = 360;
 
     // The max HP the boss has.
-    static MAX_HP = 100;
+    static MAX_HP = 30;
 
     // The direction of the that is currently moved in
     static DEFAULT_DIRECTION = Direction.None; 
@@ -146,7 +146,10 @@ export default class Boss extends Entity{
     }
 
     collisionAction(collider){
-        this.hp -= 1;
+
+        if(collider.damage){
+            this.hp -= collider.damage;
+        }
         console.log(this.hp);
     }
     

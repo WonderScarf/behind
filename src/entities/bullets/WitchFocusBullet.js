@@ -28,6 +28,7 @@ export default class WitchFocusBullet extends WitchBullet{
             WitchFocusBullet.SPEED,
             WitchFocusBullet.HITBOX_WIDTH, 
             WitchFocusBullet.HITBOX_HEIGHT,
+            WitchFocusBullet.DAMAGE
         );
     }
 }

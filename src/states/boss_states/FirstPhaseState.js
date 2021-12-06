@@ -2,7 +2,7 @@ import FightingState from "./FightingState.js";
 import Witch from "../../entities/Witch.js";
 import Boss from "../../entities/Boss.js";
 import { BulletType, Direction } from "../../enums.js";
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from "../../global.js";
+import { CANVAS_WIDTH, CANVAS_HEIGHT, stateManager } from "../../global.js";
 
 /**
  * The logic for the first phase of the fight
@@ -24,6 +24,9 @@ export default class FirstPhaseState extends FightingState {
     // Properties relating to the shots fired to the sides.
     static MAX_COOLDOWN_B = 20;
 
+    // Phase change threshold.
+    static REMAINING_HP_NEXT_THREASHOLD = .66
+
 
     constructor() {
         super();
@@ -34,6 +37,7 @@ export default class FirstPhaseState extends FightingState {
      * @param {{boss: Boss, witch: Witch}} paramaters The inputs used when entering the state.
      */
     enter(paramaters) {
+        console.log("Entering FirstPhaseState...")
         super.enter(paramaters);
 
         this.witch = paramaters.witch;
@@ -57,6 +61,11 @@ export default class FirstPhaseState extends FightingState {
     }
 
     update(trueTime) {
+
+        // We check if we have the threashold to change Phase from 1 to 2 and change
+        if( FirstPhaseState.REMAINING_HP_NEXT_THREASHOLD >= (this.boss.hp / Boss.MAX_HP) ) {
+            this.boss.stateManager.loadState("SecondPhaseState", {boss: this.boss, witch: this.witch})
+        }
 
         this.#followWitch(trueTime); // Boss follows the Witch's movements as best as they could.
 
@@ -107,6 +116,7 @@ export default class FirstPhaseState extends FightingState {
      * Spawns a B-type Direct bullets on the screen randomly
      * @param {BulletType} type 
      * @returns {{x: Number, y:Number, direction: Direction }} 
+     * @private
      */
     #randomSideSpawn() {
         // The varriables representing the spawn point of the bullet
@@ -133,6 +143,7 @@ export default class FirstPhaseState extends FightingState {
     /**
      * Manages the cooldowns of the A-Type Direct bullets that the boss fires 
      * and shoots when it is determined it should.
+     * @private
      */
     #shootAType() {
 
@@ -160,6 +171,7 @@ export default class FirstPhaseState extends FightingState {
     /**
      * Manages the cooldowns of the B-Type Direct bullets that the boss fires 
      * and shoots when it is determined it should.
+     * @private
      */
     #shootBType() {
 

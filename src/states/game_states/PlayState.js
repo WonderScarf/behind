@@ -24,7 +24,7 @@ export default class PlayState extends State {
      */
     enter(paramaters) {
         // Paramaters will be added later for play.
-
+        console.log("Entering play state.");
         this.entities = []; // The entities of the game that will be updated/rendered.
 
         this.witch = new Witch();
@@ -36,13 +36,12 @@ export default class PlayState extends State {
     }
 
     exit() {
+        console.log("Leaving play state.");
         this.entities = null; // We clear the entities list to help garbage collector a bit.
     }
 
     update(trueTime) {
 
-        // TODO still need to add collision logic / checks to the play state
-        // TODO still need tso add some way to check if the player has died or if the boss has died. 
 
         this.entities.forEach(entity => {
             /* If the entity is not null we check if we can remove it, if we can remove it
@@ -69,7 +68,6 @@ export default class PlayState extends State {
                     itemWidth: entity.hitbox.width,
                     itemHeight: entity.hitbox.height
                 })) {
-
                     entity.oobAction(); // run the entity's OOB action
                 }
 
@@ -85,13 +83,13 @@ export default class PlayState extends State {
             }
 
             // Checks if the witch is set to be removed or is removed and if so enter the gameover state.
-            if(this.witch == null || this.witch.canRemove){
+            if(!this.witch || this.witch.canRemove){
                 stateManager.removeState();
                 stateManager.loadState("GameOverState", {});
             }
 
             // Checks if the boss is set to be removed or is removed and if so enter the win state.
-            if(this.boss == null  || this.boss.canRemove){
+            if(!this.boss || this.boss.canRemove){
                 stateManager.removeState();
                 stateManager.loadState("WinState", {});
             }
