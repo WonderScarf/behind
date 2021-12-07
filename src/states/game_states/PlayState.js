@@ -3,7 +3,7 @@ import Witch from "../../entities/Witch.js";
 import Entity from "../../entities/Entity.js";
 import Boss from "../../entities/Boss.js";
 import { isObb } from "../../../lib/canvas/canvasUtils.js";
-import { CANVAS_HEIGHT, CANVAS_WIDTH, stateManager } from "../../global.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, stateManager, timer } from "../../global.js";
 import Hitbox from "../../entities/Hitbox.js";
 
 /**
@@ -41,7 +41,7 @@ export default class PlayState extends State {
     }
 
     update(trueTime) {
-
+        timer.update(trueTime);
 
         this.entities.forEach(entity => {
             /* If the entity is not null we check if we can remove it, if we can remove it
@@ -72,7 +72,7 @@ export default class PlayState extends State {
                 }
 
                 // Removes or updates the entity depending on it's designated to removed.
-                if (entity.canRemove) {
+                if (entity.canRemove && this.entities) {
                     this.entities = this.entities.filter(function(current) { return current != entity; });
                     entity = null; 
                 }

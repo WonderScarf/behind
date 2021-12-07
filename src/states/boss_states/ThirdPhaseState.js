@@ -64,7 +64,7 @@ export default class ThirdPhaseState extends FightingState {
             this.boss.stateManager.loadState("DyingState", {boss: this.boss});
         }
 
-        this.#moveToCenter(trueTime);
+        this.#followWitch(trueTime);
 
         // Managing spawning The different Bullets that the boss fires.
         this.#shootAType();
@@ -83,20 +83,21 @@ export default class ThirdPhaseState extends FightingState {
     // Unqiue functions...
 
     /**
-     * Moves the boss to the center of the canvas width.
+     * Follows the witch's X placement. 
      * @param {Number} trueTime
      * @private 
      */
-    #moveToCenter(trueTime) {
+     #followWitch(trueTime) {
+
         // Gets the center X point of both th witch and the boss
-        let destinationX = CANVAS_WIDTH / 2;
+        let witchX = (this.witch.x - (this.witch.boundingWidth / 2));
         let bossX = (this.boss.x - (this.boss.boundingWidth / 2));
 
         // Change the boss's direction depending on how far they are from the player.
-        if (FirstPhaseState.MOVEMENT_BUFFER_WIDTH > Math.abs(destinationX - bossX)) {
+        if (FirstPhaseState.MOVEMENT_BUFFER_WIDTH > Math.abs(witchX - bossX)) {
             this.boss.direction = Direction.None;
         }
-        else if (destinationX > bossX) {
+        else if (witchX > bossX) {
             this.boss.direction = Direction.Right;
         }
         else {
@@ -105,7 +106,6 @@ export default class ThirdPhaseState extends FightingState {
 
         this.boss.move(trueTime);
     }
-
     /**
      * Manages the cooldowns of the A-Type Direct bullets that the boss fires 
      * and shoots when it is determined it should.
