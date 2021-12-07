@@ -5,12 +5,16 @@ import State from "../../State.js";
  */
 export default class MenuState extends State {
     
+    constructor()
+    {
+        super();
+    }
     /**
      * Function that is run by the state manager when loaded.
      * @param {{}} paramaters The properties that should be loaded by the state.
      */
      enter(paramaters){
-
+        console.log("Entering MenuState...")
     }
 
     /**

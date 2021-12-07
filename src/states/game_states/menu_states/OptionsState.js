@@ -9,7 +9,7 @@ export default class OptionsState extends MenuState {
      * @param {{}} paramaters The properties that should be loaded by the state.
      */
     enter(paramaters){
-         
+        console.log("Entering OptionsState...")
     }
 
     /**

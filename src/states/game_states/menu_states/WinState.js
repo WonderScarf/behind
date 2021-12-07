@@ -9,13 +9,14 @@ export default class WinState extends MenuState {
          * @param {{}} paramaters The properties that should be loaded by the state.
          */
          enter(paramaters){
-         
+                console.log("Entering WinState...")
         }
     
         /**
          * Function that is run on removal of state.
          */
         exit(){
+                
         }
     
         /**

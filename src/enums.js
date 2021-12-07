@@ -27,3 +27,10 @@ export const Direction = {
     WitchHit: 1,
     BossHit: 2,
 };
+
+/**
+ * An enum representing the fillstyle color
+ */
+export const Colour ={
+	Crimson: 'crimson',
+}

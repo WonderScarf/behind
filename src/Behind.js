@@ -11,7 +11,8 @@ export default class Behind {
         this.trueTime = 0;
 
         // Loads the state manager's Loading state leading into PlayState.
-        stateManager.loadState("LoadingState", {exitState: "PlayState", exitParamaters: {}});
+        //stateManager.loadState("LoadingState", {exitState: "PlayState", exitParamaters: {}});
+        stateManager.loadState("LoadingState", {exitState: "MainMenuState", exitParamaters: {}});
     }
 
     /** 
