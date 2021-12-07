@@ -4,6 +4,9 @@ import MenuState from "./MenuState.js";
  * The game's options menu.
  */
 export default class OptionsState extends MenuState {
+    constructor(){
+        super();
+    }
     /**
      * Function that is run by the state manager when loaded.
      * @param {{}} paramaters The properties that should be loaded by the state.

@@ -20,7 +20,7 @@ export default class MainMenu extends MenuState {
          * @param {{}} paramaters The properties that should be loaded by the state.
          */
         enter(paramaters){
-         
+         inputConverter.commands.ENTER_KEY.isPushed = false;
         }
     
         /**
