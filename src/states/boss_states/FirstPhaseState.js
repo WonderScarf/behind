@@ -1,4 +1,5 @@
 import FightingState from "./FightingState.js";
+import SecondPhaseState from "./SecondPhaseState.js";
 import Witch from "../../entities/Witch.js";
 import Boss from "../../entities/Boss.js";
 import { BulletType, Direction } from "../../enums.js";
@@ -63,7 +64,7 @@ export default class FirstPhaseState extends FightingState {
     update(trueTime) {
 
         // We check if we have the threashold to change Phase from 1 to 2 and change
-        if( FirstPhaseState.REMAINING_HP_NEXT_THREASHOLD >= (this.boss.hp / Boss.MAX_HP) ) {
+        if( FirstPhaseState.REMAINING_HP_NEXT_THREASHOLD >= (this.boss.hp / Boss.MAX_HP) && !(SecondPhaseState.REMAINING_HP_NEXT_THREASHOLD >= (this.boss.hp / Boss.MAX_HP))) {
             this.boss.stateManager.loadState("SecondPhaseState", {boss: this.boss, witch: this.witch})
         }
 

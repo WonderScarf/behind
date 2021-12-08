@@ -34,7 +34,7 @@ export default class Boss extends Entity{
     static HITBOX_HEIGHT = 360;
 
     // The max HP the boss has.
-    static MAX_HP = 30;
+    static MAX_HP = 10;
 
     // The direction of the that is currently moved in
     static DEFAULT_DIRECTION = Direction.None; 

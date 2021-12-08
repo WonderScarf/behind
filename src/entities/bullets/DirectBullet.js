@@ -9,7 +9,7 @@ export default class DirectBullet extends Bullet{
     static BOUNDING_HEIGHT = 50;
     static HITBOX_WIDTH = 50;
     static HITBOX_HEIGHT = 50;
-    static SPEED = 2250; // How fast the witch bullet moves.
+    static SPEED = 2000; // How fast the witch bullet moves.
     static DAMAGE = Number.MAX_VALUE; // How much damage the bullet deals to targets.
 
     /**

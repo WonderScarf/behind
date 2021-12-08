@@ -14,12 +14,7 @@ import FirstPhaseState from "./FirstPhaseState.js";
     static HITBOX_Y_OFFSET = 150; // The y offset of the rendered hitbox compared to the bounding box.
 
     // Proporties of the shots fired directly from the Boss...
-    static MAX_COOLDOWN_A = 5;
-    static BETWEEN_CLIP_COOLDOWN_A = 55;
-    static CLIP_SIZE_A = 10;
-
-    // Properties relating to the shots fired to the sides.
-    static MAX_COOLDOWN_B = 20;
+    static MAX_COOLDOWN = 40;
 
     // Phase change threashold.
     static REMAINING_HP_NEXT_THREASHOLD = .33;
@@ -43,10 +38,6 @@ import FirstPhaseState from "./FirstPhaseState.js";
 
         // Sets a current animation to the index of the name we wanted. It is stored within the state itself so it is saved when changing directory.
         this.currentAnimation = this.boss.animations.get(Boss.SPRITESHEET_NAMES[1]);
-
-        this.clipUsed = 0;
-        this.clipCooldownA = 0;
-
     }
 
     /**
@@ -67,7 +58,13 @@ import FirstPhaseState from "./FirstPhaseState.js";
         this.#moveToCenter(trueTime);
 
         // Managing spawning The different Bullets that the boss fires.
-        this.#shootAType();
+        if(this.cooldown < SecondPhaseState.MAX_COOLDOWN){
+            this.cooldown++; //TODO refine by incremention based on truetime.
+        }
+        else {
+            this.boss.shoot(BulletType.Aoe, Direction.None, this.witch.hitbox.x + (this.witch.hitbox.width / 2), this.witch.hitbox.y + (this.witch.hitbox.height / 2) ); // We shoot a aoe type bullet.
+            this.cooldown = 0; // We reset the current cooldown / initialize if cooldown is null.
+        }
 
         super.update(trueTime);
     }
@@ -89,7 +86,7 @@ import FirstPhaseState from "./FirstPhaseState.js";
      */
     #moveToCenter(trueTime) {
         // Gets the center X point of both th witch and the boss
-        let destinationX = CANVAS_WIDTH / 2;
+        let destinationX = (CANVAS_WIDTH / 2);
         let bossX = (this.boss.x - (this.boss.boundingWidth / 2));
 
         // Change the boss's direction depending on how far they are from the player.
@@ -104,32 +101,5 @@ import FirstPhaseState from "./FirstPhaseState.js";
         }
 
         this.boss.move(trueTime);
-    }
-
-    /**
-     * Manages the cooldowns of the A-Type Direct bullets that the boss fires 
-     * and shoots when it is determined it should.
-     */
-    #shootAType() {
-
-        if (this.cooldownA < SecondPhaseState.MAX_COOLDOWN_A) {
-            this.cooldownA++;
-        }
-        else {
-            if (this.clipCooldownA >= SecondPhaseState.BETWEEN_CLIP_COOLDOWN_A) {
-                this.clipCooldownA = 0;
-                this.clipUsed = 0;
-            }
-            else if (this.clipUsed <= SecondPhaseState.CLIP_SIZE_A) {
-
-                this.boss.shoot(BulletType.Direct);
-
-                this.clipUsed++;
-                this.cooldownA = 0;
-            }
-            else {
-                this.clipCooldownA++;
-            }
-        }
     }
 }

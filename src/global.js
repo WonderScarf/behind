@@ -1,5 +1,6 @@
 import StateManager from "./states/StateManager.js";
 import InputConverter from "../lib/input_management/InputConverter.js"
+import Timer from "../lib/time_management/Timer.js";
 
 // Canvas Properties
 
@@ -32,3 +33,5 @@ export const loadedImages = new Map();
 /** Boolean dictating if we display hitboxes on screen or not. */
 export const DEBUG = true;
 
+/** Timer that can be used to track things. */
+export const timer = new Timer();
