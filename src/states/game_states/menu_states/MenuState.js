@@ -1,5 +1,5 @@
 import Vector from "../../../../lib/Vector.js";
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../../../global.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, stateManager } from "../../../global.js";
 import State from "../../State.js";
 
 /**
@@ -21,6 +21,7 @@ export default class MenuState extends State {
             options:'Options',
         }
         this.highlighted = this.menuoptions.play;
+        this.exitState ="";
     }
     /**
      * Function that is run by the state manager when loaded.
@@ -28,20 +29,23 @@ export default class MenuState extends State {
      */
      enter(paramaters){
         console.log("Entering MenuState...");
+        
+        
         //Implement this into the Menu state
+        /*
         if(this.cooldown < ShootState.MAX_COOLDOWN){
             this.cooldown++; //TODO refine by incremention based on truetime.
         }
         else {
             this.cooldown = 0; // We reset the current cooldown / initialize if cooldown is null.
-        }
+        }*/
     }
 
     /**
      * Function that is run on removal of state.
      */
     exit(){
-
+        stateManager.loadState(this.exitState,{});
     }
 
     /**
@@ -56,7 +60,6 @@ export default class MenuState extends State {
      * @param {Number} trueTime The ajusted time.
      */
     update(trueTime){ 
-        
     };
 
     /**

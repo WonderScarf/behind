@@ -138,7 +138,7 @@ export default class Boss extends Entity{
     shoot(type, direction = Direction.Down, spawnX = this.x + (this.boundingWidth / 2), spawnY = this.y + (this.boundingHeight / 2)) {
         // TODO refactor so it can shoot out of a specied possision as well as the default so TYPE A as well as B works in FirstPhaseState.
         let bullet = BulletFactory.createInstance(type, spawnX, spawnY, direction); // Make a bullet using the object factory based on the type input.
-        stateManager.getCurrentState().addEntity(bullet) // Adds the bullet to the current playstate.
+        stateManager.getCurrentState().addEntity(bullet); // Adds the bullet to the current playstate.
     }
 
     oobAction(){

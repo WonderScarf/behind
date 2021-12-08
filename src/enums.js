@@ -33,4 +33,5 @@ export const Direction = {
  */
 export const Colour ={
 	Crimson: 'crimson',
+    CornFlowerBlue:'cornflowerblue',
 }

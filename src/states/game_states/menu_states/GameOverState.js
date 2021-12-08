@@ -12,7 +12,6 @@ export default class GameOverState extends MenuState {
         ;
         constructor(){
                 super();
-                this.cursor = new Vector((CANVAS_WIDTH / 2)+170, (CANVAS_HEIGHT/2)+6);
                 this.retryButton = {isSelected:false, position: new Vector(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2)}; //later idea for modifying or making the menu appear more vibrant
                 this.replayButton =  {isSelected: false, position: new Vector(CANVAS_WIDTH / 2,  (CANVAS_HEIGHT / 2) + 100)};
         }
@@ -20,21 +19,28 @@ export default class GameOverState extends MenuState {
          * Function that is run by the state manager when loaded.
          * @param {{}} paramaters The properties that should be loaded by the state.
          */
-         enter(paramaters){
-                console.log("Game Over State")
+        enter(paramaters){
+                console.log("Game Over State");
+                this.highlighted=this.menuoptions.retry;
+                //this.exitState = paramaters.exitState ?? "MainMenuState";
+                console.log(stateManager.currentStateStack);
+                
         }
     
         /**
          * Function that is run on removal of state.
          */
         exit(){
+                //this.exitState
+                super.exit();//Why does it call exit here instead
         }
     
         /**
          * Code that is ran when we leave our current state, to prepare for re-entering a state.
          */
         return(){
-    
+
+
         }
         /**
          * Updates the current state
@@ -43,25 +49,44 @@ export default class GameOverState extends MenuState {
          update(trueTime){
                 if(inputConverter.commands.UP_KEY.isPushed){
                         console.log("Up key pressed");
-                        this.cursor.x = this.retryButton.position.x + GameOverState.REPLAY_BUTTON_X_OFF_SET-230;
-                        this.cursor.y = this.retryButton.position.y + MainMenu.CURSOR_YOFF_SET;
+                        inputConverter.commands.UP_KEY.isPushed=false;
+                        this.highlighted = this.highlighted === this.menuoptions.retry ? this.menuoptions.options: this.menuoptions.retry;
+                        if(this.highlighted != this.menuoptions.retry)
+                        {
+                                this.cursor.y = this.replayButton.position.y + MainMenu.CURSOR_YOFF_SET;
+                                this.cursor.x = this.replayButton.position.x + GameOverState.REPLAY_BUTTON_X_OFF_SET;
+                        }
+                        else{
+                                this.cursor.x = this.retryButton.position.x + GameOverState.REPLAY_BUTTON_X_OFF_SET-230;
+                                this.cursor.y = this.retryButton.position.y + MainMenu.CURSOR_YOFF_SET; 
+                        }
                         this.render();
                 }
                 else if(inputConverter.commands.DOWN_KEY.isPushed)
                 {
                         console.log("Down Key pressed");
-                        this.cursor.y = this.replayButton.position.y + MainMenu.CURSOR_YOFF_SET;
-                        this.cursor.x = this.replayButton.position.x + GameOverState.REPLAY_BUTTON_X_OFF_SET;
+                        inputConverter.commands.DOWN_KEY.isPushed=false;
+                        if(this.highlighted != this.menuoptions.retry)
+                        {
+                                this.cursor.y = this.replayButton.position.y + MainMenu.CURSOR_YOFF_SET;
+                                this.cursor.x = this.replayButton.position.x + GameOverState.REPLAY_BUTTON_X_OFF_SET;
+                        }
+                        else{
+                                this.cursor.x = this.retryButton.position.x + GameOverState.REPLAY_BUTTON_X_OFF_SET-230;
+                                this.cursor.y = this.retryButton.position.y + MainMenu.CURSOR_YOFF_SET; 
+                        }
                         this.render();
                 } 
                 else if(inputConverter.commands.ENTER_KEY.isPushed && this.cursor.y - MainMenu.CURSOR_YOFF_SET == this.retryButton.position.y){
-                        console.log("Enter has been pressed");
-                        stateManager.loadState("PlayState", {});
+                        console.log("Retry Selected");
+                        this.exitState="PlayState";
+                        stateManager.removeState();
 
                 }
                 else if(inputConverter.commands.ENTER_KEY.isPushed && this.cursor.y - MainMenu.CURSOR_YOFF_SET == this.replayButton.position.y){
-                        console.log("Options been selected");
-                        stateManager.loadState("MainMenuState", {});
+                        console.log("Return to main menu been selected");
+                        this.exitState="MainMenuState";
+                        stateManager.removeState();
                 }
         }
     
@@ -78,7 +103,7 @@ export default class GameOverState extends MenuState {
                 context.font = '80px Arial';
                 context.textBaseline = 'middle';
 		context.textAlign = 'center';
-		context.fillStyle = Colour.Crimson//Colour.DodgerBlue;
+		context.fillStyle = Colour.CornFlowerBlue//Colour.DodgerBlue;
 		context.fillText('<', this.cursor.x,this.cursor.y);
         }
         renderTitle(){
@@ -91,9 +116,9 @@ export default class GameOverState extends MenuState {
         renderOptions() {
 		context.font = '80px Arial';
 		context.textAlign = 'middle';
-		context.fillStyle = Colour.Crimson//Colour.DodgerBlue;
+		context.fillStyle = this.highlighted === this.menuoptions.play? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;
 		context.fillText('Retry', this.retryButton.position.x , this.retryButton.position.y);
-                context.fillStyle = Colour.Crimson//Colour.DodgerBlue;
+                context.fillStyle = this.highlighted === this.menuoptions.play? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;
 		context.fillText('Return to Main Menu', this.replayButton.position.x, this.replayButton.position.y);
 	}
 }

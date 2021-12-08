@@ -1,5 +1,5 @@
 import Witch from "../../entities/Witch.js";
-import { inputConverter } from "../../global.js";
+import { inputConverter, stateManager } from "../../global.js";
 import MoveState from "./MoveState.js";
 import { BulletType } from "../../enums.js";
 
@@ -49,7 +49,7 @@ export default class ShootState extends MoveState {
     }
 
     exit() {
-        this.witch.isShooting = false; // We signal to the witch that it is no longer shooting.
+        this.witch.isShooting = false;// We signal to the witch that it is no longer shooting.
     }
 
     update(trueTime) {

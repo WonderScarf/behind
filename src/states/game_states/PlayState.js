@@ -13,6 +13,7 @@ export default class PlayState extends State {
 
     constructor() {
         super();
+        this.moveState="";
     };
 
 
@@ -37,7 +38,8 @@ export default class PlayState extends State {
 
     exit() {
         console.log("Leaving play state.");
-        this.entities = null; // We clear the entities list to help garbage collector a bit.
+        this.entities = null;
+        //stateManager.loadState(this.moveState, {}); // We clear the entities list to help garbage collector a bit.
     }
 
     update(trueTime) {
@@ -88,16 +90,22 @@ export default class PlayState extends State {
 
             // Checks if the witch is set to be removed or is removed and if so enter the gameover state.
             if(!this.witch || this.witch.canRemove){
+                this.moveState="GameOverState";
+                console.log(stateManager.currentStateStack);
                 stateManager.removeState();
                 stateManager.loadState("GameOverState", {});
                 return;
+                
+                //stateManager.loadState(, {});
             }
 
             // Checks if the boss is set to be removed or is removed and if so enter the win state.
             if(!this.boss || this.boss.canRemove){
+                this.moveState="WinState";
                 stateManager.removeState();
                 stateManager.loadState("WinState", {});
                 return;
+                //stateManager.loadState("WinState", {});
             }
     }
 

@@ -12,7 +12,7 @@ export default class Behind {
 
         // Loads the state manager's Loading state leading into PlayState.
         //stateManager.loadState("LoadingState", {exitState: "PlayState", exitParamaters: {}});
-        stateManager.loadState("LoadingState", {exitState: "MainMenuState", exitParamaters: {}});
+        stateManager.loadState("LoadingState", {exitState: "MainMenuState", exitParamaters: {exitState:"PlayState"}});
     }
 
     /** 
