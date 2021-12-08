@@ -18,14 +18,14 @@ export default class Bullet extends Entity{
     /**
      * @param {Number} spawnX 
      * @param {Number} spawnY 
-     * @param {*} direction 
+     * @param {Direction} direction 
      * @param {Number} width 
      * @param {Number} height 
      * @param {Number} speed
      * @param {Number} hitboxWidth
      * @param {Hitbox} hitboxHeight
      * @param {Number} damage
-     * @param {Number[]} collisionId
+     * @param {Number[] | Number} collisionId
      */
     constructor(spawnX, spawnY, direction, width = Bullet.DEFAULT_BOUNDING_WIDTH, height = Bullet.DEFAULT_BOUNDING_HEIGHT, speed = Bullet.DEFAULT_BULLET_SPEED, hitboxWidth = Bullet.DEFAULT_HITBOX_WIDTH, hitboxHeight = Bullet.DEFAULT_HITBOX_HEIGHT, damage = Bullet.DEFAULT_DAMAGE, collisionId = Bullet.DEFAULT_COLLISION_ID){ 
         // TODO on future iderations it may be better to create a bullet data object that we bring in instead of 300 parameters.
@@ -42,6 +42,7 @@ export default class Bullet extends Entity{
         this.speed = speed;
         this.damage = damage;
         this.collisionId = collisionId;
+
     }
 
 
@@ -75,10 +76,14 @@ export default class Bullet extends Entity{
         super.render();
     }
 
-    /**
-     * Function that deter
-     */
-    hit(entity){
+    // Actions...
 
+    
+    oobAction() {
+        this.canRemove = true;
+    }
+
+    collisionAction(collider){
+        this.canRemove = true;
     }
 }

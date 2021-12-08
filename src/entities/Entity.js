@@ -1,6 +1,5 @@
 //@ts-nocheck
 
-import Sprite from "../../lib/sprite_management/Sprite.js";
 import Hitbox from "./Hitbox.js";
 import { DEBUG, context } from "../global.js";
 
@@ -20,7 +19,7 @@ export default class Entity {
      * isCollidable: Boolean,
      * xHitboxOffset: Number,
      * yHitboxOffset:Number,
-     * type: Number | Number[] }} params All the varriables to input.
+     * hitboxId: Number}} params All the varriables to input.
      */
     constructor(params) {
 
@@ -36,9 +35,9 @@ export default class Entity {
         let xHitboxOffset =  params.xHitboxOffset ?? 0;
         let yHitboxOffset =  params.yHitboxOffset ?? 0;
 
-        let hitboxType = params.type ?? Hitbox.TYPE.Unknown;
+        let hitboxId = params.hitboxId ?? 0;
 
-        this.hitbox = new Hitbox(this.x, this.y, hitboxWidth, hitboxHeight, xHitboxOffset,yHitboxOffset, hitboxType);
+        this.hitbox = new Hitbox(this.x, this.y, hitboxWidth, hitboxHeight, xHitboxOffset,yHitboxOffset, hitboxId);
 
         this.isCollidable = params.isCollidable ?? true;
 
@@ -85,12 +84,20 @@ export default class Entity {
     setSprites() { throw Error("Not implemented"); }
 
 
-    // Functions that act as templates for events that may occur to the Entity like getting shot.
-
+    /* Functions that act as templates for events that may occur to the Entity like getting shot. 
+       These will hereby be refered to as 'Actions'*/
+    
+    /**
+     * Action that is ran when entity goes off the canvas.
+     * @throws error when not being overriden.
+     */
     oobAction(){ throw Error("Not implemented"); }
 
+    /**
+     * Action that is ran when the entity colides into another entity. Meant to be overriden by entity.
+     * @param {Entity || {}} An entity that has hit.
+     * @throws error when not being overriden.
+     */
     collisionAction(collider) { throw Error("Not implemented"); };
-
-
 
 }

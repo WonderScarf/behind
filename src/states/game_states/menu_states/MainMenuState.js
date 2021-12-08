@@ -6,7 +6,6 @@ export default class MainMenu extends MenuState {
          * @param {{}} paramaters The properties that should be loaded by the state.
          */
          enter(paramaters){
-         
         }
     
         /**
@@ -27,12 +26,12 @@ export default class MainMenu extends MenuState {
          * @param {Number} trueTime The ajusted time.
          */
         update(trueTime){ 
-    
+
         };
     
         /**
          * Renders the current state to the canvas.
-         */
+         */    
         render() { 
     
         };

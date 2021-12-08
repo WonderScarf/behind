@@ -9,7 +9,7 @@ import Entity from "./Entity.js";
 import Animation from "../../lib/time_management/Animation.js";
 import FocusShootState from "../states/witch_states/FocusShootState.js";
 import { BulletFactory } from "../factories/BulletFactory.js";
-import { Direction } from "../enums.js"; 
+import { Direction, HitboxId } from "../enums.js"; 
 
 /**
  * The player entity that uses states and user inputs to determine how they
@@ -30,7 +30,7 @@ export default class Witch extends Entity{
         "witch-focus": {width: 210, height: 350}
     }
 
-    //The hitbox size
+    //The hitbox
     static HITBOX_WIDTH = 32;
     static HITBOX_HEIGHT = 32;
 
@@ -48,6 +48,7 @@ export default class Witch extends Entity{
             // Hitbox
             hitboxWidth: Witch.HITBOX_WIDTH,
             hitboxHeight: Witch.HITBOX_HEIGHT, 
+            hitboxId: HitboxId.WitchHit
             
         });
 
@@ -69,6 +70,7 @@ export default class Witch extends Entity{
     // Standard Entity functions...
 
     update(trueTime) {
+
         // Updates itself via depending on it's state manager's current state.
         this.stateManager.updateState(trueTime);
 
@@ -85,7 +87,6 @@ export default class Witch extends Entity{
     }
 
     // Entity sprite/animation functions... 
-
     setSprites(){
 
        let spriteSheet;
@@ -114,30 +115,56 @@ export default class Witch extends Entity{
             yModifier /= Witch.FOCUS_SPEED_MODIFIER;
         } 
 
-        //Generate the new x and y
-        this.x += Witch.SPEED * xModifier;
-        this.y += Witch.SPEED * yModifier;
+        // The place the hitbox will be when after moved.
+        let predictedHitboxPoint = { x: this.hitbox.x + (xModifier * Witch.SPEED) , y: this.hitbox.y + (yModifier * Witch.SPEED) };
+
+        /* We determine if the hitbox will be out of bounds if we move and change action acordingly.
+           We do this as the player cannot go oob in any circumstance.*/
+        if((predictedHitboxPoint.x + this.hitbox.width) > CANVAS_WIDTH) { 
+            this.hitbox.x = CANVAS_WIDTH - this.hitbox.width;
+        }
+        else if(predictedHitboxPoint.x < 0) { 
+            this.hitbox.x = 1;
+        }
+        else{
+            this.x += Witch.SPEED * xModifier;
+        }
+
+        if(predictedHitboxPoint.y < 0) {
+            this.hitbox.y = 1;
+        }
+        else if((predictedHitboxPoint.y + this.hitbox.height) > CANVAS_HEIGHT){ 
+            this.hitbox.y = CANVAS_HEIGHT - this.hitbox.height;
+        }
+        else {
+            this.y += Witch.SPEED * yModifier;
+        }
+        
     }
 
     /**
      * Launces a bullet from it's own place depending on type of bullet input and sends it to the entities in it's playstate.    
      * @param {*} type 
      */
-    shoot(type){
-        //TODO find a way to only fire a bullet based on a firerate that will change depending on state.
-    
+    shoot(type){    
         let bullet = BulletFactory.createInstance(type, this.x, this.y, Direction.Up); // Make a bullet using the object factory based on the type input.
-        stateManager.getCurrentState().addEntity(bullet) // Adds the bullet to the current playstate.
+        stateManager.getCurrentState().addEntity(bullet); // Adds the bullet to the current playstate.
     }
 
 
+    oobAction() {
+        
+    }
+
+    collisionAction(collider){
+        this.canRemove = true;
+    }
     // Private functions meant to hold functions that should be abstracted.
 
     /**
      * Sets up the witches StateManager with it's states. Should only be called in the
      * constructor.
      * @private 
-     * 
      */
     #setStates(){
         // Creates a new state manager to manage the player's states.
@@ -152,4 +179,5 @@ export default class Witch extends Entity{
         // Sets default state to move state.
         this.stateManager.loadState("MoveState",{witch: this});
     }
+    
 }

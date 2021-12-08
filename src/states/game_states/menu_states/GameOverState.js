@@ -9,7 +9,8 @@ export default class GameOverState extends MenuState {
          * @param {{}} paramaters The properties that should be loaded by the state.
          */
          enter(paramaters){
-         
+                console.log("Entering Game over state");
+
         }
     
         /**

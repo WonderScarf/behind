@@ -1,4 +1,4 @@
-import { Direction } from "../../enums.js";
+import { Direction, HitboxId } from "../../enums.js";
 import Bullet from "./Bullet.js";
 
 /**
@@ -15,7 +15,7 @@ import Bullet from "./Bullet.js";
     static DAMAGE = 1;// How much damage the bullet deals to targets.
     static FIRE_RATE = 1;// How fast the bullet is yeeted in it's 
 
-    constructor(spawnX, spawnY, direction = WitchBullet.DEFAULT_DIRECTION,  width = WitchBullet.BOUNDING_WIDTH, height = WitchBullet.BOUNDING_HEIGHT, speed = WitchBullet.DEFAULT_BULLET_SPEED, hitboxWidth = WitchBullet.DEFAULT_HITBOX_WIDTH, hitboxHeight = WitchBullet.DEFAULT_HITBOX_HEIGHT){
+    constructor(spawnX, spawnY, direction = WitchBullet.DEFAULT_DIRECTION,  width = WitchBullet.BOUNDING_WIDTH, height = WitchBullet.BOUNDING_HEIGHT, speed = WitchBullet.DEFAULT_BULLET_SPEED, hitboxWidth = WitchBullet.DEFAULT_HITBOX_WIDTH, hitboxHeight = WitchBullet.DEFAULT_HITBOX_HEIGHT, damage = WitchBullet.DAMAGE){
         super(
             spawnX + (width / 2), 
             spawnY - height, 
@@ -24,8 +24,11 @@ import Bullet from "./Bullet.js";
             height, 
             speed, 
             hitboxWidth, 
-            hitboxHeight
+            hitboxHeight,
+            damage
         );
+        
+        this.hitbox.id = HitboxId.BossHit
     }
     
 }

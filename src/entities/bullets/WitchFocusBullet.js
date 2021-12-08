@@ -1,5 +1,5 @@
 import WitchBullet from "./WitchBullet.js";
-import { Direction } from "../../enums.js";
+import { Direction, HitboxId } from "../../enums.js";
 
 /**
  * Bullet fires when the witch is focused.
@@ -28,6 +28,7 @@ export default class WitchFocusBullet extends WitchBullet{
             WitchFocusBullet.SPEED,
             WitchFocusBullet.HITBOX_WIDTH, 
             WitchFocusBullet.HITBOX_HEIGHT,
+            WitchFocusBullet.DAMAGE
         );
     }
 }
