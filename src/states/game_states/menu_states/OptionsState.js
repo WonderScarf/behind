@@ -23,6 +23,7 @@ export default class OptionsState extends MenuState {
      */
     enter(paramaters){
         console.log("Entering OptionsState...")
+        this.highlighted = this.menuoptions.UpKey;
     }
 
     /**
@@ -37,11 +38,11 @@ export default class OptionsState extends MenuState {
     return(){
 
     }
-        /**
-         * Updates the current state
-         * @param {Number} trueTime The ajusted time.
-         */
-         update(trueTime){
+    /**
+    * Updates the current state
+     * @param {Number} trueTime The ajusted time.
+     */
+    update(trueTime){
              
             if(inputConverter.commands.UP_KEY.isPushed){
                     console.log(`Up key pressed ${inputConverter.commands.UP_KEY.inputs[0]}`);

@@ -26,7 +26,8 @@ export default class MenuState extends State {
             SecondaryKey:'SECONDARY_KEY',
             TetiaryKey:'TETIARY_KEY',
             AlternateKey:'ALTERNATE_KEY',
-            BackKey:'BACK_KEY'
+            BackKey:'BACK_KEY',
+            ConsoleKey:'CONSOLE_KEY',
 
         };
         this.highlighted = this.menuoptions.play;
