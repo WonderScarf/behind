@@ -8,8 +8,8 @@ import MenuState from "./MenuState.js";
  * Screen that displays on game overaa
  */
 export default class GameOverState extends MenuState {
-        static REPLAY_BUTTON_X_OFF_SET = 415
-        ;
+        static REPLAY_BUTTON_X_OFF_SET = 415;
+
         constructor(){
                 super();
                 this.retryButton = {isSelected:false, position: new Vector(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2)}; //later idea for modifying or making the menu appear more vibrant
@@ -23,14 +23,12 @@ export default class GameOverState extends MenuState {
                 console.log("Game Over State");
                 this.highlighted=this.menuoptions.retry;
                 console.log(stateManager.currentStateStack);
-                
         }
     
         /**
          * Function that is run on removal of state.
          */
         exit(){
-                //this.exitState
                 super.exit();
         }
     

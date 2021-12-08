@@ -95,7 +95,7 @@ export default class OptionsState extends MenuState {
 		context.font = '80px Arial';
         context.textAlign = 'middle';
 		context.fillStyle = Colour.Crimson//Colour.DodgerBlue;
-		context.fillText(`UpBUtton= ${inputConverter.commands.UP_KEY.inputs[0]}`, this.retryButton.position.x , this.retryButton.position.y);
+		context.fillText(`UpButton= ${inputConverter.commands.UP_KEY.inputs[0]}`, this.retryButton.position.x , this.retryButton.position.y);
         context.fillStyle = Colour.Crimson//Colour.DodgerBlue;
 		context.fillText('Return to Main Menu', this.returnButton.position.x, this.returnButton.position.y);
 	}

@@ -18,6 +18,16 @@ export default class MenuState extends State {
             yes:'yes',
             no:'no',
             options:'Options',
+            UpKey:'UP_KEY',
+            DownKey:'DOWN_KEY',
+            LeftKey:'LEFT_KEY',
+            RightKey:'RIGHT_KEY',
+            PrimaryKey:'PRIMARY_KEY',
+            SecondaryKey:'SECONDARY_KEY',
+            TetiaryKey:'TETIARY_KEY',
+            AlternateKey:'ALTERNATE_KEY',
+            BackKey:'BACK_KEY'
+
         };
         this.highlighted = this.menuoptions.play;
         this.exitState ="";
