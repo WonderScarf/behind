@@ -22,7 +22,6 @@ export default class GameOverState extends MenuState {
         enter(paramaters){
                 console.log("Game Over State");
                 this.highlighted=this.menuoptions.retry;
-                //this.exitState = paramaters.exitState ?? "MainMenuState";
                 console.log(stateManager.currentStateStack);
                 
         }
@@ -32,7 +31,7 @@ export default class GameOverState extends MenuState {
          */
         exit(){
                 //this.exitState
-                super.exit();//Why does it call exit here instead
+                super.exit();
         }
     
         /**
@@ -50,7 +49,7 @@ export default class GameOverState extends MenuState {
                 if(inputConverter.commands.UP_KEY.isPushed){
                         console.log("Up key pressed");
                         inputConverter.commands.UP_KEY.isPushed=false;
-                        this.highlighted = this.highlighted === this.menuoptions.retry ? this.menuoptions.options: this.menuoptions.retry;
+                        this.highlighted = this.highlighted === this.menuoptions.retry ? this.menuoptions.returnToMainMenu: this.menuoptions.retry;
                         if(this.highlighted != this.menuoptions.retry)
                         {
                                 this.cursor.y = this.replayButton.position.y + MainMenu.CURSOR_YOFF_SET;
@@ -66,6 +65,7 @@ export default class GameOverState extends MenuState {
                 {
                         console.log("Down Key pressed");
                         inputConverter.commands.DOWN_KEY.isPushed=false;
+                        this.highlighted = this.highlighted === this.menuoptions.retry ? this.menuoptions.returnToMainMenu: this.menuoptions.retry;
                         if(this.highlighted != this.menuoptions.retry)
                         {
                                 this.cursor.y = this.replayButton.position.y + MainMenu.CURSOR_YOFF_SET;
@@ -116,9 +116,9 @@ export default class GameOverState extends MenuState {
         renderOptions() {
 		context.font = '80px Arial';
 		context.textAlign = 'middle';
-		context.fillStyle = this.highlighted === this.menuoptions.play? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;
+		context.fillStyle = this.highlighted === this.menuoptions.retry? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;
 		context.fillText('Retry', this.retryButton.position.x , this.retryButton.position.y);
-                context.fillStyle = this.highlighted === this.menuoptions.play? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;
+                context.fillStyle = this.highlighted === this.menuoptions.returnToMainMenu? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;
 		context.fillText('Return to Main Menu', this.replayButton.position.x, this.replayButton.position.y);
 	}
 }

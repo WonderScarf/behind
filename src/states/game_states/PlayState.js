@@ -44,8 +44,6 @@ export default class PlayState extends State {
 
     update(trueTime) {
         timer.update(trueTime);
-        console.log("bba",stateManager.getCurrentState());
-        console.log("bba2",stateManager.currentStateStack);
 
 
         this.entities.forEach(entity => {

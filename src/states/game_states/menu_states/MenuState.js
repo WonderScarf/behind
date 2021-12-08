@@ -13,13 +13,12 @@ export default class MenuState extends State {
         this.cursor = new Vector((CANVAS_WIDTH / 2)+170, (CANVAS_HEIGHT/2)+6);
         this.menuoptions = {
             play:'Play',
-            highScores:'High Scores',
             retry:'Retry',
             returnToMainMenu:'Return To Main Menu',
             yes:'yes',
             no:'no',
             options:'Options',
-        }
+        };
         this.highlighted = this.menuoptions.play;
         this.exitState ="";
     }
