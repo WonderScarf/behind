@@ -11,7 +11,6 @@ export default class MainMenu extends MenuState {
 
         constructor(){
                 super();
-                this.cursor = new Vector((CANVAS_WIDTH / 2)+170, (CANVAS_HEIGHT/2)+6);
                 this.playButton = {isSelected:false, position: new Vector(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2)}; //later idea for modifying or making the menu appear more vibrant
                 this.optionButton =  {isSelected: false, position: new Vector(CANVAS_WIDTH / 2,  (CANVAS_HEIGHT / 2) + 100)};
         }
@@ -20,7 +19,7 @@ export default class MainMenu extends MenuState {
          * @param {{}} paramaters The properties that should be loaded by the state.
          */
         enter(paramaters){
-         inputConverter.commands.ENTER_KEY.isPushed = false;
+                inputConverter.commands.ENTER_KEY.isPushed = false;
         }
     
         /**
@@ -28,12 +27,14 @@ export default class MainMenu extends MenuState {
          */
         exit(){
 
+
         }
     
         /**
          * Code that is ran when we leave our current state, to prepare for re-entering a state.
          */
         return(){
+                
         }
     
         /**
@@ -54,7 +55,7 @@ export default class MainMenu extends MenuState {
                 } 
                 else if(inputConverter.commands.ENTER_KEY.isPushed && this.cursor.y - MainMenu.CURSOR_YOFF_SET == this.playButton.position.y){
                         console.log("Enter has been pressed");
-                        stateManager.loadState("PlayState", {});
+                       // stateManager.loadState("PlayState", {});
 
                 }
                 else if(inputConverter.commands.ENTER_KEY.isPushed && this.cursor.y - MainMenu.CURSOR_YOFF_SET == this.optionButton.position.y){
@@ -91,7 +92,7 @@ export default class MainMenu extends MenuState {
         }
         renderOptions() {
 		context.font = '80px Arial';
-		context.textAlign = 'middle';
+                context.textAlign = 'middle';
 		context.fillStyle = Colour.Crimson//Colour.DodgerBlue;
 		context.fillText('Play', this.playButton.position.x , this.playButton.position.y);
                 context.fillStyle = Colour.Crimson//Colour.DodgerBlue;
