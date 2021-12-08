@@ -42,6 +42,9 @@ export default class PlayState extends State {
 
     update(trueTime) {
         timer.update(trueTime);
+        console.log("bba",stateManager.getCurrentState());
+        console.log("bba2",stateManager.currentStateStack);
+
 
         this.entities.forEach(entity => {
             /* If the entity is not null we check if we can remove it, if we can remove it
@@ -81,20 +84,21 @@ export default class PlayState extends State {
                 }
 
             }
+        });
 
             // Checks if the witch is set to be removed or is removed and if so enter the gameover state.
             if(!this.witch || this.witch.canRemove){
                 stateManager.removeState();
                 stateManager.loadState("GameOverState", {});
+                return;
             }
 
             // Checks if the boss is set to be removed or is removed and if so enter the win state.
             if(!this.boss || this.boss.canRemove){
                 stateManager.removeState();
                 stateManager.loadState("WinState", {});
+                return;
             }
-            
-        });
     }
 
     render() {
