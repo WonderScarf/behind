@@ -8,10 +8,10 @@ import Hitbox from "../Hitbox.js"
 export default class Bullet extends Entity{
 
     static DEFAULT_BULLET_SPEED = 1000;
-    static DEFAULT_HITBOX_WIDTH = 10;
-    static DEFAULT_HITBOX_HEIGHT = 10;
-    static DEFAULT_BOUNDING_WIDTH = 50;
-    static DEFAULT_BOUNDING_HEIGHT = 50;
+    static DEFAULT_HITBOX_WIDTH = 5;
+    static DEFAULT_HITBOX_HEIGHT = 5;
+    static DEFAULT_BOUNDING_WIDTH = 5;
+    static DEFAULT_BOUNDING_HEIGHT = 5;
     static DEFAULT_DAMAGE = 1;
     static DEFAULT_HIT_ID = [0]; // Determines which beings it can 'hit'
 

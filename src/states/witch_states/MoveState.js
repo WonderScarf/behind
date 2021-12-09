@@ -7,8 +7,8 @@ import Witch from "../../entities/Witch.js";
  */
   export default class MoveState extends State {    
 
-    static HITBOX_X_OFFSET = 100; // The x offset of the rendered hitbox compared to the bounding box.
-    static HITBOX_Y_OFFSET = 150; // The y offset of the rendered hitbox compared to the bounding box.
+    static HITBOX_X_OFFSET = 11; // The x offset of the rendered hitbox compared to the bounding box.
+    static HITBOX_Y_OFFSET = 17; // The y offset of the rendered hitbox compared to the bounding box.
 
     constructor(){
         super();

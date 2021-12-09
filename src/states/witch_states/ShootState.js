@@ -10,8 +10,8 @@ import { BulletType } from "../../enums.js";
  */
 export default class ShootState extends MoveState {
 
-    static HITBOX_X_OFFSET = 80; // The x offset of the rendered hitbox compared to the bounding box.
-    static HITBOX_Y_OFFSET = 150; // The y offset of the rendered hitbox compared to the bounding box.
+    static HITBOX_X_OFFSET = 11; // The x offset of the rendered hitbox compared to the bounding box.
+    static HITBOX_Y_OFFSET = 17; // The y offset of the rendered hitbox compared to the bounding box.
     static MAX_COOLDOWN = 10; // The cooldown between shots in this state.
 
     constructor() {
@@ -79,6 +79,7 @@ export default class ShootState extends MoveState {
             return;
         }
 
+        //! TURN INTO A TWEEN THIS IS ESSENTIAL SAME FOR ALL THE OTHER SHOOTS
         // Quick algorithm to make bullets only shoot when cooldown is up.
         if(this.cooldown < ShootState.MAX_COOLDOWN){
             this.cooldown++; //TODO refine by incremention based on truetime.

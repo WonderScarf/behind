@@ -9,9 +9,8 @@ import MoveState from "./MoveState.js";
 export default class FocusState extends MoveState {
 
 
-    static HITBOX_X_OFFSET = 100;
-    static HITBOX_Y_OFFSET = 150;
-    // More shall be added.
+    static HITBOX_X_OFFSET = 11;
+    static HITBOX_Y_OFFSET = 17;
 
     constructor() {
         super();

@@ -21,29 +21,23 @@ export default class Witch extends Entity{
     static FOCUS_SPEED_MODIFIER = 5;
 
     static SPRITESHEET_NAMES = ["witch-move", "witch-shoot"];
-    static INTERVAL = .4;
+    static INTERVAL = .3;
     static SPEED = 900;
 
-    static SPRITE_SIZES = {
-        "witch-shoot": {width: 210, height: 350},
-        "witch-move": {width: 210, height: 350},
-        "witch-focus": {width: 210, height: 350}
-    }
-
     //The hitbox
-    static HITBOX_WIDTH = 32;
-    static HITBOX_HEIGHT = 32;
+    static HITBOX_WIDTH = 10;
+    static HITBOX_HEIGHT = 10;
 
     constructor(){ 
         
         super({
             // The spawn-point
             x: (CANVAS_WIDTH * .25),
-            y: (CANVAS_HEIGHT * .5),
+            y: (CANVAS_HEIGHT / 2),
 
             // Bounding Box
-            boundingWidth: Witch.SPRITE_SIZES["witch-move"].width,
-            boundingHeight: Witch.SPRITE_SIZES["witch-move"].height,  
+            boundingWidth: 1,
+            boundingHeight: 1,  
 
             // Hitbox
             hitboxWidth: Witch.HITBOX_WIDTH,
