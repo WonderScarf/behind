@@ -9,13 +9,17 @@ import { timer } from "../../global.js";
 export default class AoeBullet extends Bullet{
     static SPRITESHEET_NAMES = ["bullet-aoe-warn", "bullet-aoe-hurt"];
 
+    static X_OFFSET = 3;
+    static Y_OFFSET = 0;
+    static HITBOX_WIDTH = 93;
+    static HITBOX_HEIGHT = 93;
     static DEFAULT_DIRECTION = Direction.None; // The default bullet direction of witch bullet.
     static SPEED = 0; // How fast the witch bullet moves.
     static DAMAGE = Number.MAX_VALUE; // How much damage the bullet deals to targets.
 
     // Times that affect how long it takes to enable and removea a bullet.
-    static TIME_BEFORE_ENABLING = 5;
-    static TIME_AFTER_ENABLING = 5;
+    static TIME_BEFORE_ENABLING = 10;
+    static TIME_AFTER_ENABLING = 10;
 
     constructor(spawnX, spawnY, direction = AoeBullet.DEFAULT_DIRECTION){
         super(
@@ -26,8 +30,8 @@ export default class AoeBullet extends Bullet{
             null,
             null,
             AoeBullet.SPEED,
-            null,
-            null
+            AoeBullet.HITBOX_WIDTH,
+            AoeBullet.HITBOX_HEIGHT
         );
         this.hitbox.id = -1;
         this.isActive = false;
@@ -52,8 +56,7 @@ export default class AoeBullet extends Bullet{
         this.boundingWidth = size.width;
         this.boundingHeight = size.height;
 
-        this.hitbox.width = size.width;
-        this.hitbox.height = size.height;
+        this.hitbox.setNewOffsets(AoeBullet.X_OFFSET, AoeBullet.Y_OFFSET);
 
     }
 
