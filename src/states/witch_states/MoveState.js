@@ -63,11 +63,6 @@ import Witch from "../../entities/Witch.js";
             this.witch.stateManager.loadState("FocusState", {witch: this.witch});
         }
 
-        // When we press secondary button we go into the parry state.
-        if(inputConverter.commands.SECONDARY_KEY.isPushed){
-            //TODO if time is remaining at the end create a parry state (OPTIONAL)
-        }
-
         // When we press primary button we go into the shoot state.
         if(inputConverter.commands.PRIMARY_KEY.isPushed && !this.witch.isShooting){
             this.witch.stateManager.loadState("ShootState", {witch: this.witch});

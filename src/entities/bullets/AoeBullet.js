@@ -7,13 +7,8 @@ import { timer } from "../../global.js";
  * Bullet spawns and stays in place for a set amount of time.
  */
 export default class AoeBullet extends Bullet{
-    static SPRITESHEET_NAMES = ["bullet-direct-down"];
+    static SPRITESHEET_NAMES = ["bullet-aoe-warn", "bullet-aoe-hurt"];
 
-    
-    static BOUNDING_WIDTH = 150;
-    static BOUNDING_HEIGHT = 150;
-    static HITBOX_WIDTH = 150;
-    static HITBOX_HEIGHT = 150;
     static DEFAULT_DIRECTION = Direction.None; // The default bullet direction of witch bullet.
     static SPEED = 0; // How fast the witch bullet moves.
     static DAMAGE = Number.MAX_VALUE; // How much damage the bullet deals to targets.
@@ -31,8 +26,8 @@ export default class AoeBullet extends Bullet{
             null,
             null,
             AoeBullet.SPEED,
-            AoeBullet.HITBOX_WIDTH,
-            AoeBullet.HITBOX_HEIGHT
+            null,
+            null
         );
         this.hitbox.id = -1;
         this.isActive = false;
@@ -51,21 +46,28 @@ export default class AoeBullet extends Bullet{
 
         this.currentAnimation = this.animations.get(AoeBullet.SPRITESHEET_NAMES[0]);
 
+        let size = this.currentAnimation.getFrameSize();
+
+        // Update the witch's bounding box acording to the sizes obtained.
+        this.boundingWidth = size.width;
+        this.boundingHeight = size.height;
+
+        this.hitbox.width = size.width;
+        this.hitbox.height = size.height;
+
     }
 
     update(trueTime){
-        if(this.isActive){
-            super.update(trueTime);
+        if(this.isActive ){
+            this.currentAnimation = this.animations.get(AoeBullet.SPRITESHEET_NAMES[1]);
         }
+        super.update(trueTime);
+
     }
 
     render(){
-        if(this.isActive){
-            super.render(); //TODO render the active sprite
-        } else{
-            super.render();// TODO render activating sprite
-            super.render();
-        }
+        super.render(); //TODO render the active sprite
+
     }
 
     oobAction(){

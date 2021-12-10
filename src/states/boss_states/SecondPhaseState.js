@@ -2,7 +2,7 @@ import FightingState from "./FightingState.js";
 import Witch from "../../entities/Witch.js";
 import Boss from "../../entities/Boss.js";
 import { BulletType, Direction } from "../../enums.js";
-import { CANVAS_WIDTH } from "../../global.js";
+import { CANVAS_WIDTH, timer } from "../../global.js";
 import FirstPhaseState from "./FirstPhaseState.js";
 
 /**
@@ -36,8 +36,16 @@ import FirstPhaseState from "./FirstPhaseState.js";
 
         this.setupBoss();
 
+
+        let destinationX = (CANVAS_WIDTH / 2) - (this.boss.boundingWidth / 2);
+        timer.tween(this.boss, ['x'], [destinationX], .2, () => {
+
+		});
+
         // Sets a current animation to the index of the name we wanted. It is stored within the state itself so it is saved when changing directory.
         this.currentAnimation = this.boss.animations.get(Boss.SPRITESHEET_NAMES[1]);
+
+
     }
 
     /**
@@ -55,14 +63,14 @@ import FirstPhaseState from "./FirstPhaseState.js";
             this.boss.stateManager.loadState("ThirdPhaseState", {boss: this.boss, witch: this.witch})
         }
 
-        this.#moveToCenter(trueTime);
+        //this.#moveToCenter(trueTime);
 
         // Managing spawning The different Bullets that the boss fires.
         if(this.cooldown < SecondPhaseState.MAX_COOLDOWN){
-            this.cooldown++; //TODO refine by incremention based on truetime.
+            this.cooldown++;
         }
         else {
-            this.boss.shoot(BulletType.Aoe, Direction.None, this.witch.hitbox.x + (this.witch.hitbox.width / 2), this.witch.hitbox.y + (this.witch.hitbox.height / 2) ); // We shoot a aoe type bullet.
+            this.boss.shoot(BulletType.Aoe, Direction.None,  this.witch.hitbox.x - (this.currentAnimation.getCurrentFrame().width), this.witch.hitbox.y + (this.witch.hitbox.height / 2) ); // We shoot a aoe type bullet.
             this.cooldown = 0; // We reset the current cooldown / initialize if cooldown is null.
         }
 
@@ -86,7 +94,7 @@ import FirstPhaseState from "./FirstPhaseState.js";
      */
     #moveToCenter(trueTime) {
         // Gets the center X point of both th witch and the boss
-        let destinationX = (CANVAS_WIDTH / 2);
+        let destinationX = (CANVAS_WIDTH / 2) - (this.currentAnimation / 2);
         let bossX = (this.boss.x - (this.boss.boundingWidth / 2));
 
         // Change the boss's direction depending on how far they are from the player.

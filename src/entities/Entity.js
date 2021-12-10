@@ -55,7 +55,6 @@ export default class Entity {
      * @param {Number} trueTime The current time since last frame.
      */
     update(trueTime) { 
-        // TODO Check if the entity is OOB
         this.hitbox.mimic(this.x, this.y)
     };
 

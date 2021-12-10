@@ -18,15 +18,11 @@ import ThirdPhaseState from "../states/boss_states/ThirdPhaseState.js"
 export default class Boss extends Entity{
     
     static SPRITESHEET_NAMES = ["boss-shoot", "boss-idle","boss-death"];
-    static INTERVAL = .4;
+    static INTERVAL = .2;
     static SPEED = 275;
 
-    // The hitbox size
-    static HITBOX_WIDTH = 360;
-    static HITBOX_HEIGHT = 360;
-
     // The max HP the boss has.
-    static MAX_HP = 10;
+    static MAX_HP = 3;
 
     // The direction of the that is currently moved in
     static DEFAULT_DIRECTION = Direction.None; 
@@ -128,7 +124,6 @@ export default class Boss extends Entity{
      * @param {Number | undefined} spawnY 
      */
     shoot(type, direction = Direction.Down, spawnX = this.x + (this.boundingWidth / 2), spawnY = this.y + (this.boundingHeight / 2)) {
-        // TODO refactor so it can shoot out of a specied possision as well as the default so TYPE A as well as B works in FirstPhaseState.
         let bullet = BulletFactory.createInstance(type, spawnX, spawnY, direction); // Make a bullet using the object factory based on the type input.
         stateManager.getCurrentState().addEntity(bullet) // Adds the bullet to the current playstate.
     }

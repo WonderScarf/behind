@@ -29,7 +29,6 @@ export default class StateManager {
             throw new Error("Cannot save an empty state to saved states.")
         }
 
-        // TODO Add validation that there are no duplicate keys
 
         // Sets the stateTypes map with the input data.
         this.stateTypes.set(label, state);

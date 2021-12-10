@@ -19,7 +19,7 @@ export default class Witch extends Entity{
     static FOCUS_SPEED_MODIFIER = 4;
 
     static SPRITESHEET_NAMES = ["witch-move", "witch-shoot"];
-    static INTERVAL = .3;
+    static INTERVAL = .15;
     static SPEED = 600;
 
     //The hitbox

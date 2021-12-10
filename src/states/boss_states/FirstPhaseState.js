@@ -18,9 +18,9 @@ export default class FirstPhaseState extends FightingState {
     static MOVEMENT_BUFFER_WIDTH = 6; // Number representing how closely Boss should aim to follow Witch.
 
     // Proporties of the shots fired directly from the Boss...
-    static MAX_COOLDOWN_A = 10;
-    static BETWEEN_CLIP_COOLDOWN_A = 30;
-    static CLIP_SIZE_A = 8;
+    static MAX_COOLDOWN_A = 9;
+    static BETWEEN_CLIP_COOLDOWN_A = 40;
+    static CLIP_SIZE_A = 7;
 
     // Properties relating to the shots fired to the sides.
     static MAX_COOLDOWN_B = 25;
@@ -123,9 +123,6 @@ export default class FirstPhaseState extends FightingState {
         // The varriables representing the spawn point of the bullet
         let spawnX;
         let spawnY = Math.random() * CANVAS_HEIGHT;
-
-        // TODO implement that it spawns completely inbound via the bullets' width.
-        // ? Maybe a timer of some sort that sets the bullet to dead when the we would determined as reaching it's destination.
 
         // Randomly pick either left or right
         let direction = Math.floor(Math.random() * 2) + 2;

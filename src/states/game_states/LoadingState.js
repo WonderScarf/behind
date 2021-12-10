@@ -8,7 +8,7 @@ export default class LoadingState extends State {
 
     constructor() {
         super();
-        this.iskeyboardEventsSetup = false; //TODO change to proper format
+        this.iskeyboardEventsSetup = false;
         this.isDataLoaded = false;
     };
 
@@ -31,7 +31,6 @@ export default class LoadingState extends State {
         this.exitParamaters = paramaters.exitParamaters;
 
         if (!inputConverter.isSetup) {
-            // TODO make paths varriable so we needn't hard code it.
             inputConverter.setup("../../../data/options_config.json");
         }
 
