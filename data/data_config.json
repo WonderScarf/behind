@@ -118,6 +118,23 @@
 			"path": "../style/images/bullet_sheets/bullet_knives_up.png",
             "spriteWidth": "28",
             "spriteHeight": "27"
+        },
+        
+        {
+            "name":"bullet-aoe-warn",
+            "width":"392", 
+            "height":"93",
+			"path": "../style/images/bullet_sheets/bullet_aoe_warning.png",
+            "spriteWidth": "98",
+            "spriteHeight": "93"
+        },
+        {
+            "name":"bullet-aoe-hurt",
+            "width":"392", 
+            "height":"93",
+			"path": "../style/images/bullet_sheets/bullet_aoe_hurt.png",
+            "spriteWidth": "98",
+            "spriteHeight": "93"
         }
         
 	]

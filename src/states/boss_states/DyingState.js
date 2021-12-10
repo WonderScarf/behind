@@ -31,10 +31,8 @@ export default class DyingState extends FightingState {
 
         // Sets a current animation to the index of the name we wanted. It is stored within the state itself so it is saved when changing directory.
         this.currentAnimation = this.boss.animations.get(Boss.SPRITESHEET_NAMES[2]);
-        
-        
-        //TODO Implement a dying animation and when it's over set the boss to canRemove = true. For now we will set it here.
 
+        //TODO Implement a dying animation and when it's over set the boss to canRemove = true. For now we will set it here.
         this.boss.canRemove = true;
 
     }

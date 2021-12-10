@@ -35,7 +35,7 @@ export default class ThirdPhaseState extends FirstPhaseState {
         }
 
         if(this.cooldownAoe < ThirdPhaseState.MAX_COOLDOWN){
-            this.cooldownAoe++; //TODO refine by incremention based on truetime.
+            this.cooldownAoe++;
         }
         else {
             this.boss.shoot(BulletType.Aoe, Direction.None, this.witch.hitbox.x + (this.witch.hitbox.width / 2), this.witch.hitbox.y + (this.witch.hitbox.height / 2) ); // We shoot a aoe type bullet.

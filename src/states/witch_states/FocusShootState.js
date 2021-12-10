@@ -69,7 +69,7 @@ export default class FocusShootState extends FocusState {
 
         // Checks if the cooldown has been passed.
         if (this.cooldown < FocusShootState.MAX_COOLDOWN) {
-            this.cooldown++; //TODO refine by incremention based on truetime.
+            this.cooldown++;
         }
         else {
             this.witch.shoot(BulletType.WitchFocus);
