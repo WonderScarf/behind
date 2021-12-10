@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import {CANVAS_WIDTH, CANVAS_HEIGHT, loadedImages, stateManager} from "../global.js";
 import StateManager from "../states/StateManager.js";
 import FocusState from "../states/witch_states/FocusState.js";
@@ -18,11 +16,11 @@ import { Direction, HitboxId } from "../enums.js";
  */
 export default class Witch extends Entity{
     
-    static FOCUS_SPEED_MODIFIER = 5;
+    static FOCUS_SPEED_MODIFIER = 4;
 
     static SPRITESHEET_NAMES = ["witch-move", "witch-shoot"];
     static INTERVAL = .3;
-    static SPEED = 900;
+    static SPEED = 600;
 
     //The hitbox
     static HITBOX_WIDTH = 10;
@@ -139,9 +137,13 @@ export default class Witch extends Entity{
     /**
      * Launces a bullet from it's own place depending on type of bullet input and sends it to the entities in it's playstate.    
      * @param {*} type 
+     * 
      */
     shoot(type){    
-        let bullet = BulletFactory.createInstance(type, this.x, this.y, Direction.Up); // Make a bullet using the object factory based on the type input.
+        let bullet = BulletFactory.createInstance(type, this.x + (this.boundingWidth /2), this.y, Direction.Up); // Make a bullet using the object factory based on the type input.
+        
+        bullet.x -= (bullet.boundingWidth / 2)
+        bullet.y -= bullet.boundingHeight
         stateManager.getCurrentState().addEntity(bullet); // Adds the bullet to the current playstate.
     }
 

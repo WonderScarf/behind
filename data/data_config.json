@@ -18,7 +18,6 @@
         },
 
 
-
         {
             "name":"boss-shoot",
             "width":"56", 
@@ -49,7 +48,7 @@
             "name":"award-bronze",
             "width":"128", 
             "height":"38",
-			"path": "../style/images/award_sheet/bronze.png",
+			"path": "../style/images/award_sheets/bronze.png",
             "spriteWidth": "32",
             "spriteHeight": "38"
         },
@@ -57,7 +56,7 @@
             "name":"award-silver",
             "width":"32", 
             "height":"38",
-			"path": "../style/images/award_sheet/silver.png",
+			"path": "../style/images/award_sheets/silver.png",
             "spriteWidth": "32",
             "spriteHeight": "38"
         },
@@ -65,7 +64,7 @@
             "name":"award-gold",
             "width":"127", 
             "height":"38",
-			"path": "../style/images/award_sheet/gold.png",
+			"path": "../style/images/award_sheets/gold.png",
             "spriteWidth": "28",
             "spriteHeight": "27"
         },
@@ -74,43 +73,51 @@
 
         {
             "name":"bullet-witch",
-            "width":"28", 
-            "height":"27",
-			"path": "../style/images/bullet_sheet/knives_up.png",
-            "spriteWidth": "28",
-            "spriteHeight": "27"
+            "width":"38", 
+            "height":"60",
+			"path": "../style/images/bullet_sheets/bullet_spear_up.png",
+            "spriteWidth": "19",
+            "spriteHeight": "60"
         },
         {
             "name":"bullet-witch-focus",
             "width":"128", 
             "height":"28",
-			"path": "../style/images/bullet_sheet/bullet_focus.png",
+			"path": "../style/images/bullet_sheets/bullet_focus.png",
             "spriteWidth": "29",
             "spriteHeight": "28"
         },
         {
-            "name":"bullet-direct_down",
-            "width":"51", 
-            "height":"59",
-			"path": "../style/images/bullet_sheet/bullet_spear_down.png",
-            "spriteWidth": "25",
-            "spriteHeight": "59"
-        },
-        {
-            "name":"bullet-direct_right",
-            "width":"123", 
-            "height":"19",
-			"path": "../style/images/bullet_sheet/bullet_spear_right.png",
-            "spriteWidth": "61",
-            "spriteHeight": "19"
+            "name":"bullet-direct-right",
+            "width":"28", 
+            "height":"27",
+			"path": "../style/images/bullet_sheets/bullet_knives_right.png",
+            "spriteWidth": "28",
+            "spriteHeight": "27"
         },
         {
             "name":"bullet-direct-left",
-            "width":"123", 
-            "height":"19",
-			"path": "../style/images/bullet_sheet/bullet_spear_left.png",
-            "spriteWidth": "61",
-            "spriteHeight": "19"
+            "width":"28", 
+            "height":"27",
+			"path": "../style/images/bullet_sheets/bullet_knives_left.png",
+            "spriteWidth": "28",
+            "spriteHeight": "27"
+        },
+        {
+            "name":"bullet-direct-down",
+            "width":"28", 
+            "height":"27",
+			"path": "../style/images/bullet_sheets/bullet_knives_down.png",
+            "spriteWidth": "28",
+            "spriteHeight": "27"
+        },
+        {
+            "name":"bullet-direct-up",
+            "width":"28", 
+            "height":"27",
+			"path": "../style/images/bullet_sheets/bullet_knives_up.png",
+            "spriteWidth": "28",
+            "spriteHeight": "27"
         }
         
 	]

@@ -18,9 +18,9 @@ export default class FirstPhaseState extends FightingState {
     static MOVEMENT_BUFFER_WIDTH = 6; // Number representing how closely Boss should aim to follow Witch.
 
     // Proporties of the shots fired directly from the Boss...
-    static MAX_COOLDOWN_A = 5;
-    static BETWEEN_CLIP_COOLDOWN_A = 55;
-    static CLIP_SIZE_A = 10;
+    static MAX_COOLDOWN_A = 10;
+    static BETWEEN_CLIP_COOLDOWN_A = 30;
+    static CLIP_SIZE_A = 8;
 
     // Properties relating to the shots fired to the sides.
     static MAX_COOLDOWN_B = 25;

@@ -17,11 +17,9 @@ import ThirdPhaseState from "../states/boss_states/ThirdPhaseState.js"
  */
 export default class Boss extends Entity{
     
-    static FOCUS_SPEED_MODIFIER = 5;
-
     static SPRITESHEET_NAMES = ["boss-shoot", "boss-idle","boss-death"];
     static INTERVAL = .4;
-    static SPEED = 475;
+    static SPEED = 275;
 
     // The hitbox size
     static HITBOX_WIDTH = 360;

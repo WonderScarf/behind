@@ -22,18 +22,10 @@
 
     /* Canvas */
     --canvas-border-size: .2em;
-
-
-    /* How big the canvas looks to the user (It's real size is in the HTML) */
-    --canvas-medium-width: 720px;
-    --canvas-medium-height: 1280px;
-
-    --canvas-small-width: 360px;
-    --canvas-small-height: 640px;
 }
 
 body {
-    background-color: var(--light-color);
+    background-color: var(--dark-color);
 }
 
 canvas {
@@ -41,7 +33,7 @@ canvas {
     /* Canvas properties
     width: var(--canvas-medium-width);
     height: var(--canvas-medium-height);*/
-    background-color: var(--secondary-color);
+    background-color: var(--light-color);
 
     /* Canvas border properties */
     border: var(--canvas-border-size) solid;

@@ -85,7 +85,7 @@ export default class ShootState extends MoveState {
             this.cooldown++; //TODO refine by incremention based on truetime.
         }
         else {
-            this.witch.shoot(BulletType.Witch); // We shoot a witch type bullet.
+            this.witch.shoot(BulletType.Witch ); // We shoot a witch type bullet.
             this.cooldown = 0; // We reset the current cooldown / initialize if cooldown is null.
         }
 

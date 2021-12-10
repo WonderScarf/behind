@@ -7,10 +7,13 @@ import { timer } from "../../global.js";
  * Bullet spawns and stays in place for a set amount of time.
  */
 export default class AoeBullet extends Bullet{
-    static BOUNDING_WIDTH = 350;
-    static BOUNDING_HEIGHT = 350;
-    static HITBOX_WIDTH = 350;
-    static HITBOX_HEIGHT = 350;
+    static SPRITESHEET_NAMES = ["bullet-direct-down"];
+
+    
+    static BOUNDING_WIDTH = 150;
+    static BOUNDING_HEIGHT = 150;
+    static HITBOX_WIDTH = 150;
+    static HITBOX_HEIGHT = 150;
     static DEFAULT_DIRECTION = Direction.None; // The default bullet direction of witch bullet.
     static SPEED = 0; // How fast the witch bullet moves.
     static DAMAGE = Number.MAX_VALUE; // How much damage the bullet deals to targets.
@@ -24,8 +27,9 @@ export default class AoeBullet extends Bullet{
             spawnX, 
             spawnY, 
             direction, 
-            AoeBullet.BOUNDING_WIDTH, 
-            AoeBullet.BOUNDING_HEIGHT, 
+            AoeBullet.SPRITESHEET_NAMES,
+            null,
+            null,
             AoeBullet.SPEED,
             AoeBullet.HITBOX_WIDTH,
             AoeBullet.HITBOX_HEIGHT
@@ -44,6 +48,9 @@ export default class AoeBullet extends Bullet{
                 this.canRemove = true;
             });
         });
+
+        this.currentAnimation = this.animations.get(AoeBullet.SPRITESHEET_NAMES[0]);
+
     }
 
     update(trueTime){

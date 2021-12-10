@@ -11,7 +11,7 @@ export default class FocusShootState extends FocusState {
 
     static HITBOX_X_OFFSET = 11; // The x offset of the rendered hitbox compared to the bounding box.
     static HITBOX_Y_OFFSET = 17; // The y offset of the rendered hitbox compared to the bounding box.
-    static MAX_COOLDOWN = 2.5; // The cooldown between shots in this state.
+    static MAX_COOLDOWN = 5; // The cooldown between shots in this state.
 
     constructor() {
         super();
