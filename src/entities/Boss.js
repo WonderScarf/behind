@@ -17,17 +17,9 @@ import ThirdPhaseState from "../states/boss_states/ThirdPhaseState.js"
  */
 export default class Boss extends Entity{
     
-    static FOCUS_SPEED_MODIFIER = 5;
-
-    static SPRITESHEET_NAMES = ["witch-move", "witch-shoot"];
+    static SPRITESHEET_NAMES = ["boss-shoot", "boss-idle","boss-death"];
     static INTERVAL = .4;
-    static SPEED = 475;
-
-    static SPRITE_SIZES = {
-        "witch-shoot": {width: 210, height: 350},
-        "witch-move": {width: 210, height: 350},
-        "witch-focus": {width: 210, height: 350}
-    }
+    static SPEED = 275;
 
     // The hitbox size
     static HITBOX_WIDTH = 360;
@@ -51,8 +43,8 @@ export default class Boss extends Entity{
             y: (CANVAS_HEIGHT * .02),
 
             // Bounding Box
-            boundingWidth: Boss.SPRITE_SIZES["witch-move"].width,
-            boundingHeight: Boss.SPRITE_SIZES["witch-move"].height,  
+            boundingWidth: 30,
+            boundingHeight: 30,  
 
             // Hitbox
             hitboxId: HitboxId.BossHit
@@ -96,10 +88,10 @@ export default class Boss extends Entity{
 
        let spriteSheet;
 
-        for (let spritesheetIndex = 0; spritesheetIndex < Witch.SPRITESHEET_NAMES.length; spritesheetIndex++) {
+        for (let spritesheetIndex = 0; spritesheetIndex < Boss.SPRITESHEET_NAMES.length; spritesheetIndex++) {
 
-            spriteSheet = loadedImages.get(Witch.SPRITESHEET_NAMES[spritesheetIndex]);
-            this.animations.set(Witch.SPRITESHEET_NAMES[spritesheetIndex], new Animation(spriteSheet.getSprites(), Witch.INTERVAL));
+            spriteSheet = loadedImages.get(Boss.SPRITESHEET_NAMES[spritesheetIndex]);
+            this.animations.set(Boss.SPRITESHEET_NAMES[spritesheetIndex], new Animation(spriteSheet.getSprites(), Boss.INTERVAL));
         }
     }
 

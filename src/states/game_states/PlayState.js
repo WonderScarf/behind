@@ -45,7 +45,6 @@ export default class PlayState extends State {
     update(trueTime) {
         timer.update(trueTime);
 
-
         this.entities.forEach(entity => {
             /* If the entity is not null we check if we can remove it, if we can remove it
             then we set it to null and if not we update the entity. */

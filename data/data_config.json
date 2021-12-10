@@ -2,19 +2,122 @@
     "images": [
 		{
             "name":"witch-shoot",
-            "width":"210", 
-            "height":"350",
-			"path": "../style/images/witch-shoot.png",
-            "spriteWidth": "210",
-            "spriteHeight": "350"
+            "width":"192", 
+            "height":"41",
+			"path": "../style/images/witch_sheets/witch_shoot.png",
+            "spriteWidth": "32",
+            "spriteHeight": "41"
 		},
         {
             "name":"witch-move",
-            "width":"630", 
-            "height":"350",
-			"path": "../style/images/witch-move.png",
-            "spriteWidth": "210",
-            "spriteHeight": "350"
+            "width":"160", 
+            "height":"40",
+			"path": "../style/images/witch_sheets/witch_move.png",
+            "spriteWidth": "32",
+            "spriteHeight": "40"
+        },
+
+
+        {
+            "name":"boss-shoot",
+            "width":"56", 
+            "height":"39",
+			"path": "../style/images/boss_sheets/boss_shoot.png",
+            "spriteWidth": "28",
+            "spriteHeight": "39"
+        },
+        {
+            "name":"boss-idle",
+            "width":"216", 
+            "height":"36",
+			"path": "../style/images/boss_sheets/boss_idle.png",
+            "spriteWidth": "30.85714286",
+            "spriteHeight": "36"
+        },
+        {
+            "name":"boss-death",
+            "width":"316", 
+            "height":"27",
+			"path": "../style/images/boss_sheets/boss_death.png",
+            "spriteWidth": "28",
+            "spriteHeight": "27"
+        },
+
+
+        {
+            "name":"award-bronze",
+            "width":"128", 
+            "height":"38",
+			"path": "../style/images/award_sheets/bronze.png",
+            "spriteWidth": "32",
+            "spriteHeight": "38"
+        },
+        {
+            "name":"award-silver",
+            "width":"32", 
+            "height":"38",
+			"path": "../style/images/award_sheets/silver.png",
+            "spriteWidth": "32",
+            "spriteHeight": "38"
+        },
+        {
+            "name":"award-gold",
+            "width":"127", 
+            "height":"38",
+			"path": "../style/images/award_sheets/gold.png",
+            "spriteWidth": "28",
+            "spriteHeight": "27"
+        },
+
+
+
+        {
+            "name":"bullet-witch",
+            "width":"38", 
+            "height":"60",
+			"path": "../style/images/bullet_sheets/bullet_spear_up.png",
+            "spriteWidth": "19",
+            "spriteHeight": "60"
+        },
+        {
+            "name":"bullet-witch-focus",
+            "width":"128", 
+            "height":"28",
+			"path": "../style/images/bullet_sheets/bullet_focus.png",
+            "spriteWidth": "29",
+            "spriteHeight": "28"
+        },
+        {
+            "name":"bullet-direct-right",
+            "width":"28", 
+            "height":"27",
+			"path": "../style/images/bullet_sheets/bullet_knives_right.png",
+            "spriteWidth": "28",
+            "spriteHeight": "27"
+        },
+        {
+            "name":"bullet-direct-left",
+            "width":"28", 
+            "height":"27",
+			"path": "../style/images/bullet_sheets/bullet_knives_left.png",
+            "spriteWidth": "28",
+            "spriteHeight": "27"
+        },
+        {
+            "name":"bullet-direct-down",
+            "width":"28", 
+            "height":"27",
+			"path": "../style/images/bullet_sheets/bullet_knives_down.png",
+            "spriteWidth": "28",
+            "spriteHeight": "27"
+        },
+        {
+            "name":"bullet-direct-up",
+            "width":"28", 
+            "height":"27",
+			"path": "../style/images/bullet_sheets/bullet_knives_up.png",
+            "spriteWidth": "28",
+            "spriteHeight": "27"
         }
         
 	]

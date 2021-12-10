@@ -1,23 +1,27 @@
 import { Direction } from "../../enums.js";
+import Animation from "../../../lib/time_management/Animation.js";
 import {context} from "../../global.js";
 import Entity from "../Entity.js";
 import Hitbox from "../Hitbox.js"
+import { loadedImages } from "../../global.js";
 /**
  * An Entity representing a projectile fired by either a foe or friend
  */
 export default class Bullet extends Entity{
+    static INTERVAL = 0.10;
 
     static DEFAULT_BULLET_SPEED = 1000;
-    static DEFAULT_HITBOX_WIDTH = 10;
-    static DEFAULT_HITBOX_HEIGHT = 10;
-    static DEFAULT_BOUNDING_WIDTH = 50;
-    static DEFAULT_BOUNDING_HEIGHT = 50;
+    static DEFAULT_HITBOX_WIDTH = 5;
+    static DEFAULT_HITBOX_HEIGHT = 5;
+    static DEFAULT_BOUNDING_WIDTH = 5;
+    static DEFAULT_BOUNDING_HEIGHT = 5;
     static DEFAULT_DAMAGE = 1;
     static DEFAULT_HIT_ID = [0]; // Determines which beings it can 'hit'
 
     /**
      * @param {Number} spawnX 
      * @param {Number} spawnY 
+     * @param {String} spriteNames
      * @param {Direction} direction 
      * @param {Number} width 
      * @param {Number} height 
@@ -27,7 +31,7 @@ export default class Bullet extends Entity{
      * @param {Number} damage
      * @param {Number[] | Number} collisionId
      */
-    constructor(spawnX, spawnY, direction, width = Bullet.DEFAULT_BOUNDING_WIDTH, height = Bullet.DEFAULT_BOUNDING_HEIGHT, speed = Bullet.DEFAULT_BULLET_SPEED, hitboxWidth = Bullet.DEFAULT_HITBOX_WIDTH, hitboxHeight = Bullet.DEFAULT_HITBOX_HEIGHT, damage = Bullet.DEFAULT_DAMAGE, collisionId = Bullet.DEFAULT_COLLISION_ID){ 
+    constructor(spawnX, spawnY, direction, spriteNames, width = Bullet.DEFAULT_BOUNDING_WIDTH, height = Bullet.DEFAULT_BOUNDING_HEIGHT, speed = Bullet.DEFAULT_BULLET_SPEED, hitboxWidth = Bullet.DEFAULT_HITBOX_WIDTH, hitboxHeight = Bullet.DEFAULT_HITBOX_HEIGHT, damage = Bullet.DEFAULT_DAMAGE, collisionId = Bullet.DEFAULT_COLLISION_ID){ 
         // TODO on future iderations it may be better to create a bullet data object that we bring in instead of 300 parameters.
         super({
             x: spawnX, 
@@ -43,6 +47,8 @@ export default class Bullet extends Entity{
         this.damage = damage;
         this.collisionId = collisionId;
 
+        this.spriteNames = spriteNames;
+        this.setSprites();
     }
 
 
@@ -65,6 +71,9 @@ export default class Bullet extends Entity{
                 break;
         }
 
+        this.currentAnimation.update(trueTime);
+
+        
         super.update(trueTime);
     }
 
@@ -73,8 +82,21 @@ export default class Bullet extends Entity{
             throw new Error("Could not render bullet due to the lack of context.")
         }
 
+        this.currentAnimation.renderCurrentFrame(this.x, this.y);
         super.render();
     }
+
+
+    setSprites(){
+
+        let spriteSheet;
+ 
+         for (let spritesheetIndex = 0; spritesheetIndex < this.spriteNames.length; spritesheetIndex++) {
+             console.log(this.spriteNames[spritesheetIndex])
+             spriteSheet = loadedImages.get(this.spriteNames[spritesheetIndex]);
+             this.animations.set(this.spriteNames[spritesheetIndex], new Animation(spriteSheet.getSprites(), Bullet.INTERVAL));
+         }
+     }
 
     // Actions...
 
