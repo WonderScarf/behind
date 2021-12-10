@@ -98,21 +98,21 @@ export default class GameOverState extends MenuState {
                 this.renderCursor();
         }
         renderCursor(){
-                context.font = '80px Arial';
+                context.font = '15px Arial';
                 context.textBaseline = 'middle';
 		context.textAlign = 'center';
 		context.fillStyle = Colour.CornFlowerBlue//Colour.DodgerBlue;
 		context.fillText('<', this.cursor.x,this.cursor.y);
         }
         renderTitle(){
-                context.font = '100px Arial';
+                context.font = '30px Arial';
                 context.textBaseline = 'middle';
 		context.textAlign = 'center';
 		context.fillStyle = Colour.Crimson//Colour.DodgerBlue;
 		context.fillText('GAME OVER', CANVAS_WIDTH / 2, 100);
         }
         renderOptions() {
-		context.font = '80px Arial';
+		context.font = '15px Arial';
 		context.textAlign = 'middle';
 		context.fillStyle = this.highlighted === this.menuoptions.retry? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;
 		context.fillText('Retry', this.retryButton.position.x , this.retryButton.position.y);

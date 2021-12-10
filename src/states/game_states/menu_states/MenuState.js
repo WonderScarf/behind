@@ -10,7 +10,7 @@ export default class MenuState extends State {
     constructor()
     {
         super();
-        this.cursor = new Vector((CANVAS_WIDTH / 2)+170, (CANVAS_HEIGHT/2)+6);
+        this.cursor = new Vector((CANVAS_WIDTH / 2)+68, (CANVAS_HEIGHT/2)+3);
         this.menuoptions = {
             play:'Play',
             retry:'Retry',

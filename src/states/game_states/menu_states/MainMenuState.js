@@ -6,7 +6,7 @@ import MenuState from "./MenuState.js";
 export default class MainMenu extends MenuState {
 
         static CURSOR_XOFF_SET=170;
-        static CURSOR_YOFF_SET=6;
+        static CURSOR_YOFF_SET=3;
 
 
         constructor(){
@@ -93,21 +93,21 @@ export default class MainMenu extends MenuState {
                 this.renderCursor();
         }
         renderCursor(){
-                context.font = '80px Arial';
+                context.font = '30px Arial';
                 context.textBaseline = 'middle';
 		context.textAlign = 'center';
 		context.fillStyle = Colour.CornFlowerBlue//Colour.DodgerBlue;
 		context.fillText('<', this.cursor.x,this.cursor.y);
         }
         renderTitle(){
-                context.font = '100px Arial';
+                context.font = '40px Arial';
                 context.textBaseline = 'middle';
 		context.textAlign = 'center';
 		context.fillStyle = Colour.Crimson//Colour.DodgerBlue;
 		context.fillText('Behind', CANVAS_WIDTH / 2, 100);
         }
         renderOptions() {
-		context.font = '80px Arial';
+		context.font = '30px Arial';
                 context.textAlign = 'middle';
 		context.fillStyle = this.highlighted === this.menuoptions.play? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;
 		context.fillText('Play', this.playButton.position.x , this.playButton.position.y);

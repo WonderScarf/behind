@@ -29,6 +29,8 @@ export const inputConverter = new InputConverter();
 /** A Map of currently loaded images. */
 export const loadedImages = new Map();
 
+export let keys = null;
+
 
 /** Boolean dictating if we display hitboxes on screen or not. */
 export const DEBUG = true;
