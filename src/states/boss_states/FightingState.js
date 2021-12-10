@@ -6,9 +6,6 @@ import State from "../State.js";
  * Type of state representing a phase in a boss fight, should be overidden by more specific phase Object.
  */
 export default class FightingState extends State {   
-    static HITBOX_X_OFFSET = 100; // The x offset of the rendered hitbox compared to the bounding box.
-    static HITBOX_Y_OFFSET = 150; // The y offset of the rendered hitbox compared to the bounding box.
-
     constructor(){
         super();
     };

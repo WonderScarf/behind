@@ -1,0 +1,8 @@
+Note that these sprites are from another game, Touhou: Adventures of Reimu 2 which is a fangame of based on the Touhou series. As such this game is permited to used them in a non-monitary environment as specified by the sources bellow.
+
+Source: https://www.spriters-resource.com/pc_computer/touhouadvreimu2/
+Guidelines: https://touhou-project.news/guidelines_en/
+
+Special thanks for my friend psychicberry for helping to edit sprites to match project format!
+
+-WonderScarf

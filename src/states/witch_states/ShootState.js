@@ -1,5 +1,5 @@
 import Witch from "../../entities/Witch.js";
-import { inputConverter } from "../../global.js";
+import { inputConverter, timer } from "../../global.js";
 import MoveState from "./MoveState.js";
 import { BulletType } from "../../enums.js";
 
@@ -10,9 +10,9 @@ import { BulletType } from "../../enums.js";
  */
 export default class ShootState extends MoveState {
 
-    static HITBOX_X_OFFSET = 80; // The x offset of the rendered hitbox compared to the bounding box.
-    static HITBOX_Y_OFFSET = 150; // The y offset of the rendered hitbox compared to the bounding box.
-    static MAX_COOLDOWN = 10; // The cooldown between shots in this state.
+    static HITBOX_X_OFFSET = 11; // The x offset of the rendered hitbox compared to the bounding box.
+    static HITBOX_Y_OFFSET = 17; // The y offset of the rendered hitbox compared to the bounding box.
+    static MAX_COOLDOWN = 15; // The cooldown between shots in this state.
 
     constructor() {
         super();
@@ -81,13 +81,12 @@ export default class ShootState extends MoveState {
 
         // Quick algorithm to make bullets only shoot when cooldown is up.
         if(this.cooldown < ShootState.MAX_COOLDOWN){
-            this.cooldown++; //TODO refine by incremention based on truetime.
+            this.cooldown++;
         }
         else {
-            this.witch.shoot(BulletType.Witch); // We shoot a witch type bullet.
+            this.witch.shoot(BulletType.Witch ); // We shoot a witch type bullet.
             this.cooldown = 0; // We reset the current cooldown / initialize if cooldown is null.
         }
-
         super.update(trueTime);
     }
 

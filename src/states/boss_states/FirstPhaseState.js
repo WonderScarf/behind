@@ -11,19 +11,19 @@ import { CANVAS_WIDTH, CANVAS_HEIGHT, stateManager } from "../../global.js";
 export default class FirstPhaseState extends FightingState {
 
     // Properties relating to size and place.
-    static HITBOX_X_OFFSET = 100; // The x offset of the rendered hitbox compared to the bounding box.
-    static HITBOX_Y_OFFSET = 150; // The y offset of the rendered hitbox compared to the bounding box.
+    static HITBOX_X_OFFSET = 12; // The x offset of the rendered hitbox compared to the bounding box.
+    static HITBOX_Y_OFFSET = 12; // The y offset of the rendered hitbox compared to the bounding box.
 
     // Properties relating to movement...
-    static MOVEMENT_BUFFER_WIDTH = 8; // Number representing how closely Boss should aim to follow Witch.
+    static MOVEMENT_BUFFER_WIDTH = 6; // Number representing how closely Boss should aim to follow Witch.
 
     // Proporties of the shots fired directly from the Boss...
-    static MAX_COOLDOWN_A = 5;
-    static BETWEEN_CLIP_COOLDOWN_A = 55;
-    static CLIP_SIZE_A = 10;
+    static MAX_COOLDOWN_A = 9;
+    static BETWEEN_CLIP_COOLDOWN_A = 40;
+    static CLIP_SIZE_A = 7;
 
     // Properties relating to the shots fired to the sides.
-    static MAX_COOLDOWN_B = 20;
+    static MAX_COOLDOWN_B = 25;
 
     // Phase change threshold.
     static REMAINING_HP_NEXT_THREASHOLD = .66
@@ -123,9 +123,6 @@ export default class FirstPhaseState extends FightingState {
         // The varriables representing the spawn point of the bullet
         let spawnX;
         let spawnY = Math.random() * CANVAS_HEIGHT;
-
-        // TODO implement that it spawns completely inbound via the bullets' width.
-        // ? Maybe a timer of some sort that sets the bullet to dead when the we would determined as reaching it's destination.
 
         // Randomly pick either left or right
         let direction = Math.floor(Math.random() * 2) + 2;

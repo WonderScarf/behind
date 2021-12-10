@@ -9,9 +9,9 @@ import { BulletType } from "../../enums.js";
  */
 export default class FocusShootState extends FocusState {
 
-    static HITBOX_X_OFFSET = 80; // The x offset of the rendered hitbox compared to the bounding box.
-    static HITBOX_Y_OFFSET = 150; // The y offset of the rendered hitbox compared to the bounding box.
-    static MAX_COOLDOWN = 2.5; // The cooldown between shots in this state.
+    static HITBOX_X_OFFSET = 11; // The x offset of the rendered hitbox compared to the bounding box.
+    static HITBOX_Y_OFFSET = 17; // The y offset of the rendered hitbox compared to the bounding box.
+    static MAX_COOLDOWN = 5; // The cooldown between shots in this state.
 
     constructor() {
         super();
@@ -69,7 +69,7 @@ export default class FocusShootState extends FocusState {
 
         // Checks if the cooldown has been passed.
         if (this.cooldown < FocusShootState.MAX_COOLDOWN) {
-            this.cooldown++; //TODO refine by incremention based on truetime.
+            this.cooldown++;
         }
         else {
             this.witch.shoot(BulletType.WitchFocus);

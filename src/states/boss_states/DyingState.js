@@ -1,5 +1,6 @@
 import FightingState from "./FightingState.js";
 import Boss from "../../entities/Boss.js";
+import { timer } from "../../global.js";
 
 
 /**
@@ -29,10 +30,9 @@ export default class DyingState extends FightingState {
         this.setupBoss();
 
         // Sets a current animation to the index of the name we wanted. It is stored within the state itself so it is saved when changing directory.
-        this.currentAnimation = this.boss.animations.get(Boss.SPRITESHEET_NAMES[0]);
-        
-        //TODO Implement a dying animation and when it's over set the boss to canRemove = true. For now we will set it here.
+        this.currentAnimation = this.boss.animations.get(Boss.SPRITESHEET_NAMES[2]);
 
+        //TODO Implement a dying animation and when it's over set the boss to canRemove = true. For now we will set it here.
         this.boss.canRemove = true;
 
     }
@@ -47,6 +47,7 @@ export default class DyingState extends FightingState {
 
     update(trueTime) {
         super.update(trueTime);
+
     }
 
     render() {

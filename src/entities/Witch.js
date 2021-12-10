@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import {CANVAS_WIDTH, CANVAS_HEIGHT, loadedImages, stateManager} from "../global.js";
 import StateManager from "../states/StateManager.js";
 import FocusState from "../states/witch_states/FocusState.js";
@@ -18,32 +16,26 @@ import { Direction, HitboxId } from "../enums.js";
  */
 export default class Witch extends Entity{
     
-    static FOCUS_SPEED_MODIFIER = 5;
+    static FOCUS_SPEED_MODIFIER = 4;
 
     static SPRITESHEET_NAMES = ["witch-move", "witch-shoot"];
-    static INTERVAL = .4;
-    static SPEED = 900;
-
-    static SPRITE_SIZES = {
-        "witch-shoot": {width: 210, height: 350},
-        "witch-move": {width: 210, height: 350},
-        "witch-focus": {width: 210, height: 350}
-    }
+    static INTERVAL = .15;
+    static SPEED = 600;
 
     //The hitbox
-    static HITBOX_WIDTH = 32;
-    static HITBOX_HEIGHT = 32;
+    static HITBOX_WIDTH = 10;
+    static HITBOX_HEIGHT = 10;
 
     constructor(){ 
         
         super({
             // The spawn-point
             x: (CANVAS_WIDTH * .25),
-            y: (CANVAS_HEIGHT * .5),
+            y: (CANVAS_HEIGHT / 2),
 
             // Bounding Box
-            boundingWidth: Witch.SPRITE_SIZES["witch-move"].width,
-            boundingHeight: Witch.SPRITE_SIZES["witch-move"].height,  
+            boundingWidth: 1,
+            boundingHeight: 1,  
 
             // Hitbox
             hitboxWidth: Witch.HITBOX_WIDTH,
@@ -145,9 +137,13 @@ export default class Witch extends Entity{
     /**
      * Launces a bullet from it's own place depending on type of bullet input and sends it to the entities in it's playstate.    
      * @param {*} type 
+     * 
      */
     shoot(type){    
-        let bullet = BulletFactory.createInstance(type, this.x, this.y, Direction.Up); // Make a bullet using the object factory based on the type input.
+        let bullet = BulletFactory.createInstance(type, this.x + (this.boundingWidth /2), this.y, Direction.Up); // Make a bullet using the object factory based on the type input.
+        
+        bullet.x -= (bullet.boundingWidth / 2)
+        bullet.y -= bullet.boundingHeight
         stateManager.getCurrentState().addEntity(bullet); // Adds the bullet to the current playstate.
     }
 

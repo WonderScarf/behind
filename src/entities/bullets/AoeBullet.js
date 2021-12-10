@@ -7,25 +7,28 @@ import { timer } from "../../global.js";
  * Bullet spawns and stays in place for a set amount of time.
  */
 export default class AoeBullet extends Bullet{
-    static BOUNDING_WIDTH = 350;
-    static BOUNDING_HEIGHT = 350;
-    static HITBOX_WIDTH = 350;
-    static HITBOX_HEIGHT = 350;
+    static SPRITESHEET_NAMES = ["bullet-aoe-warn", "bullet-aoe-hurt"];
+
+    static X_OFFSET = 3;
+    static Y_OFFSET = 0;
+    static HITBOX_WIDTH = 93;
+    static HITBOX_HEIGHT = 93;
     static DEFAULT_DIRECTION = Direction.None; // The default bullet direction of witch bullet.
     static SPEED = 0; // How fast the witch bullet moves.
     static DAMAGE = Number.MAX_VALUE; // How much damage the bullet deals to targets.
 
     // Times that affect how long it takes to enable and removea a bullet.
-    static TIME_BEFORE_ENABLING = 5;
-    static TIME_AFTER_ENABLING = 5;
+    static TIME_BEFORE_ENABLING = 10;
+    static TIME_AFTER_ENABLING = 10;
 
     constructor(spawnX, spawnY, direction = AoeBullet.DEFAULT_DIRECTION){
         super(
             spawnX, 
             spawnY, 
             direction, 
-            AoeBullet.BOUNDING_WIDTH, 
-            AoeBullet.BOUNDING_HEIGHT, 
+            AoeBullet.SPRITESHEET_NAMES,
+            null,
+            null,
             AoeBullet.SPEED,
             AoeBullet.HITBOX_WIDTH,
             AoeBullet.HITBOX_HEIGHT
@@ -44,21 +47,30 @@ export default class AoeBullet extends Bullet{
                 this.canRemove = true;
             });
         });
+
+        this.currentAnimation = this.animations.get(AoeBullet.SPRITESHEET_NAMES[0]);
+
+        let size = this.currentAnimation.getFrameSize();
+
+        // Update the witch's bounding box acording to the sizes obtained.
+        this.boundingWidth = size.width;
+        this.boundingHeight = size.height;
+
+        this.hitbox.setNewOffsets(AoeBullet.X_OFFSET, AoeBullet.Y_OFFSET);
+
     }
 
     update(trueTime){
-        if(this.isActive){
-            super.update(trueTime);
+        if(this.isActive ){
+            this.currentAnimation = this.animations.get(AoeBullet.SPRITESHEET_NAMES[1]);
         }
+        super.update(trueTime);
+
     }
 
     render(){
-        if(this.isActive){
-            super.render(); //TODO render the active sprite
-        } else{
-            super.render();// TODO render activating sprite
-            super.render();
-        }
+        super.render(); //TODO render the active sprite
+
     }
 
     oobAction(){

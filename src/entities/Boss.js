@@ -17,24 +17,12 @@ import ThirdPhaseState from "../states/boss_states/ThirdPhaseState.js"
  */
 export default class Boss extends Entity{
     
-    static FOCUS_SPEED_MODIFIER = 5;
-
-    static SPRITESHEET_NAMES = ["witch-move", "witch-shoot"];
-    static INTERVAL = .4;
-    static SPEED = 475;
-
-    static SPRITE_SIZES = {
-        "witch-shoot": {width: 210, height: 350},
-        "witch-move": {width: 210, height: 350},
-        "witch-focus": {width: 210, height: 350}
-    }
-
-    // The hitbox size
-    static HITBOX_WIDTH = 360;
-    static HITBOX_HEIGHT = 360;
+    static SPRITESHEET_NAMES = ["boss-shoot", "boss-idle","boss-death"];
+    static INTERVAL = .2;
+    static SPEED = 275;
 
     // The max HP the boss has.
-    static MAX_HP = 10;
+    static MAX_HP = 3;
 
     // The direction of the that is currently moved in
     static DEFAULT_DIRECTION = Direction.None; 
@@ -51,8 +39,8 @@ export default class Boss extends Entity{
             y: (CANVAS_HEIGHT * .02),
 
             // Bounding Box
-            boundingWidth: Boss.SPRITE_SIZES["witch-move"].width,
-            boundingHeight: Boss.SPRITE_SIZES["witch-move"].height,  
+            boundingWidth: 30,
+            boundingHeight: 30,  
 
             // Hitbox
             hitboxId: HitboxId.BossHit
@@ -96,10 +84,10 @@ export default class Boss extends Entity{
 
        let spriteSheet;
 
-        for (let spritesheetIndex = 0; spritesheetIndex < Witch.SPRITESHEET_NAMES.length; spritesheetIndex++) {
+        for (let spritesheetIndex = 0; spritesheetIndex < Boss.SPRITESHEET_NAMES.length; spritesheetIndex++) {
 
-            spriteSheet = loadedImages.get(Witch.SPRITESHEET_NAMES[spritesheetIndex]);
-            this.animations.set(Witch.SPRITESHEET_NAMES[spritesheetIndex], new Animation(spriteSheet.getSprites(), Witch.INTERVAL));
+            spriteSheet = loadedImages.get(Boss.SPRITESHEET_NAMES[spritesheetIndex]);
+            this.animations.set(Boss.SPRITESHEET_NAMES[spritesheetIndex], new Animation(spriteSheet.getSprites(), Boss.INTERVAL));
         }
     }
 
@@ -136,7 +124,6 @@ export default class Boss extends Entity{
      * @param {Number | undefined} spawnY 
      */
     shoot(type, direction = Direction.Down, spawnX = this.x + (this.boundingWidth / 2), spawnY = this.y + (this.boundingHeight / 2)) {
-        // TODO refactor so it can shoot out of a specied possision as well as the default so TYPE A as well as B works in FirstPhaseState.
         let bullet = BulletFactory.createInstance(type, spawnX, spawnY, direction); // Make a bullet using the object factory based on the type input.
         stateManager.getCurrentState().addEntity(bullet) // Adds the bullet to the current playstate.
     }

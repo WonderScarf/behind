@@ -7,8 +7,8 @@ import Witch from "../../entities/Witch.js";
  */
   export default class MoveState extends State {    
 
-    static HITBOX_X_OFFSET = 100; // The x offset of the rendered hitbox compared to the bounding box.
-    static HITBOX_Y_OFFSET = 150; // The y offset of the rendered hitbox compared to the bounding box.
+    static HITBOX_X_OFFSET = 11; // The x offset of the rendered hitbox compared to the bounding box.
+    static HITBOX_Y_OFFSET = 17; // The y offset of the rendered hitbox compared to the bounding box.
 
     constructor(){
         super();
@@ -61,11 +61,6 @@ import Witch from "../../entities/Witch.js";
         // If we are not currently focused and we push the alternate key go into focus state.
         if(inputConverter.commands.ALTERNATE_KEY.isPushed && !this.witch.isFocused){
             this.witch.stateManager.loadState("FocusState", {witch: this.witch});
-        }
-
-        // When we press secondary button we go into the parry state.
-        if(inputConverter.commands.SECONDARY_KEY.isPushed){
-            //TODO if time is remaining at the end create a parry state (OPTIONAL)
         }
 
         // When we press primary button we go into the shoot state.

@@ -1,7 +1,8 @@
 # Behind
 
 ## Description
-Behind is a short bullet hell shooter developed using javascript for the canvas where the player puppets a witch fighting a boss with multiple phases. 
+Behind is a short bullet hell shooter developed using javascript for the canvas where the player puppets a witch fighting a boss with multiple phases. Note that this is also somewhat of a Touhou fangame with similar mechanics.
+
 The boss enemy is the win and lose state of the game (if you get shot you lose, if you shoot them enough without getting shot yourself you win). 
 
 ## Gameplay
@@ -53,8 +54,7 @@ As you should have noticed the conrtol schemes are varriable and change dependin
 
 ## Assets
 In terms of assets, sprites homegrown (we will make them ourselves) using programs like [Krita](https://krita.org/en/) 
-and [Pixelart](https://www.pixilart.com/draw). Sounds will be produced on site and music will be taken from open source cites when
-implemented . We will use Arial as a font to keep it simple to read. The UML and state diagrams were made using LucidCharts.
+and [Pixelart](https://www.pixilart.com/draw). We are also drawing sprites from [Touhou fangames](https://touhou-project.news/guidelines_en/). More details of this can be found in the SOURCES file in the images folder.
 ### GUI
 The gui should be bare-bones and unintrusive so the user doensn't get distracted from being killed in one hit. It can be really hard to focus in environments 
 with tons of colors and sound so the UI should be unintrusive with a basic clear color scheme.
@@ -67,6 +67,7 @@ with tons of colors and sound so the UI should be unintrusive with a basic clear
 1. [lodash.clonedeep](https://www.npmjs.com/package/lodash.clonedeep)
 2. [dom-confetti](https://github.com/daniel-lundin/dom-confetti) 
 3. some base code from [Vikram Signh](https://github.com/VikramSinghMTL) that was edited to suit the project.
+4. Sprites from the Touhou fangame [Touhou: Adventures of Reimu 2](https://www.spriters-resource.com/pc_computer/touhouadvreimu2/). The specifics of the 
 
 ### Unique Inclusions
 ESinstall will be used so to complile node libraries into a single javascript file so that it can run without a server being active.
@@ -76,3 +77,11 @@ ESinstall will be used so to complile node libraries into a single javascript fi
 
 1. State Manager, a state machine using pushdown automata combined with heigharchy to allow not only a state history but the use of states in a far more addaptable method.
 2. InputConverted and Commands, allows for the easy access of actions through any keyboard inputs anywhere in the code so that keys can be changed anytime and still work.
+
+
+## Special Thanks
+>These are the people who helped the development of the game in non-direct ways such as morral support or giving us inspiration!
+
+1. [Vikram Signh](https://github.com/VikramSinghMTL) for answering questions about the state manager, sprites and requirements!
+2. [Ian Clement](https://github.com/ianclement) for helping me with getting to grips with the theory of developing the state manager!
+3. My good friend psychicberry for helping with the editing of sprites to match the project format!
