@@ -1,6 +1,6 @@
 import Vector from "../../../../lib/Vector.js";
 import { Colour } from "../../../enums.js";
-import { CANVAS_HEIGHT, CANVAS_WIDTH, context, inputConverter, keys, stateManager } from "../../../global.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, context, inputConverter, stateManager } from "../../../global.js";
 import StateManager from "../../StateManager.js";
 import GameOverState from "./GameOverState.js";
 import MainMenu from "./MainMenuState.js";
@@ -24,6 +24,7 @@ export default class OptionsState extends MenuState {
     enter(paramaters){
         console.log("Entering OptionsState...")
         this.highlighted = this.menuoptions.UpKey;
+        inputConverter.commands.ENTER_KEY.isPushed=false;
 
     }
 
@@ -81,9 +82,6 @@ export default class OptionsState extends MenuState {
                        stateManager.removeState();
 
                 }
-                else if(inputConverter.commands.ENTER_KEY.isPushed && this.highlighted == this.menuoptions.UpKey){
-                    console.log("Options been selected");
-                }
                 else if(inputConverter.commands.ENTER_KEY.isPushed && (this.highlighted === this.menuoptions.UpKey||
                     this.highlighted === this.menuoptions.RightKey||this.highlighted === this.menuoptions.DownKey||
                     this.highlighted === this.menuoptions.LeftKey||this.highlighted === this.menuoptions.PrimaryKey||
@@ -95,27 +93,37 @@ export default class OptionsState extends MenuState {
             }
             else{
 
-                if(keys!=null){
+                if(inputConverter.currentKey!=null){
+                    console.log("Hello there");
                     switch(this.highlighted){
                         case this.menuoptions.UpKey:
-                            inputConverter.alterCommand(inputConverter.commands.UP_KEY,keys);
+                            console.log(inputConverter.commands.UP_KEY);
+                            inputConverter.alterCommand(inputConverter.commands.UP_KEY,inputConverter.currentKey);
                             this.isSelected=false;
                             break;
                         case this.menuoptions.DownKey:
+                            this.isSelected=false;
                             break;
                         case this.menuoptions.LeftKey:
+                            this.isSelected=false;
                             break;
                         case this.menuoptions.RightKey:
+                            this.isSelected=false;
                             break;
                         case this.menuoptions.ConsoleKey:
+                            this.isSelected=false;
                             break;
                         case this.menuoptions.TetiaryKey:
+                            this.isSelected=false;
                             break;
                         case this.menuoptions.PrimaryKey:
+                            this.isSelected=false;
                             break;
                         case this.menuoptions.SecondaryKey:
+                            this.isSelected=false;
                             break;
                         case this.menuoptions.BackKey:
+                            this.isSelected=false;
                             break;
                     }
                     console.log(keys);
