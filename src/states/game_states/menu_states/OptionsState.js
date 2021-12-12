@@ -10,12 +10,12 @@ import MenuState from "./MenuState.js";
  * The game's options menu.
  */
 export default class OptionsState extends MenuState {
-
+    static MODIFY_COOLDOWN=15;
     static RETURN_BUTTON_X_OFFSET=20;
     constructor(){
         super();
         this.isSelected=false;
-
+        this.cooldown=0;
     }
     /**
      * Function that is run by the state manager when loaded.
@@ -98,49 +98,64 @@ export default class OptionsState extends MenuState {
                             this.highlighted === this.menuoptions.TetiaryKey ? this.menuoptions.TetiaryKey:
                             this.highlighted === this.menuoptions.BackKey ? this.menuoptions.BackKey:
                             this.highlighted === this.menuoptions.ConsoleKey ? this.menuoptions.ConsoleKey: 
-                            this.menuoptions.no;
+                            null;
                     }
             }
             else{
-
-                if(inputConverter.currentKey!=null){
-                    console.log("Hello there");
-                    switch(this.highlighted){
-                        case this.menuoptions.UpKey:
-                            console.log(inputConverter.commands.UP_KEY);
-                            inputConverter.alterCommand(inputConverter.commands.UP_KEY,[inputConverter.currentKey]);
-                            console.log(inputConverter.commands.UP_KEY);
-                            this.isSelected=false;
-                            break;
-                        case this.menuoptions.DownKey:
-                            this.isSelected=false;
-                            break;
-                        case this.menuoptions.LeftKey:
-                            this.isSelected=false;
-                            break;
-                        case this.menuoptions.RightKey:
-                            this.isSelected=false;
-                            break;
-                        case this.menuoptions.ConsoleKey:
-                            this.isSelected=false;
-                            break;
-                        case this.menuoptions.TetiaryKey:
-                            this.isSelected=false;
-                            break;
-                        case this.menuoptions.PrimaryKey:
-                            this.isSelected=false;
-                            break;
-                        case this.menuoptions.SecondaryKey:
-                            this.isSelected=false;
-                            break;
-                        case this.menuoptions.BackKey:
-                            this.isSelected=false;
-                            break;
+                if(this.cooldown < OptionsState.MODIFY_COOLDOWN){
+                    this.cooldown++;
+                }
+                else {
+                    if(inputConverter.currentKey!=null){
+                        console.log("Hello there");
+                        switch(this.highlighted){
+                            case this.menuoptions.UpKey:
+                                console.log(inputConverter.commands.UP_KEY);
+                                inputConverter.alterCommand(inputConverter.commands.UP_KEY,[inputConverter.currentKey]);
+                                //console.log(inputConverter.commands.UP_KEY);
+                                //this.isSelected=false;
+                                break;
+                            case this.menuoptions.DownKey:
+                                this.isSelected=false;
+                                break;
+                            case this.menuoptions.LeftKey:
+                                this.isSelected=false;
+                                break;
+                            case this.menuoptions.RightKey:
+                                this.isSelected=false;
+                                break;
+                            case this.menuoptions.ConsoleKey:
+                                this.isSelected=false;
+                                break;
+                            case this.menuoptions.TetiaryKey:
+                                this.isSelected=false;
+                                break;
+                            case this.menuoptions.PrimaryKey:
+                                this.isSelected=false;
+                                break;
+                            case this.menuoptions.SecondaryKey:
+                                this.isSelected=false;
+                                break;
+                            case this.menuoptions.BackKey:
+                                this.isSelected=false;
+                                break;
+                        }
+                        this.isSelected=false;
+                        this.beingModified=null;
+                        this.cooldown=0;
                     }
                 }
 
+               
+
             }
             this.render();
+    }
+
+    saveConfiguration(commandName,keys){
+        localStorage
+        //const fs = require('fs');
+        //const editJsonFile = require("edit-json-file");
     }
 
             /**
