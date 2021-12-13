@@ -1,6 +1,6 @@
 import Vector from "../../../../lib/Vector.js";
-import { Colour } from "../../../enums.js";
-import { CANVAS_HEIGHT, CANVAS_WIDTH, context, inputConverter, stateManager } from "../../../global.js";
+import { Colour, SoundName } from "../../../enums.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, context, inputConverter, sounds, stateManager } from "../../../global.js";
 import StateManager from "../../StateManager.js";
 import GameOverState from "./GameOverState.js";
 import MainMenu from "./MainMenuState.js";
@@ -26,6 +26,7 @@ export default class OptionsState extends MenuState {
         this.highlighted = this.menuoptions.UpKey;
         inputConverter.commands.ENTER_KEY.isPushed=false;
         this.beingModified=this.menuoptions.no;
+        sounds.stop(SoundName.BattleMusic);
     }
 
     /**

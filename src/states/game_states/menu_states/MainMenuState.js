@@ -13,6 +13,7 @@ export default class MainMenu extends MenuState {
                 super();
                 this.playButton = {isSelected:false, position: new Vector(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2)}; //later idea for modifying or making the menu appear more vibrant
                 this.optionButton =  {isSelected: false, position: new Vector(CANVAS_WIDTH / 2,  (CANVAS_HEIGHT / 2) + 100)};
+                
         }
         /**
          * Function that is run by the state manager when loaded.
@@ -21,7 +22,7 @@ export default class MainMenu extends MenuState {
         enter(paramaters){
                 inputConverter.commands.ENTER_KEY.isPushed = false;
                 this.highlighted=this.menuoptions.play;
-                sounds.play(SoundName.BattleMusic);
+                sounds.play(SoundName.menuMusic);
         }
     
         /**
@@ -29,7 +30,7 @@ export default class MainMenu extends MenuState {
          */
         exit(){
                 super.exit();
-                sounds.stop(SoundName.BattleMusic);
+                sounds.stop(SoundName.menuMusic);
         }
     
         /**

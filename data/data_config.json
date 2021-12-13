@@ -185,16 +185,22 @@
             "volume":0.1
         },
         {
+            "name":"mainMenuMusic",
+            "path":"../style/sounds/main_menu.wav",
+            "size":2,
+            "volume":0.1
+        },
+        {
             "name":"gameMusic",
             "path":"../style/sounds/gameMusic.mp3",
-            "size":4,
+            "size":2,
             "volume":0.2
         },
         {
             "name":"victory",
             "path":"../style/sounds/sfx-victory5.mp3",
             "size":1,
-            "volume":0.8
+            "volume":0.1
         }
     ]
 }
