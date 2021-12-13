@@ -46,11 +46,11 @@
 
         {
             "name":"award-bronze",
-            "width":"128", 
-            "height":"38",
+            "width":"32", 
+            "height":"37",
 			"path": "../style/images/award_sheets/bronze.png",
             "spriteWidth": "32",
-            "spriteHeight": "38"
+            "spriteHeight": "37"
         },
         {
             "name":"award-silver",
@@ -62,15 +62,22 @@
         },
         {
             "name":"award-gold",
-            "width":"127", 
+            "width":"33", 
             "height":"38",
 			"path": "../style/images/award_sheets/gold.png",
-            "spriteWidth": "28",
-            "spriteHeight": "27"
+            "spriteWidth": "33",
+            "spriteHeight": "38"
         },
 
 
-
+        {
+            "name":"focus_hitbox",
+            "width":"10",
+            "height":"10",
+            "path":"../style/images/witch_sheets/focus_sheets/focus_hitbox.png",
+            "spriteWidth": "10",
+            "spriteHeight": "10"
+        },
         {
             "name":"bullet-witch",
             "width":"38", 
@@ -137,5 +144,63 @@
             "spriteHeight": "93"
         }
         
-	]
+	],
+    "fonts":[
+        {
+            "name":"mechanismo",
+            "path":"../style/fonts/mechanismo/MechanismoRegular-p7ywa.otf"
+        },
+        {
+            "name":"aquire",
+            "path":"../style/fonts/aquire/Aquire-BW0ox.otf"
+        },
+        {
+            "name":"MoonLightMagic",
+            "path":"../style/fonts/moonlight-magic/MoonlightMagic-DOBE3.otf"
+        },
+        {
+            "name":"MoonLightMagicItalic",
+            "path":"../style/fonts/moonlight-magic/MoonlightMagicItalic-x3OPO.otf"
+        },
+        {
+            "name":"death-markers",
+            "path":"../style/fonts/death-markers/DeathMarkersDrip-mLZ25.otf"
+        },
+        {
+            "name":"gameOnRegular",
+            "path":"../style/fonts/game-on/GameOnRegular-AL1jg.otf"
+        }
+    ],
+    "sounds":[
+        {
+            "name":"player-hit",
+            "path":"../style/sounds/player_hit.wav",
+            "size":1,
+            "volume":0.1
+        },
+        {
+            "name":"boss-hit",
+            "path":"../style/sounds/boss_hit.wav",
+            "size":1,
+            "volume":0.1
+        },
+        {
+            "name":"mainMenuMusic",
+            "path":"../style/sounds/main_menu.wav",
+            "size":2,
+            "volume":0.1
+        },
+        {
+            "name":"gameMusic",
+            "path":"../style/sounds/gameMusic.mp3",
+            "size":2,
+            "volume":0.2
+        },
+        {
+            "name":"victory",
+            "path":"../style/sounds/sfx-victory5.mp3",
+            "size":1,
+            "volume":0.1
+        }
+    ]
 }

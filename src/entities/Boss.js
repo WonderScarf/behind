@@ -1,9 +1,9 @@
-import {CANVAS_WIDTH, CANVAS_HEIGHT, loadedImages, stateManager} from "../global.js";
+import {CANVAS_WIDTH, CANVAS_HEIGHT, loadedImages, stateManager, sounds} from "../global.js";
 import StateManager from "../states/StateManager.js";
 import Entity from "./Entity.js";
 import Animation from "../../lib/time_management/Animation.js";
 import { BulletFactory } from "../factories/BulletFactory.js";
-import { Direction, BulletType, HitboxId} from "../enums.js"; 
+import { Direction, BulletType, HitboxId, SoundName} from "../enums.js"; 
 import Witch from "./Witch.js";
 import DyingState from "../states/boss_states/DyingState.js"
 import FirstPhaseState from "../states/boss_states/FirstPhaseState.js"
@@ -125,7 +125,7 @@ export default class Boss extends Entity{
      */
     shoot(type, direction = Direction.Down, spawnX = this.x + (this.boundingWidth / 2), spawnY = this.y + (this.boundingHeight / 2)) {
         let bullet = BulletFactory.createInstance(type, spawnX, spawnY, direction); // Make a bullet using the object factory based on the type input.
-        stateManager.getCurrentState().addEntity(bullet) // Adds the bullet to the current playstate.
+        stateManager.getCurrentState().addEntity(bullet); // Adds the bullet to the current playstate.
     }
 
     oobAction(){
@@ -135,6 +135,7 @@ export default class Boss extends Entity{
     collisionAction(collider){
 
         if(collider.damage){
+            sounds.play(SoundName.BossHit);
             this.hp -= collider.damage;
         }
         console.log(this.hp);

@@ -29,6 +29,7 @@ export default class FocusState extends MoveState {
         }
 
         this.currentAnimation = this.witch.animations.get(Witch.SPRITESHEET_NAMES[0]);
+        this.focusCurrentAnimation = this.witch.animations.get(Witch.SPRITESHEET_NAMES[2]);
 
         this.#setupWitch();
 
@@ -68,13 +69,14 @@ export default class FocusState extends MoveState {
             this.witch.stateManager.removeState();
             return;
         }
-
+        this.focusCurrentAnimation.update(trueTime);
         super.update(trueTime);
 
     }
 
     render() {
         super.render();
+        this.focusCurrentAnimation.renderCurrentFrame(this.witch.hitbox.x, this.witch.hitbox.y);
     }
     
     #setupWitch(){

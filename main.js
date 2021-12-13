@@ -1,5 +1,5 @@
 import Behind from "./src/Behind.js";
-import {stateManager} from "./src/global.js"
+import {canvas, stateManager} from "./src/global.js"
 import PlayState from "./src/states/game_states/PlayState.js"
 import LoadingState from "./src/states/game_states/LoadingState.js";
 
