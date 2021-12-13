@@ -20,7 +20,6 @@ export default class GameOverState extends MenuState {
          * @param {{}} paramaters The properties that should be loaded by the state.
          */
         enter(paramaters){
-                console.log("Game Over State");
                 this.highlighted=this.menuoptions.retry;
                 sounds.stop(SoundName.BattleMusic);
         }
@@ -45,27 +44,31 @@ export default class GameOverState extends MenuState {
          */
          update(trueTime){
                 if(inputConverter.commands.UP_KEY.isPushed){
-                        console.log("Up key pressed");
                         inputConverter.commands.UP_KEY.isPushed=false;
+                        sounds.stop(SoundName.BossHit);
+                        sounds.play(SoundName.BossHit);
                         this.highlighted = this.highlighted === this.menuoptions.retry ? this.menuoptions.returnToMainMenu: this.menuoptions.retry;
 
                         this.render();
                 }
                 else if(inputConverter.commands.DOWN_KEY.isPushed)
-                {
-                        console.log("Down Key pressed");
+                {                        
+                        sounds.stop(SoundName.BossHit);
+                        sounds.play(SoundName.BossHit);
                         inputConverter.commands.DOWN_KEY.isPushed=false;
                         this.highlighted = this.highlighted === this.menuoptions.retry ? this.menuoptions.returnToMainMenu: this.menuoptions.retry;
                         this.render();
                 } 
                 else if(inputConverter.commands.ENTER_KEY.isPushed && this.highlighted === this.menuoptions.retry){
-                        console.log("Retry Selected");
+                        sounds.stop(SoundName.PlayerHit);
+                        sounds.play(SoundName.PlayerHit);
                         this.exitState="PlayState";
                         stateManager.removeState();
 
                 }
                 else if(inputConverter.commands.ENTER_KEY.isPushed && this.highlighted === this.menuoptions.returnToMainMenu){
-                        console.log("Return to main menu been selected");
+                        sounds.stop(SoundName.PlayerHit);
+                        sounds.play(SoundName.PlayerHit);
                         this.exitState="MainMenuState";
                         stateManager.removeState();
                 }

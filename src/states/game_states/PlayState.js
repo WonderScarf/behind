@@ -30,7 +30,6 @@ export default class PlayState extends State {
      */
     enter(paramaters) {
         // Paramaters will be added later for play.
-        console.log("Entering play state.");
         this.entities = []; // The entities of the game that will be updated/rendered.
 
         this.witch = new Witch();
@@ -42,12 +41,13 @@ export default class PlayState extends State {
         this.addEntity(this.boss); // Spawn in the Boss for the player to fight.
         localStorage.removeItem('currentTime');
         this.startTimer();
+        sounds.stop(SoundName.menuMusic);
+
     }
 
     exit() {
         sounds.stop(SoundName.BattleMusic);
         timer.clear();
-        console.log("Leaving play state.");
         this.entities = null;
         if(this.timer < this.bestTime&&(!this.boss || this.boss.canRemove)){
             localStorage.setItem('timeToBeat',this.timer);    
@@ -57,6 +57,8 @@ export default class PlayState extends State {
         }
         localStorage.setItem('currentTime',this.timer);
         this.timer=0;
+        sounds.stop(SoundName.BattleMusic);
+
     }
 
     update(trueTime) {
@@ -105,7 +107,6 @@ export default class PlayState extends State {
             // Checks if the witch is set to be removed or is removed and if so enter the gameover state.
             if(!this.witch || this.witch.canRemove){
                 this.moveState="GameOverState";
-                console.log(stateManager.currentStateStack);
                 stateManager.removeState();
                 stateManager.loadState("GameOverState", {});
                 return;
@@ -140,7 +141,7 @@ export default class PlayState extends State {
 		context.font = '25px MoonLightMagic';
         context.fillText(`Timer:`, 70, 25);
         context.textAlign = 'right';
-        context.fillText(`${this.timer}`, 90,  27);
+        context.fillText(`${this.timer}`, 145,  27);
         context.fillText(`Best Time:`, 115, 50);
         context.textAlign = 'right';
         context.fillText(`${this.bestTime}`, 145,  50);

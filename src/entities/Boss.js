@@ -22,7 +22,7 @@ export default class Boss extends Entity{
     static SPEED = 275;
 
     // The max HP the boss has.
-    static MAX_HP = 3;
+    static MAX_HP = 20;
 
     // The direction of the that is currently moved in
     static DEFAULT_DIRECTION = Direction.None; 
@@ -135,10 +135,11 @@ export default class Boss extends Entity{
     collisionAction(collider){
 
         if(collider.damage){
+            sounds.stop(SoundName.BossHit);
             sounds.play(SoundName.BossHit);
             this.hp -= collider.damage;
         }
-        console.log(this.hp);
+        
     }
     
     // Private functions meant to hold functions that should be abstracted.

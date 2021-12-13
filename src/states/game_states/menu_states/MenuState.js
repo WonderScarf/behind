@@ -38,7 +38,6 @@ export default class MenuState extends State {
      * @param {{}} paramaters The properties that should be loaded by the state.
      */
      enter(paramaters){
-        console.log("Entering MenuState...");
     }
 
     /**

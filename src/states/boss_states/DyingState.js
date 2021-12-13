@@ -24,7 +24,6 @@ export default class DyingState extends FightingState {
      * @param {{boss: Boss}} paramaters The inputs used when entering the state.
      */
     enter(paramaters) {
-        console.log("Entering DyingState...")
         super.enter(paramaters);
 
         this.setupBoss();

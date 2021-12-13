@@ -12,9 +12,9 @@ export default class WinState extends MenuState {
         static REPLAY_BUTTON_X_OFF_SET = 415;
         static SPRITESHEET_NAMES = ["award-bronze", "award-silver","award-gold"];
         static INTERVAL = .15;
-        static GOLD_MEDEAL_REQ=3;
-        static SILVER_MEDEAL_REQ=5;
-        static BRONZE_MEDEAL_REQ=6;
+        static GOLD_MEDEAL_REQ = 10;
+        static SILVER_MEDEAL_REQ = 15;
+        static BRONZE_MEDEAL_REQ = 20;
 
 
         constructor(){
@@ -43,9 +43,7 @@ export default class WinState extends MenuState {
         enter(paramaters){
                 sounds.play(SoundName.VictoryMusic);
                 this.setSprites();
-                console.log("Game Over State");
                 this.highlighted = this.menuoptions.retry;
-                console.log(stateManager.currentStateStack);
                 this.currentTime = localStorage.getItem('currentTime');
                 if(this.currentTime < WinState.GOLD_MEDEAL_REQ)
                         this.currentAnimation = this.animations.get(WinState.SPRITESHEET_NAMES[2]);       
@@ -62,6 +60,8 @@ export default class WinState extends MenuState {
          * Function that is run on removal of state.
          */
         exit(){
+                sounds.stop(SoundName.PlayerHit);
+                sounds.play(SoundName.PlayerHit);
                 super.exit();
         }
     
@@ -77,27 +77,27 @@ export default class WinState extends MenuState {
          */
          update(trueTime){
                 if(inputConverter.commands.UP_KEY.isPushed){
-                        console.log("Up key pressed");
+                        sounds.stop(SoundName.BossHit);
+                        sounds.play(SoundName.BossHit);
                         inputConverter.commands.UP_KEY.isPushed=false;
                         this.highlighted = this.highlighted === this.menuoptions.retry ? this.menuoptions.returnToMainMenu: this.menuoptions.retry;
                         this.render();
                 }
                 else if(inputConverter.commands.DOWN_KEY.isPushed)
                 {
-                        console.log("Down Key pressed");
+                        sounds.stop(SoundName.BossHit);
+                        sounds.play(SoundName.BossHit);
                         inputConverter.commands.DOWN_KEY.isPushed=false;
                         this.highlighted = this.highlighted === this.menuoptions.retry ? this.menuoptions.returnToMainMenu: this.menuoptions.retry;
 
                         this.render();
                 } 
                 else if(inputConverter.commands.ENTER_KEY.isPushed && this.highlighted === this.menuoptions.retry){
-                        console.log("Retry Selected");
                         this.exitState="PlayState";
                         stateManager.removeState();
 
                 }
                 else if(inputConverter.commands.ENTER_KEY.isPushed && this.highlighted === this.menuoptions.returnToMainMenu){
-                        console.log("Return to main menu been selected");
                         this.exitState="MainMenuState";
                         stateManager.removeState();
                 }

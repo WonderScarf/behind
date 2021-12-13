@@ -39,7 +39,7 @@ export const sounds = new Sounds();
 
 
 /** Boolean dictating if we display hitboxes on screen or not. */
-export const DEBUG = true;
+export const DEBUG = false;
 
 /** Timer that can be used to track things. */
 export const timer = new Timer();

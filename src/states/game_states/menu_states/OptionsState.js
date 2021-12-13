@@ -22,7 +22,6 @@ export default class OptionsState extends MenuState {
      * @param {{}} paramaters The properties that should be loaded by the state.
      */
     enter(paramaters){
-        console.log("Entering OptionsState...")
         this.highlighted = this.menuoptions.UpKey;
         inputConverter.commands.ENTER_KEY.isPushed=false;
         this.beingModified=this.menuoptions.no;
@@ -49,7 +48,9 @@ export default class OptionsState extends MenuState {
     update(trueTime){
             if(!this.isSelected){
                 if(inputConverter.commands.UP_KEY.isPushed){
-                    console.log(`Up key pressed ${inputConverter.commands.UP_KEY.inputs[0]}`);
+
+                    sounds.stop(SoundName.BossHit);
+                    sounds.play(SoundName.BossHit);
                     inputConverter.commands.UP_KEY.isPushed=false;
                     this.highlighted = this.highlighted === this.menuoptions.UpKey ? this.menuoptions.returnToMainMenu:
                                        this.highlighted === this.menuoptions.returnToMainMenu ?  this.menuoptions.restoretoDefualt: 
@@ -65,7 +66,8 @@ export default class OptionsState extends MenuState {
                 }
                 else if(inputConverter.commands.DOWN_KEY.isPushed)
                 {
-                        console.log("Down Key pressed");
+                    sounds.stop(SoundName.BossHit);
+                    sounds.play(SoundName.BossHit);
                         inputConverter.commands.DOWN_KEY.isPushed=false;
                         this.highlighted = this.highlighted === this.menuoptions.UpKey ? this.menuoptions.DownKey:
                             this.highlighted === this.menuoptions.DownKey ? this.menuoptions.RightKey: 
@@ -81,14 +83,16 @@ export default class OptionsState extends MenuState {
 
                 } 
                 else if(inputConverter.commands.ENTER_KEY.isPushed && this.highlighted == this.menuoptions.returnToMainMenu){
-                    console.log("Return has been pressed has been pressed");
                     this.exitState="MainMenuState";
+                    sounds.stop(SoundName.PlayerHit);
+                    sounds.play(SoundName.PlayerHit);
                     stateManager.removeState();
 
                 }
                 else if(inputConverter.commands.ENTER_KEY.isPushed && this.highlighted == this.menuoptions.restoretoDefualt){
-                    console.log("Restore has been called");
                     inputConverter.resetCommands();
+                    sounds.stop(SoundName.PlayerHit);
+                    sounds.play(SoundName.PlayerHit);
                     localStorage.setItem('customCommands',JSON.stringify(inputConverter.commandData));
                 }
                 else if(inputConverter.commands.ENTER_KEY.isPushed && (this.highlighted === this.menuoptions.UpKey||
@@ -96,6 +100,8 @@ export default class OptionsState extends MenuState {
                     this.highlighted === this.menuoptions.LeftKey||this.highlighted === this.menuoptions.PrimaryKey||
                     this.highlighted === this.menuoptions.SecondaryKey||this.highlighted === this.menuoptions.TetiaryKey||
                     this.highlighted === this.menuoptions.BackKey||this.highlighted === this.menuoptions.ConsoleKey)){
+                        sounds.stop(SoundName.PlayerHit);
+                        sounds.play(SoundName.PlayerHit);
                         this.isSelected=true;
                         inputConverter.commands.ENTER_KEY.isPushed=false;
                         this.beingModified = this.highlighted === this.menuoptions.UpKey ? this.menuoptions.UpKey:
@@ -116,7 +122,6 @@ export default class OptionsState extends MenuState {
                 }
                 else {
                     if(inputConverter.currentKey!=null){
-                        console.log("Hello there");
                         switch(this.highlighted){
                             case this.menuoptions.UpKey:
                                 inputConverter.alterCommand(inputConverter.commands.UP_KEY,[inputConverter.currentKey]);

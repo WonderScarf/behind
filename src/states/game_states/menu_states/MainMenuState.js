@@ -21,7 +21,7 @@ export default class MainMenu extends MenuState {
          */
         enter(paramaters){
                 inputConverter.commands.ENTER_KEY.isPushed = false;
-                this.highlighted=this.menuoptions.play;
+                this.highlighted = this.menuoptions.play;
                 sounds.play(SoundName.menuMusic);
         }
     
@@ -37,6 +37,8 @@ export default class MainMenu extends MenuState {
          * Code that is ran when we leave our current state, to prepare for re-entering a state.
          */
         return(){
+                sounds.stop(SoundName.menuMusic);
+                sounds.play(SoundName.menuMusic);
                 super.return();
         }
     
@@ -47,26 +49,32 @@ export default class MainMenu extends MenuState {
          */
          update(trueTime){
                 if(inputConverter.commands.UP_KEY.isPushed){
-                        console.log("Up key pressed");
                         inputConverter.commands.UP_KEY.isPushed=false;
+                        sounds.stop(SoundName.BossHit);
+                        sounds.play(SoundName.BossHit);
                         this.highlighted = this.highlighted === this.menuoptions.play ? this.menuoptions.options: this.menuoptions.play;
 
                 }
                 else if(inputConverter.commands.DOWN_KEY.isPushed)
                 {
+                        sounds.stop(SoundName.BossHit);
+                        sounds.play(SoundName.BossHit);
                         inputConverter.commands.DOWN_KEY.isPushed=false;
-                        console.log("Down Key pressed");
                         this.highlighted = this.highlighted === this.menuoptions.options ? this.menuoptions.play: this.menuoptions.options;
 
                 } 
                 else if(inputConverter.commands.ENTER_KEY.isPushed && this.highlighted==this.menuoptions.play){
-                        console.log("Enter has been pressed");
                         this.exitState="PlayState";
+                        sounds.stop(SoundName.PlayerHit);
+                        sounds.play(SoundName.PlayerHit);
+
                         stateManager.removeState();
                 }
                 else if(inputConverter.commands.ENTER_KEY.isPushed && this.highlighted==this.menuoptions.options){
-                        console.log("Options been selected");
                         this.exitState="OptionsState";
+                        sounds.stop(SoundName.PlayerHit);
+                        sounds.play(SoundName.PlayerHit);
+
                         stateManager.removeState();
                 }
                 this.render();

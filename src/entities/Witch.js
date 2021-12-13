@@ -145,6 +145,7 @@ export default class Witch extends Entity{
         bullet.x -= (bullet.boundingWidth / 2)
         bullet.y -= bullet.boundingHeight
         stateManager.getCurrentState().addEntity(bullet); // Adds the bullet to the current playstate.
+        
     }
 
 

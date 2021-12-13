@@ -21,8 +21,6 @@ export default class ThirdPhaseState extends FirstPhaseState {
      * @param {{boss: Boss, witch: Witch}} paramaters The inputs used when entering the state.
      */
     enter(paramaters) {
-        console.log("Entering ThirdPhase...")
-
         super.enter(paramaters);
     }
 

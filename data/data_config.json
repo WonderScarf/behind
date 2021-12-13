@@ -188,13 +188,15 @@
             "name":"mainMenuMusic",
             "path":"../style/sounds/main_menu.wav",
             "size":2,
-            "volume":0.1
+            "volume":0.1,
+            "loop": true
         },
         {
             "name":"gameMusic",
             "path":"../style/sounds/gameMusic.mp3",
             "size":2,
-            "volume":0.2
+            "volume":0.2,
+            "loop": true
         },
         {
             "name":"victory",
