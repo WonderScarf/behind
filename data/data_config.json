@@ -46,11 +46,11 @@
 
         {
             "name":"award-bronze",
-            "width":"128", 
-            "height":"38",
+            "width":"32", 
+            "height":"37",
 			"path": "../style/images/award_sheets/bronze.png",
             "spriteWidth": "32",
-            "spriteHeight": "38"
+            "spriteHeight": "37"
         },
         {
             "name":"award-silver",
@@ -62,11 +62,11 @@
         },
         {
             "name":"award-gold",
-            "width":"127", 
+            "width":"33", 
             "height":"38",
 			"path": "../style/images/award_sheets/gold.png",
-            "spriteWidth": "28",
-            "spriteHeight": "27"
+            "spriteWidth": "33",
+            "spriteHeight": "38"
         },
 
 

@@ -1,7 +1,7 @@
 import Vector from "../../../../lib/Vector.js";
 import { Colour } from "../../../enums.js";
-import { CANVAS_HEIGHT, CANVAS_WIDTH, context, inputConverter, stateManager } from "../../../global.js";
-import MainMenu from "./MainMenuState.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, context, inputConverter, loadedImages, stateManager } from "../../../global.js";
+import Animation from "../../../../lib/time_management/Animation.js"
 import MenuState from "./MenuState.js";
 
 /**
@@ -10,19 +10,45 @@ import MenuState from "./MenuState.js";
 export default class WinState extends MenuState {
 
         static REPLAY_BUTTON_X_OFF_SET = 415;
+        static SPRITESHEET_NAMES = ["award-bronze", "award-silver","award-gold"];
+        static INTERVAL = .15;
         constructor(){
                 super();
                 this.retryButton = {isSelected:false, position: new Vector(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2)}; //later idea for modifying or making the menu appear more vibrant
                 this.replayButton =  {isSelected: false, position: new Vector(CANVAS_WIDTH / 2,  (CANVAS_HEIGHT / 2) + 100)};
+                this.currentTime = localStorage.getItem('currentTime');
+                this.animations = new Map();
+                this.currentAnimation = null;
         }
+        setSprites(){
+
+                let spriteSheet;
+         
+                 for (let spritesheetIndex = 0; spritesheetIndex < WinState.SPRITESHEET_NAMES.length; spritesheetIndex++) {
+         
+                     spriteSheet = loadedImages.get(WinState.SPRITESHEET_NAMES[spritesheetIndex]);
+                     this.animations.set(WinState.SPRITESHEET_NAMES[spritesheetIndex], new Animation(spriteSheet.getSprites(), WinState.INTERVAL));
+                 }
+             }
+         
         /**
          * Function that is run by the state manager when loaded.
          * @param {{}} paramaters The properties that should be loaded by the state.
          */
         enter(paramaters){
+                this.setSprites();
                 console.log("Game Over State");
                 this.highlighted=this.menuoptions.retry;
                 console.log(stateManager.currentStateStack);
+                if(this.currentTime<3)
+                {
+                        this.currentAnimation = this.animations.get(WinState.SPRITESHEET_NAMES[2]);        
+                }
+                else if(this.currentTime<4)
+                        this.currentAnimation = this.animations.get(WinState.SPRITESHEET_NAMES[1]);
+                else if (this.currentTime<5)
+                        this.currentAnimation = this.animations.get(WinState.SPRITESHEET_NAMES[0]);
+                
         }
     
         /**
@@ -68,6 +94,7 @@ export default class WinState extends MenuState {
                         this.exitState="MainMenuState";
                         stateManager.removeState();
                 }
+                this.currentAnimation.update(trueTime);
         }
     
 /**
@@ -77,10 +104,10 @@ export default class WinState extends MenuState {
                 context.save();
                 this.renderTitle();
                 this.renderOptions();
-                this.renderCursor();
+                this.currentAnimation.renderCurrentFrame(200, 200);
         }
         renderTitle(){
-                context.font = '50px MoonLightMagic';
+                context.font = '38px MoonLightMagic';
                 context.textBaseline = 'middle';
 		context.textAlign = 'center';
 		context.fillStyle = Colour.Crimson//Colour.DodgerBlue;

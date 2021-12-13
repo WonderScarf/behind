@@ -3,7 +3,7 @@ import Witch from "../../entities/Witch.js";
 import Entity from "../../entities/Entity.js";
 import Boss from "../../entities/Boss.js";
 import { isObb } from "../../../lib/canvas/canvasUtils.js";
-import { CANVAS_HEIGHT, CANVAS_WIDTH, stateManager, timer } from "../../global.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, context, stateManager, timer } from "../../global.js";
 import Hitbox from "../../entities/Hitbox.js";
 
 /**
@@ -14,6 +14,9 @@ export default class PlayState extends State {
     constructor() {
         super();
         this.moveState="";
+        this.timer=0;
+        this.bestTime=0;
+        this.worstTime=60;
     };
 
 
@@ -30,16 +33,27 @@ export default class PlayState extends State {
 
         this.witch = new Witch();
         this.boss = new Boss(this.witch);
+        this.bestTime = localStorage.getItem('timeToBeat');
 
         this.addEntity(this.witch); // Spawn in the Witch, representing the player.
 
         this.addEntity(this.boss); // Spawn in the Boss for the player to fight.
+        this.startTimer();
     }
 
     exit() {
         console.log("Leaving play state.");
+        timer.clear();
         this.entities = null;
-        //stateManager.loadState(this.moveState, {}); // We clear the entities list to help garbage collector a bit.
+        if(this.timer < this.bestTime&&(!this.boss || this.boss.canRemove)){
+            localStorage.setItem('timeToBeat',this.timer);    
+        }
+        else if(this.timer < this.worstTime&&(!this.boss || this.boss.canRemove)){
+            localStorage.setItem('timeToBeat',this.timer);    
+        }
+        localStorage.setItem('currentTime',this.timer);
+        this.timer = 0;
+        
     }
 
     update(trueTime) {
@@ -115,8 +129,33 @@ export default class PlayState extends State {
                 entity.render();
             }
         });
+        this.renderScore();
 
     }
+    renderScore(){
+		context.fillStyle = 'white';
+		context.font = '25px MoonLightMagic';
+        context.fillText(`Timer:`, 70, 25);
+        context.textAlign = 'right';
+        context.fillText(`${this.timer}`, 90,  27);
+        context.fillText(`Best Time:`, 115, 50);
+        context.textAlign = 'right';
+        context.fillText(`${this.bestTime}`, 145,  50);
+
+
+
+    }
+    
+	startTimer() {
+		// Decrement the timer every second.
+		timer.addTask(() => {
+			this.timer++;
+
+			if (this.timer <= 5) {
+				//sounds.play(SoundName.Clock);
+			}
+		}, 1);
+	}
 
 
     // Unique functions...
