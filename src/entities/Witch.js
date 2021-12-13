@@ -1,4 +1,4 @@
-import {CANVAS_WIDTH, CANVAS_HEIGHT, loadedImages, stateManager} from "../global.js";
+import {CANVAS_WIDTH, CANVAS_HEIGHT, loadedImages, stateManager, sounds} from "../global.js";
 import StateManager from "../states/StateManager.js";
 import FocusState from "../states/witch_states/FocusState.js";
 import MoveState from "../states/witch_states/MoveState.js";
@@ -7,7 +7,7 @@ import Entity from "./Entity.js";
 import Animation from "../../lib/time_management/Animation.js";
 import FocusShootState from "../states/witch_states/FocusShootState.js";
 import { BulletFactory } from "../factories/BulletFactory.js";
-import { Direction, HitboxId } from "../enums.js"; 
+import { Direction, HitboxId, SoundName } from "../enums.js"; 
 
 /**
  * The player entity that uses states and user inputs to determine how they
@@ -18,7 +18,7 @@ export default class Witch extends Entity{
     
     static FOCUS_SPEED_MODIFIER = 4;
 
-    static SPRITESHEET_NAMES = ["witch-move", "witch-shoot"];
+    static SPRITESHEET_NAMES = ["witch-move", "witch-shoot","focus_hitbox"];
     static INTERVAL = .15;
     static SPEED = 600;
 
@@ -145,6 +145,7 @@ export default class Witch extends Entity{
         bullet.x -= (bullet.boundingWidth / 2)
         bullet.y -= bullet.boundingHeight
         stateManager.getCurrentState().addEntity(bullet); // Adds the bullet to the current playstate.
+        
     }
 
 
@@ -153,6 +154,7 @@ export default class Witch extends Entity{
     }
 
     collisionAction(collider){
+        sounds.play(SoundName.PlayerHit);
         this.canRemove = true;
     }
     // Private functions meant to hold functions that should be abstracted.

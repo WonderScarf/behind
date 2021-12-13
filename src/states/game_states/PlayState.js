@@ -3,8 +3,9 @@ import Witch from "../../entities/Witch.js";
 import Entity from "../../entities/Entity.js";
 import Boss from "../../entities/Boss.js";
 import { isObb } from "../../../lib/canvas/canvasUtils.js";
-import { CANVAS_HEIGHT, CANVAS_WIDTH, stateManager, timer } from "../../global.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, context, sounds, stateManager, timer } from "../../global.js";
 import Hitbox from "../../entities/Hitbox.js";
+import { SoundName } from "../../enums.js";
 
 /**
  * The state of the game dictating the the actual video game is happening.
@@ -13,6 +14,11 @@ export default class PlayState extends State {
 
     constructor() {
         super();
+        this.moveState="";
+        this.timer=0;
+        this.timerPlacement=0;
+        this.bestTime=0;
+        this.worstTime=60;
     };
 
 
@@ -24,20 +30,35 @@ export default class PlayState extends State {
      */
     enter(paramaters) {
         // Paramaters will be added later for play.
-        console.log("Entering play state.");
         this.entities = []; // The entities of the game that will be updated/rendered.
 
         this.witch = new Witch();
         this.boss = new Boss(this.witch);
+        this.bestTime = localStorage.getItem('timeToBeat');
 
         this.addEntity(this.witch); // Spawn in the Witch, representing the player.
 
         this.addEntity(this.boss); // Spawn in the Boss for the player to fight.
+        localStorage.removeItem('currentTime');
+        this.startTimer();
+        sounds.stop(SoundName.menuMusic);
+
     }
 
     exit() {
-        console.log("Leaving play state.");
-        this.entities = null; // We clear the entities list to help garbage collector a bit.
+        sounds.stop(SoundName.BattleMusic);
+        timer.clear();
+        this.entities = null;
+        if(this.timer < this.bestTime&&(!this.boss || this.boss.canRemove)){
+            localStorage.setItem('timeToBeat',this.timer);    
+        }
+        else if(this.timer < this.worstTime&&(!this.boss || this.boss.canRemove)){
+            localStorage.setItem('timeToBeat',this.timer);    
+        }
+        localStorage.setItem('currentTime',this.timer);
+        this.timer=0;
+        sounds.stop(SoundName.BattleMusic);
+
     }
 
     update(trueTime) {
@@ -85,16 +106,21 @@ export default class PlayState extends State {
 
             // Checks if the witch is set to be removed or is removed and if so enter the gameover state.
             if(!this.witch || this.witch.canRemove){
+                this.moveState="GameOverState";
                 stateManager.removeState();
                 stateManager.loadState("GameOverState", {});
                 return;
+                
+                //stateManager.loadState(, {});
             }
 
             // Checks if the boss is set to be removed or is removed and if so enter the win state.
             if(!this.boss || this.boss.canRemove){
+                this.moveState="WinState";
                 stateManager.removeState();
                 stateManager.loadState("WinState", {});
                 return;
+                //stateManager.loadState("WinState", {});
             }
     }
 
@@ -107,8 +133,33 @@ export default class PlayState extends State {
                 entity.render();
             }
         });
+        this.renderScore();
 
     }
+    renderScore(){
+		context.fillStyle = 'white';
+		context.font = '25px MoonLightMagic';
+        context.fillText(`Timer:`, 70, 25);
+        context.textAlign = 'right';
+        context.fillText(`${this.timer}`, 145,  27);
+        context.fillText(`Best Time:`, 115, 50);
+        context.textAlign = 'right';
+        context.fillText(`${this.bestTime}`, 145,  50);
+
+
+
+    }
+    
+	startTimer() {
+		// Decrement the timer every second.
+		timer.addTask(() => {
+			this.timer++;
+            /*
+			if (this.timer >= this.timerPlacement) {
+				this.timerPlacement++;
+			}*/
+		}, 1);
+	}
 
 
     // Unique functions...

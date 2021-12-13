@@ -29,7 +29,6 @@ import FirstPhaseState from "./FirstPhaseState.js";
      * @param {{boss: Boss, witch: Witch}} paramaters The inputs used when entering the state.
      */
     enter(paramaters) {
-        console.log("Entering SecondPhaseState...")
         super.enter(paramaters);
 
         this.witch = paramaters.witch;

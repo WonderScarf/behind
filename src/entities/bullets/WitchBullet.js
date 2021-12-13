@@ -19,7 +19,7 @@ import Animation from "../../../lib/time_management/Animation.js";
     // Bullet properties...
     static DEFAULT_DIRECTION = Direction.Up; // The default bullet direction of witch bullet.
     static SPEED = 800; // How fast the witch bullet moves.
-    static DAMAGE = 1;// How much damage the bullet deals to targets.
+    static DAMAGE = .75;// How much damage the bullet deals to targets.
 
     constructor(spawnX, spawnY, direction = WitchBullet.DEFAULT_DIRECTION, spriteNames = WitchBullet.SPRITESHEET_NAMES ,width = 1, height = 1, speed = WitchBullet.SPEED, hitboxWidth = WitchBullet.DEFAULT_HITBOX_WIDTH, hitboxHeight = WitchBullet.DEFAULT_HITBOX_HEIGHT, damage = WitchBullet.DAMAGE){
         super(

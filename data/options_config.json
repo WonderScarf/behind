@@ -49,6 +49,11 @@
 			"order": "9",
 			"name": "CONSOLE_KEY",
 			"keys": ["/"]
+		},
+		{
+			"order": "10",
+			"name": "ENTER_KEY",
+			"keys": ["Enter"]
 		}
 	]
 }

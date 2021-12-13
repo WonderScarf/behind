@@ -91,7 +91,6 @@ export default class Bullet extends Entity{
         let spriteSheet;
  
          for (let spritesheetIndex = 0; spritesheetIndex < this.spriteNames.length; spritesheetIndex++) {
-             console.log(this.spriteNames[spritesheetIndex])
              spriteSheet = loadedImages.get(this.spriteNames[spritesheetIndex]);
              this.animations.set(this.spriteNames[spritesheetIndex], new Animation(spriteSheet.getSprites(), Bullet.INTERVAL));
          }
