@@ -55,5 +55,62 @@
 			"name": "ENTER_KEY",
 			"keys": ["Enter"]
 		}
+	],
+	"defualtcommands": [
+		{
+			"order": "0",
+			"name": "UP_KEY",
+			"keys": ["ArrowUp"]
+		},
+		{
+			"order": "1",
+			"name": "RIGHT_KEY",
+			"keys": ["ArrowRight"]
+		},
+		{
+			"order": "2",
+			"name": "DOWN_KEY",
+			"keys": ["ArrowDown"]
+		},
+		{
+			"order": "3",
+			"name": "LEFT_KEY",
+			"keys": ["ArrowLeft"]
+		},
+		{
+			"order": "4",
+			"name": "PRIMARY_KEY",
+			"keys": ["z","Z"]
+		},
+		{
+			"order": "5",
+			"name": "SECONDARY_KEY",
+			"keys": ["x","X"]
+		},
+		{
+			"order": "6",
+			"name": "TETIARY_KEY",
+			"keys": ["c","C"]
+		},
+		{
+			"order": "7",
+			"name": "ALTERNATE_KEY",
+			"keys": ["Shift","\\"]
+		},
+		{
+			"order": "8",
+			"name": "BACK_KEY",
+			"keys": ["Escape","Backspace"]
+		},
+		{
+			"order": "9",
+			"name": "CONSOLE_KEY",
+			"keys": ["/"]
+		},
+		{
+			"order": "10",
+			"name": "ENTER_KEY",
+			"keys": ["Enter"]
+		}
 	]
 }

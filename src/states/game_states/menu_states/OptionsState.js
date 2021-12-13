@@ -50,8 +50,7 @@ export default class OptionsState extends MenuState {
                     console.log(`Up key pressed ${inputConverter.commands.UP_KEY.inputs[0]}`);
                     inputConverter.commands.UP_KEY.isPushed=false;
                     this.highlighted = this.highlighted === this.menuoptions.UpKey ? this.menuoptions.returnToMainMenu:
-                                       this.highlighted === this.menuoptions.returnToMainMenu ?  this.menuoptions.restoretoDefualt: 
-                                       this.highlighted === this.menuoptions.restoretoDefualt ? this.menuoptions.ConsoleKey: 
+                                       this.highlighted === this.menuoptions.returnToMainMenu ? this.menuoptions.ConsoleKey: 
                                        this.highlighted === this.menuoptions.ConsoleKey ? this.menuoptions.BackKey: 
                                        this.highlighted === this.menuoptions.BackKey ? this.menuoptions.TetiaryKey: 
                                        this.highlighted === this.menuoptions.TetiaryKey ? this.menuoptions.SecondaryKey:
@@ -73,8 +72,7 @@ export default class OptionsState extends MenuState {
                             this.highlighted === this.menuoptions.SecondaryKey ? this.menuoptions.TetiaryKey:
                             this.highlighted === this.menuoptions.TetiaryKey ? this.menuoptions.BackKey:
                             this.highlighted === this.menuoptions.BackKey ? this.menuoptions.ConsoleKey:
-                            this.highlighted === this.menuoptions.ConsoleKey ? this.menuoptions.restoretoDefualt: 
-                            this.highlighted === this.menuoptions.restoretoDefualt ? this.menuoptions.returnToMainMenu:
+                            this.highlighted === this.menuoptions.ConsoleKey ? this.menuoptions.returnToMainMenu: 
                             this.menuoptions.UpKey;
 
                 } 
@@ -114,37 +112,31 @@ export default class OptionsState extends MenuState {
                             case this.menuoptions.UpKey:
                                 console.log(inputConverter.commands.UP_KEY);
                                 inputConverter.alterCommand(inputConverter.commands.UP_KEY,[inputConverter.currentKey]);
+                                //console.log(inputConverter.commands.UP_KEY);
+                                //this.isSelected=false;
                                 break;
                             case this.menuoptions.DownKey:
-                                inputConverter.alterCommand(inputConverter.commands.DOWN_KEY,[inputConverter.currentKey]);
                                 this.isSelected=false;
                                 break;
                             case this.menuoptions.LeftKey:
-                                inputConverter.alterCommand(inputConverter.commands.LEFT_KEY,[inputConverter.currentKey]);
                                 this.isSelected=false;
                                 break;
                             case this.menuoptions.RightKey:
-                                inputConverter.alterCommand(inputConverter.commands.RIGHT_KEY,[inputConverter.currentKey]);
                                 this.isSelected=false;
                                 break;
                             case this.menuoptions.ConsoleKey:
-                                inputConverter.alterCommand(inputConverter.commands.CONSOLE_KEY,[inputConverter.currentKey]);
                                 this.isSelected=false;
                                 break;
                             case this.menuoptions.TetiaryKey:
-                                inputConverter.alterCommand(inputConverter.commands.TETIARY_KEY,[inputConverter.currentKey]);
                                 this.isSelected=false;
                                 break;
                             case this.menuoptions.PrimaryKey:
-                                inputConverter.alterCommand(inputConverter.commands.PRIMARY_KEY,[inputConverter.currentKey]);
                                 this.isSelected=false;
                                 break;
                             case this.menuoptions.SecondaryKey:
-                                inputConverter.alterCommand(inputConverter.commands.SECONDARY_KEY,[inputConverter.currentKey]);
                                 this.isSelected=false;
                                 break;
                             case this.menuoptions.BackKey:
-                                inputConverter.alterCommand(inputConverter.commands.BACK_KEY,[inputConverter.currentKey]);
                                 this.isSelected=false;
                                 break;
                         }
@@ -160,7 +152,11 @@ export default class OptionsState extends MenuState {
             this.render();
     }
 
-
+    saveConfiguration(commandName,keys){
+        localStorage
+        //const fs = require('fs');
+        //const editJsonFile = require("edit-json-file");
+    }
 
             /**
          * Renders the current state to the canvas.
@@ -208,9 +204,7 @@ export default class OptionsState extends MenuState {
         context.fillText(this.beingModified === this.menuoptions.BackKey? '... waiting for input' : `BACK_KEY = ${inputConverter.commands.BACK_KEY.inputs[0]}`, CANVAS_WIDTH / 2,360);
         context.fillStyle = this.highlighted === this.menuoptions.ConsoleKey? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;/Colour.DodgerBlue;
         context.fillText(this.beingModified === this.menuoptions.ConsoleKey? '... waiting for input' :`CONSOLE_KEY = ${inputConverter.commands.CONSOLE_KEY.inputs[0]}`, CANVAS_WIDTH / 2,390);
-        context.fillStyle = this.highlighted === this.menuoptions.restoretoDefualt? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;/Colour.DodgerBlue;
-        context.fillText(`${this.menuoptions.restoretoDefualt}`, CANVAS_WIDTH / 2,420);
         context.fillStyle = this.highlighted === this.menuoptions.returnToMainMenu? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;/Colour.DodgerBlue;
-		context.fillText('Return to Main Menu', CANVAS_WIDTH / 2,450);
+		context.fillText('Return to Main Menu', CANVAS_WIDTH / 2,420);
 	}
 }

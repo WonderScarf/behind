@@ -15,7 +15,7 @@ export default class MenuState extends State {
             play:'Play',
             retry:'Retry',
             returnToMainMenu:'Return To Main Menu',
-            restoretoDefualt:'Restore To Defualt',
+            yes:'yes',
             no:'no',
             options:'Options',
             UpKey:'UP_KEY',
