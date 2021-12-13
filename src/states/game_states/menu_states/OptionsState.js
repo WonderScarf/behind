@@ -118,7 +118,6 @@ export default class OptionsState extends MenuState {
                         console.log("Hello there");
                         switch(this.highlighted){
                             case this.menuoptions.UpKey:
-                                console.log(inputConverter.commands.UP_KEY);
                                 inputConverter.alterCommand(inputConverter.commands.UP_KEY,[inputConverter.currentKey]);
                                 break;
                             case this.menuoptions.DownKey:
@@ -154,6 +153,7 @@ export default class OptionsState extends MenuState {
                                 this.isSelected=false;
                                 break;
                         }
+                        localStorage.setItem('customCommands',JSON.stringify(inputConverter.commandData));
                         this.isSelected=false;
                         this.beingModified=null;
                         this.cooldown=0;
@@ -187,9 +187,7 @@ export default class OptionsState extends MenuState {
     }
     renderOptions() {
 		context.font = '22px aquire';
-        //context.textBaseline = 'bottom';
         context.textAlign = 'center';
-        //context.textBaseline = 'left';
 		context.fillStyle = this.highlighted === this.menuoptions.UpKey? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;
 		context.fillText(this.beingModified === this.menuoptions.UpKey? '... waiting for input' : `Up Button = ${inputConverter.commands.UP_KEY.inputs[0]}`, CANVAS_WIDTH / 2,150);
         context.fillStyle = this.highlighted === this.menuoptions.DownKey? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;
@@ -203,7 +201,7 @@ export default class OptionsState extends MenuState {
         context.fillStyle = this.highlighted === this.menuoptions.SecondaryKey? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;
         context.fillText(this.beingModified === this.menuoptions.SecondaryKey? '... waiting for input' : `SECONDARY_KEY = ${inputConverter.commands.SECONDARY_KEY.inputs[0]}`, CANVAS_WIDTH / 2,300);
         context.fillStyle = this.highlighted === this.menuoptions.TetiaryKey? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;
-        context.fillText(this.beingModified === this.menuoptions.TetiaryKey? '... waiting for input' : `TETIARY_KEY = ${inputConverter.commands.TETIARY_KEY.inputs[0]}`, CANVAS_WIDTH / 2,330);
+        context.fillText(this.beingModified === this.menuoptions.TetiaryKey? '... waiting for input' : `TERTIARY_KEY = ${inputConverter.commands.TETIARY_KEY.inputs[0]}`, CANVAS_WIDTH / 2,330);
         context.fillStyle = this.highlighted === this.menuoptions.BackKey? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;
         context.fillText(this.beingModified === this.menuoptions.BackKey? '... waiting for input' : `BACK_KEY = ${inputConverter.commands.BACK_KEY.inputs[0]}`, CANVAS_WIDTH / 2,360);
         context.fillStyle = this.highlighted === this.menuoptions.ConsoleKey? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;/Colour.DodgerBlue;
