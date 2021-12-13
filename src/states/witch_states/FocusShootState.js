@@ -27,6 +27,7 @@ export default class FocusShootState extends FocusState {
 
         // Set the current animation to use from the newly set witch.
         this.currentAnimation = this.witch.animations.get(Witch.SPRITESHEET_NAMES[1]);
+        this.focusCurrentAnimation = this.witch.animations.get(Witch.SPRITESHEET_NAMES[2]);
 
         // Setup the witch object.
         this.#setupWitch();
@@ -86,6 +87,7 @@ export default class FocusShootState extends FocusState {
         }
 
         this.currentAnimation.renderCurrentFrame(this.witch.x, this.witch.y);
+        this.focusCurrentAnimation.renderCurrentFrame(this.witch.hitbox.x, this.witch.hitbox.y);
     }
 
     /**

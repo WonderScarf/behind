@@ -70,7 +70,14 @@
         },
 
 
-
+        {
+            "name":"focus_hitbox",
+            "width":"10",
+            "height":"10",
+            "path":"../style/images/witch_sheets/focus_sheets/focus_hitbox.png",
+            "spriteWidth": "10",
+            "spriteHeight": "10"
+        },
         {
             "name":"bullet-witch",
             "width":"38", 

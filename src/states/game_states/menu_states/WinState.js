@@ -12,11 +12,16 @@ export default class WinState extends MenuState {
         static REPLAY_BUTTON_X_OFF_SET = 415;
         static SPRITESHEET_NAMES = ["award-bronze", "award-silver","award-gold"];
         static INTERVAL = .15;
+        static GOLD_MEDEAL_REQ=3;
+        static SILVER_MEDEAL_REQ=5;
+        static BRONZE_MEDEAL_REQ=6;
+
+        
         constructor(){
                 super();
                 this.retryButton = {isSelected:false, position: new Vector(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2)}; //later idea for modifying or making the menu appear more vibrant
                 this.replayButton =  {isSelected: false, position: new Vector(CANVAS_WIDTH / 2,  (CANVAS_HEIGHT / 2) + 100)};
-                this.currentTime = localStorage.getItem('currentTime');
+                //this.currentTime = localStorage.getItem('currentTime');
                 this.animations = new Map();
                 this.currentAnimation = null;
         }
@@ -38,15 +43,14 @@ export default class WinState extends MenuState {
         enter(paramaters){
                 this.setSprites();
                 console.log("Game Over State");
-                this.highlighted=this.menuoptions.retry;
+                this.highlighted = this.menuoptions.retry;
                 console.log(stateManager.currentStateStack);
-                if(this.currentTime<3)
-                {
-                        this.currentAnimation = this.animations.get(WinState.SPRITESHEET_NAMES[2]);        
-                }
-                else if(this.currentTime<4)
+                this.currentTime = localStorage.getItem('currentTime');
+                if(this.currentTime < WinState.GOLD_MEDEAL_REQ)
+                        this.currentAnimation = this.animations.get(WinState.SPRITESHEET_NAMES[2]);       
+                else if(this.currentTime < WinState.SILVER_MEDEAL_REQ)
                         this.currentAnimation = this.animations.get(WinState.SPRITESHEET_NAMES[1]);
-                else if (this.currentTime<5)
+                else if (this.currentTime < WinState.BRONZE_MEDEAL_REQ)
                         this.currentAnimation = this.animations.get(WinState.SPRITESHEET_NAMES[0]);
                 
         }
@@ -104,7 +108,7 @@ export default class WinState extends MenuState {
                 context.save();
                 this.renderTitle();
                 this.renderOptions();
-                this.currentAnimation.renderCurrentFrame(200, 200);
+                this.currentAnimation.renderCurrentFrame(175, 180);
         }
         renderTitle(){
                 context.font = '38px MoonLightMagic';

@@ -18,7 +18,7 @@ export default class Witch extends Entity{
     
     static FOCUS_SPEED_MODIFIER = 4;
 
-    static SPRITESHEET_NAMES = ["witch-move", "witch-shoot"];
+    static SPRITESHEET_NAMES = ["witch-move", "witch-shoot","focus_hitbox"];
     static INTERVAL = .15;
     static SPEED = 600;
 

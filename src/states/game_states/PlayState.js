@@ -15,6 +15,7 @@ export default class PlayState extends State {
         super();
         this.moveState="";
         this.timer=0;
+        this.timerPlacement=0;
         this.bestTime=0;
         this.worstTime=60;
     };
@@ -38,12 +39,13 @@ export default class PlayState extends State {
         this.addEntity(this.witch); // Spawn in the Witch, representing the player.
 
         this.addEntity(this.boss); // Spawn in the Boss for the player to fight.
+        localStorage.removeItem('currentTime');
         this.startTimer();
     }
 
     exit() {
-        console.log("Leaving play state.");
         timer.clear();
+        console.log("Leaving play state.");
         this.entities = null;
         if(this.timer < this.bestTime&&(!this.boss || this.boss.canRemove)){
             localStorage.setItem('timeToBeat',this.timer);    
@@ -52,8 +54,7 @@ export default class PlayState extends State {
             localStorage.setItem('timeToBeat',this.timer);    
         }
         localStorage.setItem('currentTime',this.timer);
-        this.timer = 0;
-        
+        this.timer=0;
     }
 
     update(trueTime) {
@@ -150,10 +151,10 @@ export default class PlayState extends State {
 		// Decrement the timer every second.
 		timer.addTask(() => {
 			this.timer++;
-
-			if (this.timer <= 5) {
-				//sounds.play(SoundName.Clock);
-			}
+            /*
+			if (this.timer >= this.timerPlacement) {
+				this.timerPlacement++;
+			}*/
 		}, 1);
 	}
 
