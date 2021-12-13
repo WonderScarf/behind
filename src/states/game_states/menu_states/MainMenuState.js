@@ -38,41 +38,28 @@ export default class MainMenu extends MenuState {
                 super.return();
         }
     
+
         /**
          * Updates the current state
          * @param {Number} trueTime The ajusted time.
          */
-        update(trueTime){
+         update(trueTime){
                 if(inputConverter.commands.UP_KEY.isPushed){
                         console.log("Up key pressed");
                         inputConverter.commands.UP_KEY.isPushed=false;
                         this.highlighted = this.highlighted === this.menuoptions.play ? this.menuoptions.options: this.menuoptions.play;
-                        if(this.highlighted != this.menuoptions.play)
-                        {
-                                this.cursor.y = this.optionButton.position.y + MainMenu.CURSOR_YOFF_SET;
-                        }
-                        else         
-                                this.cursor.y = this.playButton.position.y + MainMenu.CURSOR_YOFF_SET;
-                        this.render();
+
                 }
                 else if(inputConverter.commands.DOWN_KEY.isPushed)
                 {
                         inputConverter.commands.DOWN_KEY.isPushed=false;
                         console.log("Down Key pressed");
                         this.highlighted = this.highlighted === this.menuoptions.options ? this.menuoptions.play: this.menuoptions.options;
-                        if(this.highlighted != this.menuoptions.play)
-                        {
-                                this.cursor.y = this.optionButton.position.y + MainMenu.CURSOR_YOFF_SET;
-                        }
-                        else         
-                                this.cursor.y = this.playButton.position.y + MainMenu.CURSOR_YOFF_SET;
-                        //this.cursor.y = this.optionButton.position.y + MainMenu.CURSOR_YOFF_SET;
-                        this.render();
+
                 } 
                 else if(inputConverter.commands.ENTER_KEY.isPushed && this.highlighted==this.menuoptions.play){
                         console.log("Enter has been pressed");
                         this.exitState="PlayState";
-                        //stateManager.loadState(this.exitState,{});
                         stateManager.removeState();
                 }
                 else if(inputConverter.commands.ENTER_KEY.isPushed && this.highlighted==this.menuoptions.options){
@@ -80,6 +67,7 @@ export default class MainMenu extends MenuState {
                         this.exitState="OptionsState";
                         stateManager.removeState();
                 }
+                this.render();
 
         }
     
@@ -90,24 +78,17 @@ export default class MainMenu extends MenuState {
                 context.save();
                 this.renderTitle();
                 this.renderOptions();
-                this.renderCursor();
         }
-        renderCursor(){
-                context.font = '30px Arial';
-                context.textBaseline = 'middle';
-		context.textAlign = 'center';
-		context.fillStyle = Colour.CornFlowerBlue//Colour.DodgerBlue;
-		context.fillText('<', this.cursor.x,this.cursor.y);
-        }
+
         renderTitle(){
-                context.font = '40px Arial';
+                context.font = '60px MoonLightMagic';
                 context.textBaseline = 'middle';
 		context.textAlign = 'center';
 		context.fillStyle = Colour.Crimson//Colour.DodgerBlue;
 		context.fillText('Behind', CANVAS_WIDTH / 2, 100);
         }
         renderOptions() {
-		context.font = '30px Arial';
+		context.font = '40px MoonLightMagic';
                 context.textAlign = 'middle';
 		context.fillStyle = this.highlighted === this.menuoptions.play? Colour.CornFlowerBlue :Colour.Crimson//Colour.DodgerBlue;
 		context.fillText('Play', this.playButton.position.x , this.playButton.position.y);

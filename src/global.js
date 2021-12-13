@@ -1,6 +1,7 @@
 import StateManager from "./states/StateManager.js";
 import InputConverter from "../lib/input_management/InputConverter.js"
 import Timer from "../lib/time_management/Timer.js";
+import Fonts from "../lib/Fonts.js";
 
 // Canvas Properties
 
@@ -24,6 +25,8 @@ export const stateManager = new StateManager();
 
 //Input
 export const inputConverter = new InputConverter();
+
+export const fonts = new Fonts();
 
 //Image Stockpile
 /** A Map of currently loaded images. */

@@ -137,5 +137,26 @@
             "spriteHeight": "93"
         }
         
-	]
+	],
+    "fonts":[
+        {
+            "name":"mechanismo",
+            "path":"../style/fonts/mechanismo/MechanismoRegular-p7ywa.otf"
+        },
+        {
+            "name":"aquire",
+            "path":"../style/fonts/aquire/Aquire-BW0ox.otf"
+        },
+        {
+            "name":"MoonLightMagic",
+            "path":"../style/fonts/moonlight-magic/MoonlightMagic-DOBE3.otf"
+        },
+        {
+            "name":"death-markers",
+            "path":"../style/fonts/death-markers/DeathMarkersDrip-mLZ25.otf"
+        }
+    ],
+    "soungs":[
+
+    ]
 }

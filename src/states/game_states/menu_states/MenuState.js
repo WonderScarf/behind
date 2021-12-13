@@ -15,7 +15,7 @@ export default class MenuState extends State {
             play:'Play',
             retry:'Retry',
             returnToMainMenu:'Return To Main Menu',
-            yes:'yes',
+            restoretoDefualt:'Restore To Default',
             no:'no',
             options:'Options',
             UpKey:'UP_KEY',
@@ -39,16 +39,6 @@ export default class MenuState extends State {
      */
      enter(paramaters){
         console.log("Entering MenuState...");
-        
-        
-        //Implement this into the Menu state
-        /*
-        if(this.cooldown < ShootState.MAX_COOLDOWN){
-            this.cooldown++; //TODO refine by incremention based on truetime.
-        }
-        else {
-            this.cooldown = 0; // We reset the current cooldown / initialize if cooldown is null.
-        }*/
     }
 
     /**
