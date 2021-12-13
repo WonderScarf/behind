@@ -29,7 +29,6 @@ export default class PlayState extends State {
      * @param {null | undefined | {}} paramaters The paramates for the PlayState (no paramaters are needed for PlayState).
      */
     enter(paramaters) {
-        sounds.play(SoundName.BattleMusic);
         // Paramaters will be added later for play.
         console.log("Entering play state.");
         this.entities = []; // The entities of the game that will be updated/rendered.

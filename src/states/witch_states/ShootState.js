@@ -1,5 +1,5 @@
 import Witch from "../../entities/Witch.js";
-import { inputConverter, timer } from "../../global.js";
+import { inputConverter, sounds, timer } from "../../global.js";
 import MoveState from "./MoveState.js";
 import { BulletType } from "../../enums.js";
 

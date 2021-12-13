@@ -41,7 +41,7 @@ export default class WinState extends MenuState {
          * @param {{}} paramaters The properties that should be loaded by the state.
          */
         enter(paramaters){
-                sounds.stop(SoundName.BattleMusic);
+                sounds.play(SoundName.VictoryMusic);
                 this.setSprites();
                 console.log("Game Over State");
                 this.highlighted = this.menuoptions.retry;

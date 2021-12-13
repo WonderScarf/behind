@@ -21,7 +21,7 @@ export default class MainMenu extends MenuState {
         enter(paramaters){
                 inputConverter.commands.ENTER_KEY.isPushed = false;
                 this.highlighted=this.menuoptions.play;
-                sounds.play(SoundName.menuMusic);
+                sounds.play(SoundName.BattleMusic);
         }
     
         /**
@@ -29,7 +29,7 @@ export default class MainMenu extends MenuState {
          */
         exit(){
                 super.exit();
-                sounds.stop(SoundName.menuMusic);
+                sounds.stop(SoundName.BattleMusic);
         }
     
         /**
