@@ -1,5 +1,5 @@
 import State from "../State.js";
-import { context, inputConverter, stateManager, loadedImages,fonts } from "../../global.js"
+import { context, inputConverter, stateManager, loadedImages,fonts, sounds } from "../../global.js"
 import CanvasImage from "../../../lib/sprite_management/CanvasImage.js";
 /**
  * State that is ran when getting data from JSON files. Displays a symbol of loading to screen.
@@ -43,13 +43,15 @@ export default class LoadingState extends State {
     async load(){
         const {
             images: jsonImages,
-            fonts: jsonFonts
+            fonts: jsonFonts,
+            sounds:jsonSounds
             // @ts-ignore
         } = await fetch('../../../data/data_config.json').then((response) => response.json());
 
         // Loads images and then when done set that the images loaded.
         this.loadImages(jsonImages);
         fonts.load(jsonFonts);
+        sounds.load(jsonSounds);
     }
 
     /**

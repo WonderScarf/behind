@@ -171,7 +171,37 @@
             "path":"../style/fonts/game-on/GameOnRegular-AL1jg.otf"
         }
     ],
-    "soungs":[
-
+    "sounds":[
+        {
+            "name":"player-hit",
+            "path":"../style/sounds/player_hit.wav",
+            "size":1,
+            "volume":0.1
+        },
+        {
+            "name":"boss-hit",
+            "path":"../style/sounds/boss_hit.wav",
+            "size":1,
+            "volume":0.1
+        },
+        {
+            "name":"mainMenuMusic",
+            "path":"../style/sounds/main_menu.wav",
+            "size":2,
+            "volume":0.1
+        },
+        {
+            "name":"gameMusic",
+            "path":"../style/sounds/gameMusic.mp3",
+            "size":2,
+            "volume":0.2,
+            "loop":true
+        },
+        {
+            "name":"victory",
+            "path":"../style/sounds/sft-victory5.mp3",
+            "size":1,
+            "volume":0.1
+        }
     ]
 }

@@ -3,8 +3,9 @@ import Witch from "../../entities/Witch.js";
 import Entity from "../../entities/Entity.js";
 import Boss from "../../entities/Boss.js";
 import { isObb } from "../../../lib/canvas/canvasUtils.js";
-import { CANVAS_HEIGHT, CANVAS_WIDTH, context, stateManager, timer } from "../../global.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, context, sounds, stateManager, timer } from "../../global.js";
 import Hitbox from "../../entities/Hitbox.js";
+import { SoundName } from "../../enums.js";
 
 /**
  * The state of the game dictating the the actual video game is happening.
@@ -28,6 +29,7 @@ export default class PlayState extends State {
      * @param {null | undefined | {}} paramaters The paramates for the PlayState (no paramaters are needed for PlayState).
      */
     enter(paramaters) {
+        sounds.play(SoundName.BattleMusic);
         // Paramaters will be added later for play.
         console.log("Entering play state.");
         this.entities = []; // The entities of the game that will be updated/rendered.
@@ -44,6 +46,7 @@ export default class PlayState extends State {
     }
 
     exit() {
+        sounds.stop(SoundName.BattleMusic);
         timer.clear();
         console.log("Leaving play state.");
         this.entities = null;

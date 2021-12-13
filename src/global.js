@@ -2,6 +2,7 @@ import StateManager from "./states/StateManager.js";
 import InputConverter from "../lib/input_management/InputConverter.js"
 import Timer from "../lib/time_management/Timer.js";
 import Fonts from "../lib/Fonts.js";
+import Sounds from "../lib/Sound.js";
 
 // Canvas Properties
 
@@ -31,6 +32,10 @@ export const fonts = new Fonts();
 //Image Stockpile
 /** A Map of currently loaded images. */
 export const loadedImages = new Map();
+
+
+//sound board
+export const sounds = new Sounds();
 
 
 /** Boolean dictating if we display hitboxes on screen or not. */

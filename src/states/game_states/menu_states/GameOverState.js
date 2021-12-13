@@ -1,6 +1,6 @@
 import Vector from "../../../../lib/Vector.js";
-import { Colour } from "../../../enums.js";
-import { CANVAS_HEIGHT, CANVAS_WIDTH, context, inputConverter, stateManager } from "../../../global.js";
+import { Colour, SoundName } from "../../../enums.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, context, inputConverter, sounds, stateManager } from "../../../global.js";
 import MainMenu from "./MainMenuState.js";
 import MenuState from "./MenuState.js";
 
@@ -22,6 +22,7 @@ export default class GameOverState extends MenuState {
         enter(paramaters){
                 console.log("Game Over State");
                 this.highlighted=this.menuoptions.retry;
+                sounds.stop(SoundName.BattleMusic);
         }
     
         /**

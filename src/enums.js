@@ -35,3 +35,13 @@ export const Colour ={
 	Crimson: 'crimson',
     CornFlowerBlue:'cornflowerblue',
 }
+
+
+export const SoundName = {
+	PlayerHit: 'player-hit',
+	menuMusic: 'mainMenuMusic',
+	VictoryMusic: 'victory',
+    BattleMusic: 'gameMusic',
+	BossHit: 'boss-hit',
+
+};

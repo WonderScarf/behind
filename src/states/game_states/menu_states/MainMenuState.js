@@ -1,6 +1,6 @@
 import Vector from "../../../../lib/Vector.js";
-import { Colour } from "../../../enums.js";
-import { CANVAS_HEIGHT, CANVAS_WIDTH, context, inputConverter, stateManager } from "../../../global.js";
+import { Colour, SoundName } from "../../../enums.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, context, inputConverter, sounds, stateManager } from "../../../global.js";
 import MenuState from "./MenuState.js";
 
 export default class MainMenu extends MenuState {
@@ -21,7 +21,7 @@ export default class MainMenu extends MenuState {
         enter(paramaters){
                 inputConverter.commands.ENTER_KEY.isPushed = false;
                 this.highlighted=this.menuoptions.play;
-                console.log(stateManager.currentStateStack);
+                sounds.play(SoundName.menuMusic);
         }
     
         /**
@@ -29,6 +29,7 @@ export default class MainMenu extends MenuState {
          */
         exit(){
                 super.exit();
+                sounds.stop(SoundName.menuMusic);
         }
     
         /**

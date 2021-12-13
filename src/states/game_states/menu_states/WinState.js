@@ -1,6 +1,6 @@
 import Vector from "../../../../lib/Vector.js";
-import { Colour } from "../../../enums.js";
-import { CANVAS_HEIGHT, CANVAS_WIDTH, context, inputConverter, loadedImages, stateManager } from "../../../global.js";
+import { Colour, SoundName } from "../../../enums.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, context, inputConverter, loadedImages, sounds, stateManager } from "../../../global.js";
 import Animation from "../../../../lib/time_management/Animation.js"
 import MenuState from "./MenuState.js";
 
@@ -16,7 +16,7 @@ export default class WinState extends MenuState {
         static SILVER_MEDEAL_REQ=5;
         static BRONZE_MEDEAL_REQ=6;
 
-        
+
         constructor(){
                 super();
                 this.retryButton = {isSelected:false, position: new Vector(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2)}; //later idea for modifying or making the menu appear more vibrant
@@ -41,6 +41,7 @@ export default class WinState extends MenuState {
          * @param {{}} paramaters The properties that should be loaded by the state.
          */
         enter(paramaters){
+                sounds.stop(SoundName.BattleMusic);
                 this.setSprites();
                 console.log("Game Over State");
                 this.highlighted = this.menuoptions.retry;
@@ -52,6 +53,8 @@ export default class WinState extends MenuState {
                         this.currentAnimation = this.animations.get(WinState.SPRITESHEET_NAMES[1]);
                 else if (this.currentTime < WinState.BRONZE_MEDEAL_REQ)
                         this.currentAnimation = this.animations.get(WinState.SPRITESHEET_NAMES[0]);
+
+                sounds.play(SoundName.VictoryMusic);
                 
         }
     
