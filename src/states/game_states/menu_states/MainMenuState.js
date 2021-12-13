@@ -81,7 +81,7 @@ export default class MainMenu extends MenuState {
         }
 
         renderTitle(){
-                context.font = '60px MoonLightMagic';
+                context.font = '60px gameOnRegular';
                 context.textBaseline = 'middle';
 		context.textAlign = 'center';
 		context.fillStyle = Colour.Crimson//Colour.DodgerBlue;

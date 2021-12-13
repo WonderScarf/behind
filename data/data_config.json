@@ -152,8 +152,16 @@
             "path":"../style/fonts/moonlight-magic/MoonlightMagic-DOBE3.otf"
         },
         {
+            "name":"MoonLightMagicItalic",
+            "path":"../style/fonts/moonlight-magic/MoonlightMagicItalic-x3OPO.otf"
+        },
+        {
             "name":"death-markers",
             "path":"../style/fonts/death-markers/DeathMarkersDrip-mLZ25.otf"
+        },
+        {
+            "name":"gameOnRegular",
+            "path":"../style/fonts/game-on/GameOnRegular-AL1jg.otf"
         }
     ],
     "soungs":[

@@ -179,7 +179,7 @@ export default class OptionsState extends MenuState {
     }
 
     renderTitle(){
-        context.font = '40px aquire';
+        context.font = '50px aquire';
         context.textBaseline = 'middle';
 		context.textAlign = 'center';
 		context.fillStyle = Colour.Crimson//Colour.DodgerBlue;
