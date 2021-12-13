@@ -55,6 +55,8 @@ As you should have noticed the conrtol schemes are varriable and change dependin
 ## Assets
 In terms of assets, sprites homegrown (we will make them ourselves) using programs like [Krita](https://krita.org/en/) 
 and [Pixelart](https://www.pixilart.com/draw). We are also drawing sprites from [Touhou fangames](https://touhou-project.news/guidelines_en/). More details of this can be found in the SOURCES file in the images folder.
+The sound is used from old assignments provided by:[Vikram Signh](https://github.com/VikramSinghMTL).
+The fonts were found on here and used for personal use https://www.fontspace.com/collection/behind-game-cnrw6nq
 ### GUI
 The gui should be bare-bones and unintrusive so the user doensn't get distracted from being killed in one hit. It can be really hard to focus in environments 
 with tons of colors and sound so the UI should be unintrusive with a basic clear color scheme.
