@@ -88,7 +88,7 @@ export default class OptionsState extends MenuState {
                 else if(inputConverter.commands.ENTER_KEY.isPushed && this.highlighted == this.menuoptions.restoretoDefualt){
                     console.log("Restore has been called");
                     inputConverter.resetCommands();
-
+                    localStorage.setItem('customCommands',JSON.stringify(inputConverter.commandData));
                 }
                 else if(inputConverter.commands.ENTER_KEY.isPushed && (this.highlighted === this.menuoptions.UpKey||
                     this.highlighted === this.menuoptions.RightKey||this.highlighted === this.menuoptions.DownKey||
